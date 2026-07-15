@@ -7,17 +7,18 @@ This repository now includes a lightweight browser stack for CityGML files:
 
 ## Current Support
 
-- CityGML: 2.0
-- Energy ADE: 2.0
+- CityGML: 2.0, 3.0
+- Energy ADE: 2.0, 3.0
+- LCA ADE: 1.0
 
 The API detects unsupported dialects and returns structured errors for now.
 
 ## Project Structure
 
-- parse.py: existing CityGML parser logic (reused)
-- app.py: existing graph builder logic (reused)
 - api/server.py: FastAPI upload endpoints and logging
 - api/dialect.py: namespace-based dialect detection
+- api/parsers/: CityGML + ADE parsing pipeline (2.0/3.0 aware)
+- api/graph.py: vis-network graph payload builder
 - web/: React + TypeScript + Tailwind browser UI
 
 ## Run Backend API
@@ -76,9 +77,20 @@ This starts:
 
 ## API Endpoints
 
+- GET /api/v1/health
+   - basic API health payload
+
 - POST /api/v1/graph-file
   - multipart/form-data with file field
   - returns graph nodes, edges, typeColors, and dialect info
+
+- POST /api/v1/graph/citygml20
+   - multipart/form-data with file field
+   - forces CityGML 2.0 parser path
+
+- POST /api/v1/graph/citygml30
+   - multipart/form-data with file field
+   - forces CityGML 3.0 parser path
 
 - POST /api/v1/parse-file
   - multipart/form-data with file field
@@ -92,4 +104,4 @@ This is intentionally not overengineered.
 - One frontend app.
 - One extension seam: dialect detection + support checks.
 
-Future support for CityGML 3.0 and Energy ADE 3.0 can be added without changing the frontend contract.
+The frontend contract remains stable while parser coverage evolves.
