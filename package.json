@@ -1,0 +1,15 @@
+{
+  "name": "citygml2neo4j",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "setup": "npm --prefix web install",
+    "dev": "concurrently -k \"./.venv/bin/python -m uvicorn api.server:app --reload --host 0.0.0.0 --port 8000\" \"npm --prefix web run dev\"",
+    "dev:backend": "./.venv/bin/python -m uvicorn api.server:app --reload --host 0.0.0.0 --port 8000",
+    "dev:frontend": "npm --prefix web run dev",
+    "build": "npm --prefix web run build"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
