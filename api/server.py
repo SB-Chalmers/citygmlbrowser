@@ -11,7 +11,8 @@ from typing import Any
 
 from fastapi import FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 
 from api.graph import TYPE_STYLE, build_graph
 from api.parsers import parse_file
@@ -28,6 +29,7 @@ MAX_UPLOAD_MB = int(os.getenv("CITYGML_MAX_UPLOAD_MB", "50"))
 SUPPORTED_CITYGML = {"2.0", "3.0"}
 SUPPORTED_ENERGY_ADE = {None, "2.0", "3.0"}
 SUPPORTED_LCA_ADE = {None, "1.0"}
+FRONTEND_DIST = Path(os.getenv("CITYGML_FRONTEND_DIST", "web/dist")).resolve()
 
 app = FastAPI(title="CityGML Browser API", version="1.0.0")
 
@@ -317,3 +319,28 @@ if __name__ == "__main__":
     import uvicorn
 
     uvicorn.run("api.server:app", host="0.0.0.0", port=8000, reload=True)
+
+
+if FRONTEND_DIST.exists() and FRONTEND_DIST.is_dir():
+    assets_dir = FRONTEND_DIST / "assets"
+    if assets_dir.exists() and assets_dir.is_dir():
+        app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
+
+    @app.get("/")
+    async def serve_root() -> FileResponse:
+        return FileResponse(FRONTEND_DIST / "index.html")
+
+
+    @app.get("/{full_path:path}")
+    async def serve_spa(full_path: str):
+        # Do not mask API 404s.
+        if full_path.startswith("api/"):
+            raise HTTPException(status_code=404, detail="Not Found")
+
+        candidate = (FRONTEND_DIST / full_path).resolve()
+        if str(candidate).startswith(str(FRONTEND_DIST)) and candidate.is_file():
+            return FileResponse(candidate)
+
+        return FileResponse(FRONTEND_DIST / "index.html")
+else:
+    logger.warning("Frontend dist directory not found: %s", FRONTEND_DIST)

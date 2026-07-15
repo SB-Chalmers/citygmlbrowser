@@ -1,6 +1,7 @@
 import type { ApiErrorResponse, ApiSuccess, GraphPayload } from '../types/graph'
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8000'
+const API_BASE = import.meta.env.VITE_API_BASE_URL ?? ''
+const API_BASE_LABEL = API_BASE || window.location.origin
 
 export class ApiError extends Error {
   code: string
@@ -33,7 +34,7 @@ export async function uploadGraph(file: File): Promise<ApiSuccess<GraphPayload>>
     })
   } catch {
     throw new ApiError(
-      `Cannot reach backend at ${API_BASE}. Start it with \"npm run dev\" (repo root) or \"npm run dev:backend\".`,
+      `Cannot reach backend at ${API_BASE_LABEL}. Start it with \"npm run dev\" (repo root) or \"npm run dev:backend\".`,
       'backend_unreachable',
     )
   }
