@@ -162,7 +162,7 @@ function App() {
 
         <aside className="min-h-0 overflow-auto rounded-xl border border-slate-700 bg-slate-900/80 p-4">
           <h2 className="mb-3 text-xs font-bold uppercase tracking-wider text-amber-400">Properties</h2>
-          <NodeDetailsPanel node={selectedNode} typeColors={payload?.typeColors ?? {}} />
+          <NodeDetailsPanel node={selectedNode} typeColors={payload?.typeColors ?? {}} dialect={payload?.dialect ?? null} />
         </aside>
       </main>
     </div>

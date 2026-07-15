@@ -68,6 +68,43 @@ TYPE_STYLE = {
 DEFAULT_STYLE = {"bg": "#BDC3C7", "border": "#95a5a6", "font": "#ffffff", "size": 22, "shape": "dot"}
 
 
+# ── Provenance classification ─────────────────────────────────────────────────
+# Tags each property with the schema/source it originates from so the UI can
+# group properties UML-style: CityGML, Energy ADE, LCA ADE, or a linked database.
+
+_ENERGY_GROUPS = frozenset({
+    "SolidMaterial", "Gas", "Construction", "LayeredConstruction",
+    "ThermalZone", "ThermalBoundary", "ThermalOpening", "UsageZone",
+    "Boiler", "HeatPump", "CombinedHeatPower", "ChillerUnit", "HeatExchanger",
+    "PhotovoltaicCollector", "PhotovoltaicThermalCollector",
+    "SolarThermalCollector", "GenericSolarCollector",
+    "LightingDevice", "LightingFacilities", "GenericElectricalDevice",
+    "GenericDevice", "MovableShadingDevice", "ThermalStorageDevice",
+    "ElectricalStorageDevice", "MechanicalVentilation",
+    "AirDistributionSystem", "ElectricalAppliances",
+})
+
+# Energy ADE hook properties that can appear on CityGML node types.
+_ENERGY_KEYS = frozenset({
+    "heatingSetpoint", "coolingSetpoint", "ventilationSetpoint",
+})
+
+
+def _classify_provenance(key: str, group: str) -> str:
+    """Return the source category of a property: database | lca | energy | citygml."""
+    if key.startswith("db:"):
+        return "database"
+    if key.startswith("lca:"):
+        return "lca"
+    if key.startswith("floorArea") or key in _ENERGY_KEYS:
+        return "energy"
+    if key.startswith("[generic]"):
+        return "citygml"
+    if group in _ENERGY_GROUPS:
+        return "energy"
+    return "citygml"
+
+
 # ── Global energy feature collector ──────────────────────────────────────────
 
 def _local(tag):
@@ -106,19 +143,19 @@ def _enrich_with_epd(props: dict) -> None:
 
     name = gwp.get("name")
     if name:
-        props["lca:epdName"] = name
+        props["db:epdName"] = name
 
     # kg CO2-eq per declared/inventory unit of the product
-    for module, key in (("A1-A3", "lca:gwpA1A3"),
-                        ("A4", "lca:gwpA4"),
-                        ("A5.1", "lca:gwpA5_1")):
+    for module, key in (("A1-A3", "db:gwpA1A3"),
+                        ("A4", "db:gwpA4"),
+                        ("A5.1", "db:gwpA5_1")):
         val = gwp.get(module)
         if val is not None:
             props[key] = f"{val} kgCO2e"
 
     waste = gwp.get("WasteFactor")
     if waste is not None:
-        props["lca:wasteFactor"] = waste
+        props["db:wasteFactor"] = waste
 
 
 def collect_global_energy(gml_file: str) -> dict:
@@ -167,6 +204,7 @@ def build_graph(model, gml_file):
     def add_node(node_type, label, details):
         i = nid()
         s = TYPE_STYLE.get(node_type, DEFAULT_STYLE)
+        clean_details = {k: v for k, v in details.items() if v is not None}
         nodes.append({
             "id": i,
             "label": label,
@@ -181,7 +219,8 @@ def build_graph(model, gml_file):
             "size": s["size"],
             "shape": s["shape"],
             "font": {"color": s["font"], "size": 11, "face": "ui-sans-serif, system-ui, sans-serif", "strokeWidth": 4, "strokeColor": "rgba(0,0,0,0.9)"},
-            "details": {k: v for k, v in details.items() if v is not None},
+            "details": clean_details,
+            "provenance": {k: _classify_provenance(k, node_type) for k in clean_details},
             "children": [],   # direct child node ids
         })
         return i

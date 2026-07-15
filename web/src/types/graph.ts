@@ -17,6 +17,7 @@ export type GraphNode = {
   shape?: string
   font?: Record<string, unknown>
   details?: Record<string, unknown>
+  provenance?: Record<string, string>
   children?: number[]
   hidden?: boolean
   borderWidth?: number
