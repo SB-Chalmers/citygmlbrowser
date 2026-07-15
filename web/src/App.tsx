@@ -62,6 +62,7 @@ function App() {
       file: payload.file,
       citygml: payload.dialect.citygml ?? 'unknown',
       energyAde: payload.dialect.energyAde ?? 'none',
+      lcaAde: payload.dialect.lcaAde ?? 'none',
       nodeCount: payload.graph.nodes.length,
       edgeCount: payload.graph.edges.length,
     }
@@ -85,6 +86,7 @@ function App() {
               <span className="mr-3">{graphMeta.file}</span>
               <span className="mr-3">CityGML {graphMeta.citygml}</span>
               <span className="mr-3">Energy ADE {graphMeta.energyAde}</span>
+              <span className="mr-3">LCA ADE {graphMeta.lcaAde}</span>
               <span>{graphMeta.nodeCount} nodes / {graphMeta.edgeCount} edges</span>
             </div>
           ) : (

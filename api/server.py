@@ -27,6 +27,7 @@ logging.basicConfig(
 MAX_UPLOAD_MB = int(os.getenv("CITYGML_MAX_UPLOAD_MB", "50"))
 SUPPORTED_CITYGML = {"2.0", "3.0"}
 SUPPORTED_ENERGY_ADE = {None, "2.0", "3.0"}
+SUPPORTED_LCA_ADE = {None, "1.0"}
 
 app = FastAPI(title="CityGML Browser API", version="1.0.0")
 
@@ -102,7 +103,7 @@ async def request_context(request: Request, call_next):
     return response
 
 
-def _validate_support(dialect_citygml: str | None, dialect_energy: str | None, request_id: str) -> None:
+def _validate_support(dialect_citygml: str | None, dialect_energy: str | None, request_id: str, dialect_lca: str | None = None) -> None:
     if dialect_citygml not in SUPPORTED_CITYGML:
         raise HTTPException(
             status_code=400,
@@ -112,13 +113,21 @@ def _validate_support(dialect_citygml: str | None, dialect_energy: str | None, r
                 request_id,
             ),
         )
-
     if dialect_energy not in SUPPORTED_ENERGY_ADE:
         raise HTTPException(
             status_code=400,
             detail=_error_payload(
                 "unsupported_energy_ade_version",
                 f"Detected Energy ADE {dialect_energy}; supported versions: 2.0, 3.0.",
+                request_id,
+            ),
+        )
+    if dialect_lca not in SUPPORTED_LCA_ADE:
+        raise HTTPException(
+            status_code=400,
+            detail=_error_payload(
+                "unsupported_lca_ade_version",
+                f"Detected LCA ADE {dialect_lca}; only version 1.0 is supported.",
                 request_id,
             ),
         )
@@ -169,7 +178,7 @@ async def parse_uploaded_file(request: Request, file: UploadFile = File(...)):
     try:
         tmp_path, filename, size_bytes = await _persist_upload(file)
         dialect = detect_dialect(tmp_path)
-        _validate_support(dialect.citygml, dialect.energy_ade, request_id)
+        _validate_support(dialect.citygml, dialect.energy_ade, request_id, dialect.lca_ade)
 
         model = parse_file(tmp_path)
 
@@ -182,31 +191,28 @@ async def parse_uploaded_file(request: Request, file: UploadFile = File(...)):
 
         elapsed_ms = round((time.perf_counter() - started) * 1000, 2)
         logger.info(
-            "parse_ok request_id=%s file=%s size_bytes=%s citygml=%s energy_ade=%s elapsed_ms=%s",
-            request_id,
-            filename,
-            size_bytes,
-            dialect.citygml,
-            dialect.energy_ade,
-            elapsed_ms,
+            "parse_ok request_id=%s file=%s size_bytes=%s citygml=%s energy_ade=%s lca_ade=%s elapsed_ms=%s",
+            request_id, filename, size_bytes,
+            dialect.citygml, dialect.energy_ade, dialect.lca_ade, elapsed_ms,
         )
 
-        return _success_payload(
+        return JSONResponse(content=_success_payload(
             data={
                 "file": filename,
                 "dialect": {
-                    "citygml": dialect.citygml,
+                    "citygml":   dialect.citygml,
                     "energyAde": dialect.energy_ade,
+                    "lcaAde":    dialect.lca_ade,
                 },
                 "model": model,
                 "summary": {
-                    "buildingCount": building_count,
+                    "buildingCount":    building_count,
                     "thermalZoneCount": thermal_zone_count,
-                    "surfaceCount": surface_count,
+                    "surfaceCount":     surface_count,
                 },
             },
             meta={"apiVersion": "v1", "processingMs": elapsed_ms},
-        )
+        ))
     except ET.ParseError:
         logger.exception("parse_xml_error request_id=%s", request_id)
         return JSONResponse(
@@ -256,30 +262,27 @@ async def _handle_graph(
     try:
         tmp_path, filename, size_bytes = await _persist_upload(file)
         dialect = detect_dialect(tmp_path)
-        _validate_support(dialect.citygml, dialect.energy_ade, request_id)
+        _validate_support(dialect.citygml, dialect.energy_ade, request_id, dialect.lca_ade)
 
         model = parse_file(tmp_path, force_citygml=force_citygml)
         graph = build_graph(model, tmp_path)
 
         elapsed_ms = round((time.perf_counter() - started) * 1000, 2)
         logger.info(
-            "graph_ok request_id=%s file=%s size_bytes=%s nodes=%s edges=%s citygml=%s energy_ade=%s elapsed_ms=%s",
-            request_id,
-            filename,
-            size_bytes,
-            len(graph.get("nodes", [])),
-            len(graph.get("edges", [])),
-            dialect.citygml,
-            dialect.energy_ade,
-            elapsed_ms,
+            "graph_ok request_id=%s file=%s nodes=%s edges=%s "
+            "citygml=%s energy_ade=%s lca_ade=%s elapsed_ms=%s",
+            request_id, filename,
+            len(graph.get("nodes", [])), len(graph.get("edges", [])),
+            dialect.citygml, dialect.energy_ade, dialect.lca_ade, elapsed_ms,
         )
 
-        return _success_payload(
+        return JSONResponse(content=_success_payload(
             data={
                 "file": filename,
                 "dialect": {
                     "citygml":   dialect.citygml,
                     "energyAde": dialect.energy_ade,
+                    "lcaAde":    dialect.lca_ade,
                 },
                 "graph":       graph,
                 "typeColors":  _type_colors(),
@@ -290,7 +293,7 @@ async def _handle_graph(
                 "nodeCount":    len(graph.get("nodes", [])),
                 "edgeCount":    len(graph.get("edges", [])),
             },
-        )
+        ))
     except ET.ParseError:
         logger.exception("graph_xml_error request_id=%s", request_id)
         return JSONResponse(

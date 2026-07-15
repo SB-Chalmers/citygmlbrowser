@@ -7,12 +7,14 @@ CITYGML_2_URI = "http://www.opengis.net/citygml/2.0"
 CITYGML_3_URI = "http://www.opengis.net/citygml/3.0"
 ENERGY_ADE_2_URI = "http://www.sig3d.org/citygml/2.0/energy/2.0"
 ENERGY_ADE_3_URI = "http://www.citygml.org/ade/energy/3.0"
+LCA_ADE_URI      = "http://www.citygml.org/ade/lca/1.0"
 
 
 @dataclass(frozen=True)
 class DialectInfo:
     citygml: str | None
     energy_ade: str | None
+    lca_ade: str | None
     namespaces: list[str]
 
 
@@ -60,8 +62,11 @@ def detect_dialect(path: str) -> DialectInfo:
             if v in {"2.0", "3.0"}:
                 break
 
+    lca_ade_version: str | None = "1.0" if LCA_ADE_URI in namespaces else None
+
     return DialectInfo(
         citygml=citygml_version,
         energy_ade=energy_ade_version,
+        lca_ade=lca_ade_version,
         namespaces=sorted(namespaces),
     )

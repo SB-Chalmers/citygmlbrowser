@@ -45,6 +45,7 @@ export type GraphPayload = {
   dialect: {
     citygml: string | null
     energyAde: string | null
+    lcaAde: string | null
   }
   graph: {
     nodes: GraphNode[]

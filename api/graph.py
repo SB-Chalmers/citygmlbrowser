@@ -10,7 +10,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 from api.parsers.base import NS, _gml_id, text_of
-from api.parsers import energy_ade_20, energy_ade_30
+from api.parsers import energy_ade_20, energy_ade_30, lca_ade
 from api.dialect import detect_dialect
 
 # ── Node styling ──────────────────────────────────────────────────────────────
@@ -51,17 +51,27 @@ def _local(tag):
 
 
 def collect_global_energy(gml_file: str) -> dict:
-    """Return global energy objects keyed by gml:id.
+    """Return global energy objects keyed by gml:id, enriched with LCA props.
 
-    Delegates to the version-specific ADE parser based on detected dialect.
+    Delegates to the version-specific ADE parser, then overlays any LCA ADE
+    properties found on the same elements.
     """
     root    = ET.parse(gml_file).getroot()
     dialect = detect_dialect(gml_file)
     if dialect.energy_ade == "3.0":
-        return energy_ade_30.collect_global_objects(root)
-    if dialect.energy_ade == "2.0":
-        return energy_ade_20.collect_global_objects(root)
-    return {}
+        result = energy_ade_30.collect_global_objects(root)
+    elif dialect.energy_ade == "2.0":
+        result = energy_ade_20.collect_global_objects(root)
+    else:
+        result = {}
+    # Overlay LCA props onto existing material entries
+    if dialect.lca_ade:
+        for gml_id, lca_props in lca_ade.collect_global_objects(root).items():
+            if gml_id in result:
+                result[gml_id].update(lca_props)
+            else:
+                result[gml_id] = lca_props
+    return result
 
 
 # ── Graph builder ─────────────────────────────────────────────────────────────
@@ -196,11 +206,13 @@ def build_graph(model, gml_file):
 
     # ── CityModel ──
     bbox = model.get("bbox") or {}
+    lca  = model.get("lca") or {}
     cm_id = add_node("CityModel", "CityModel", {
         "file":  Path(model["file"]).name,
         "lower": bbox.get("lower"),
         "upper": bbox.get("upper"),
         "srs":   bbox.get("srs"),
+        "lca:referenceStudyPeriod": lca.get("referenceStudyPeriod"),
     })
 
     for b in model["buildings"]:
