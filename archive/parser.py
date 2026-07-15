@@ -10,6 +10,7 @@ import xml.etree.ElementTree as ET
 
 # ── Namespace map ────────────────────────────────────────────────────────────
 NS = {
+    # CityGML 2.0
     "core":   "http://www.opengis.net/citygml/2.0",
     "bldg":   "http://www.opengis.net/citygml/building/2.0",
     "gml":    "http://www.opengis.net/gml",
@@ -18,7 +19,30 @@ NS = {
     "genobj": "http://www.opengis.net/citygml/generics/2.0",
     "xAL":    "urn:oasis:names:tc:ciq:xsdschema:xAL:2.0",
     "xlink":  "http://www.w3.org/1999/xlink",
+    # Energy ADE 3.0
+    "nrg3":   "http://www.citygml.org/ade/energy/3.0",
+    # CityGML 3.0
+    "core3":  "http://www.opengis.net/citygml/3.0",
+    "bldg3":  "http://www.opengis.net/citygml/building/3.0",
+    "con":    "http://www.opengis.net/citygml/construction/3.0",
+    "gml32":  "http://www.opengis.net/gml/3.2",
+    "gen3":   "http://www.opengis.net/citygml/generics/3.0",
 }
+
+GML_ID_ATTRS = [
+    "{http://www.opengis.net/gml}id",
+    "{http://www.opengis.net/gml/3.2}id",
+]
+
+
+def _gml_id(el: ET.Element) -> str | None:
+    """Return the gml:id attribute regardless of GML namespace version."""
+    for attr in GML_ID_ATTRS:
+        v = el.get(attr)
+        if v:
+            return v
+    return None
+
 
 # Reverse map: full URI → prefix
 URI_TO_PREFIX = {v: k for k, v in NS.items()}
@@ -49,7 +73,7 @@ def elem_text(el: ET.Element) -> str | None:
 # ── Core extraction ───────────────────────────────────────────────────────────
 
 def parse_linear_ring(el: ET.Element) -> dict:
-    ring = {"id": el.get("{http://www.opengis.net/gml}id"), "points": []}
+    ring = {"id": _gml_id(el), "points": []}
     pos_list = el.find("gml:posList", NS)
     if pos_list is not None and pos_list.text:
         ring["points"] = parse_pos_list(pos_list.text)
@@ -62,7 +86,7 @@ def parse_linear_ring(el: ET.Element) -> dict:
 
 
 def parse_polygon(el: ET.Element) -> dict:
-    poly = {"id": el.get("{http://www.opengis.net/gml}id"), "exterior": None, "interior": []}
+    poly = {"id": _gml_id(el), "exterior": None, "interior": []}
     ext = el.find("gml:exterior/gml:LinearRing", NS)
     if ext is not None:
         poly["exterior"] = parse_linear_ring(ext)
@@ -72,19 +96,23 @@ def parse_polygon(el: ET.Element) -> dict:
 
 
 def collect_polygons(el: ET.Element) -> list[dict]:
-    """Recursively find all gml:Polygon elements under el."""
+    """Recursively find all gml:Polygon elements under el (GML 3.1 and 3.2)."""
     polys = []
-    for poly_el in el.iter("{http://www.opengis.net/gml}Polygon"):
-        polys.append(parse_polygon(poly_el))
+    for uri in ("http://www.opengis.net/gml", "http://www.opengis.net/gml/3.2"):
+        for poly_el in el.iter(f"{{{uri}}}Polygon"):
+            polys.append(parse_polygon(poly_el))
     return polys
 
 
 def parse_envelope(el: ET.Element) -> dict | None:
+    # Try GML 3.1 first, then GML 3.2
     env = el.find("gml:boundedBy/gml:Envelope", NS)
     if env is None:
+        env = el.find("gml32:boundedBy/gml32:Envelope", NS)
+    if env is None:
         return None
-    lo = env.find("gml:lowerCorner", NS)
-    hi = env.find("gml:upperCorner", NS)
+    lo = env.find("gml:lowerCorner", NS) or env.find("gml32:lowerCorner", NS)
+    hi = env.find("gml:upperCorner", NS) or env.find("gml32:upperCorner", NS)
     return {
         "srs": env.get("srsName"),
         "lower": lo.text.strip() if lo is not None and lo.text else None,
@@ -93,10 +121,10 @@ def parse_envelope(el: ET.Element) -> dict | None:
 
 
 def parse_opening(el: ET.Element) -> dict:
-    tag = short_tag(el.tag)  # e.g. bldg:Window / bldg:Door
+    tag = short_tag(el.tag)  # e.g. bldg:Window / bldg:Door / con:Window / con:Door
     opening = {
         "type": tag,
-        "id": el.get("{http://www.opengis.net/gml}id"),
+        "id": _gml_id(el),
         "name": None,
         "polygons": [],
     }
@@ -111,27 +139,31 @@ def parse_surface(el: ET.Element) -> dict:
     tag = short_tag(el.tag)
     surface = {
         "type": tag,
-        "id": el.get("{http://www.opengis.net/gml}id"),
+        "id": _gml_id(el),
         "name": None,
         "bbox": parse_envelope(el),
         "polygons": [],
         "openings": [],
     }
-    name_el = el.find("gml:name", NS)
+    name_el = el.find("gml:name", NS) or el.find("gml32:name", NS)
     if name_el is not None:
         surface["name"] = elem_text(name_el)
 
-    # collect polygons from the lod geometry (exclude opening sub-elements)
-    for lod_tag in ["bldg:lod2MultiSurface", "bldg:lod3MultiSurface", "bldg:lod4MultiSurface"]:
+    # collect polygons from the lod geometry (CityGML 2.0 and 3.0 lod tags)
+    for lod_tag in [
+        "bldg:lod2MultiSurface", "bldg:lod3MultiSurface", "bldg:lod4MultiSurface",
+        "con:lod2MultiSurface", "con:lod3MultiSurface",
+    ]:
         lod_el = el.find(lod_tag, NS)
         if lod_el is not None:
             surface["polygons"] = collect_polygons(lod_el)
             break
 
-    # openings (Window / Door)
-    for op_prop in el.findall("bldg:opening", NS):
-        for child in op_prop:
-            surface["openings"].append(parse_opening(child))
+    # openings: CityGML 2.0 (bldg:opening) and 3.0 (con:opening)
+    for op_prop_tag in ("bldg:opening", "con:opening"):
+        for op_prop in el.findall(op_prop_tag, NS):
+            for child in op_prop:
+                surface["openings"].append(parse_opening(child))
 
     return surface
 
@@ -200,7 +232,7 @@ def _parse_solid_material(el: ET.Element | None) -> dict | None:
     if el is None:
         return None
     return {
-        "id": el.get("{http://www.opengis.net/gml}id"),
+        "id": _gml_id(el),
         "name": text_of(el, "gml:name"),
         "conductivity": text_of(el, "energy:conductivity"),
         "density": text_of(el, "energy:density"),
@@ -208,15 +240,64 @@ def _parse_solid_material(el: ET.Element | None) -> dict | None:
     }
 
 
+def _parse_solid_material_nrg3(el: ET.Element | None) -> dict | None:
+    if el is None:
+        return None
+    return {
+        "id": _gml_id(el),
+        "name": text_of(el, "gml:name"),
+        "conductivity": text_of(el, "nrg3:thermalConductivity"),
+        "density": text_of(el, "nrg3:density"),
+        "specificHeat": text_of(el, "nrg3:specificHeatCapacity"),
+    }
+
+
+def _parse_gas_nrg3(el: ET.Element | None) -> dict | None:
+    if el is None:
+        return None
+    return {
+        "id": _gml_id(el),
+        "name": text_of(el, "gml:name"),
+        "isVentilated": text_of(el, "nrg3:isVentilated"),
+        "rValue": text_of(el, "nrg3:rValue"),
+    }
+
+
 def parse_construction(el: ET.Element) -> dict:
     c = {
-        "id": el.get("{http://www.opengis.net/gml}id"),
+        "id": _gml_id(el),
         "name": text_of(el, "gml:name"),
         "uValue": text_of(el, "energy:uValue"),
         "layers": [],
     }
     for layer_el in el.findall("energy:layer/energy:Layer/energy:layerComponent/energy:LayerComponent", NS):
         c["layers"].append(parse_layer_component(layer_el))
+    return c
+
+
+def _parse_layer_nrg3(el: ET.Element) -> dict:
+    mat_el = el.find("nrg3:material", NS)
+    material: str | None = None
+    if mat_el is not None:
+        href = mat_el.get("{http://www.w3.org/1999/xlink}href")
+        if href:
+            # ADE 3.0 material hrefs do NOT have a leading '#'
+            material = href
+    return {
+        "thickness": text_of(el, "nrg3:thickness"),
+        "material": material,
+    }
+
+
+def parse_layered_construction(el: ET.Element) -> dict:
+    c = {
+        "id": _gml_id(el),
+        "name": text_of(el, "gml:name"),
+        "uValue": text_of(el, "nrg3:uValue"),
+        "layers": [],
+    }
+    for layer_el in el.findall("nrg3:layer/nrg3:Layer", NS):
+        c["layers"].append(_parse_layer_nrg3(layer_el))
     return c
 
 
@@ -255,7 +336,7 @@ def _parse_construction_ref_or_inline(el: ET.Element) -> str | dict | None:
 
 def parse_thermal_boundary(el: ET.Element) -> dict:
     tb = {
-        "id": el.get("{http://www.opengis.net/gml}id"),
+        "id": _gml_id(el),
         "type": text_of(el, "energy:thermalBoundaryType"),
         "azimuth": text_of(el, "energy:azimuth"),
         "inclination": text_of(el, "energy:inclination"),
@@ -269,6 +350,34 @@ def parse_thermal_boundary(el: ET.Element) -> dict:
     sg = el.find("energy:surfaceGeometry", NS)
     if sg is not None:
         tb["surfaceGeometry"] = {"href": sg.get("{http://www.w3.org/1999/xlink}href")}
+    return tb
+
+
+def parse_thermal_boundary_nrg3(surf_el: ET.Element) -> dict:
+    """Parse a bldg/con surface element acting as a thermal boundary in ADE 3.0.
+
+    In ADE 3.0, nrg3:thermalBoundary wraps a regular building surface element
+    (e.g. bldg:WallSurface) which carries nrg3:bdgBdrySurf* properties.
+    """
+    tag = short_tag(surf_el.tag)
+    tb = {
+        "id": _gml_id(surf_el),
+        "type": tag,
+        "name": None,
+        "azimuth": text_of(surf_el, "nrg3:bdgBdrySurfAzimuth"),
+        "inclination": text_of(surf_el, "nrg3:bdgBdrySurfInclination"),
+        "area": text_of(surf_el, "nrg3:bdgBdrySurfTotalSurfaceArea"),
+        "construction": None,
+        "thermalOpenings": [],
+        "surfaceGeometry": None,
+    }
+    name_el = surf_el.find("gml:name", NS) or surf_el.find("gml32:name", NS)
+    if name_el is not None:
+        tb["name"] = elem_text(name_el)
+    c_ref = surf_el.find("nrg3:layeredConstruction", NS)
+    if c_ref is not None:
+        href = c_ref.get("{http://www.w3.org/1999/xlink}href")
+        tb["construction"] = href  # '#id_xxx' format
     return tb
 
 
@@ -308,7 +417,7 @@ def parse_schedule(el: ET.Element) -> dict | None:
 
 def parse_usage_zone(el: ET.Element) -> dict:
     uz = {
-        "id": el.get("{http://www.opengis.net/gml}id"),
+        "id": _gml_id(el),
         "type": text_of(el, "energy:usageZoneType"),
         "isHeated": text_of(el, "energy:isHeated"),
         "isCooled": text_of(el, "energy:isCooled"),
@@ -336,16 +445,50 @@ def parse_usage_zone(el: ET.Element) -> dict:
                 "radiantFraction": text_of(hd_el, "energy:radiantFraction"),
             }
         uz["electricalAppliances"].append({
-            "id": ea_el.get("{http://www.opengis.net/gml}id"),
+            "id": _gml_id(ea_el),
             "heatDissipation": hd,
             "operationSchedule": parse_schedule(ea_el.find("energy:operationSchedule", NS)),
         })
     return uz
 
 
+def parse_usage_zone_nrg3(el: ET.Element) -> dict:
+    uz = {
+        "id": _gml_id(el),
+        "type": text_of(el, "nrg3:usageZoneClass") or text_of(el, "nrg3:usageZoneType"),
+        "isHeated": text_of(el, "nrg3:isHeated"),
+        "isCooled": text_of(el, "nrg3:isCooled"),
+        "isVentilated": None,
+        "isMechanicallyVentilated": None,
+        "floorAreas": [],
+        "occupancySchedules": [],
+        "heatingSchedule": None,
+        "coolingSchedule": None,
+        "ventilationSchedule": None,
+        "electricalAppliances": [],
+    }
+    for area_el in el.findall("nrg3:area/nrg3:QualifiedArea", NS):
+        uz["floorAreas"].append({
+            "type": text_of(area_el, "nrg3:type"),
+            "value": text_of(area_el, "nrg3:value"),
+        })
+    # Schedule references (xlink href to schedule objects)
+    for sched_tag, key in [
+        ("nrg3:heatingSchedule", "heatingSchedule"),
+        ("nrg3:coolingSchedule", "coolingSchedule"),
+        ("nrg3:ventilationSchedule", "ventilationSchedule"),
+    ]:
+        s_el = el.find(sched_tag, NS)
+        if s_el is not None:
+            href = s_el.get("{http://www.w3.org/1999/xlink}href")
+            if href:
+                uz[key] = {"scheduleType": "xlink:ref", "name": href.lstrip("#")}
+    return uz
+
+
 def parse_thermal_zone(el: ET.Element) -> dict:
     tz = {
-        "id": el.get("{http://www.opengis.net/gml}id"),
+        "id": _gml_id(el),
         "isHeated": text_of(el, "energy:isHeated"),
         "isCooled": text_of(el, "energy:isCooled"),
         "volumes": [],
@@ -375,9 +518,41 @@ def parse_thermal_zone(el: ET.Element) -> dict:
     return tz
 
 
+def parse_thermal_zone_nrg3(el: ET.Element) -> dict:
+    tz = {
+        "id": _gml_id(el),
+        "isHeated": text_of(el, "nrg3:isHeated"),
+        "isCooled": text_of(el, "nrg3:isCooled"),
+        "volumes": [],
+        "floorAreas": [],
+        "thermalBoundaries": [],
+        "usageZones": [],
+        "usageZoneRefs": [],
+    }
+    for vol_el in el.findall("nrg3:volume/nrg3:QualifiedVolume", NS):
+        tz["volumes"].append({
+            "type": text_of(vol_el, "nrg3:type"),
+            "value": text_of(vol_el, "nrg3:value"),
+        })
+    for area_el in el.findall("nrg3:area/nrg3:QualifiedArea", NS):
+        tz["floorAreas"].append({
+            "type": text_of(area_el, "nrg3:type"),
+            "value": text_of(area_el, "nrg3:value"),
+        })
+    # In ADE 3.0, thermalBoundary wraps a building surface element
+    for tb_prop in el.findall("nrg3:thermalBoundary", NS):
+        for surf_el in tb_prop:
+            tz["thermalBoundaries"].append(parse_thermal_boundary_nrg3(surf_el))
+    for uz_el in el.findall("nrg3:usageZone", NS):
+        href = uz_el.get("{http://www.w3.org/1999/xlink}href")
+        if href:
+            tz["usageZoneRefs"].append(href.lstrip("#"))
+    return tz
+
+
 def parse_building(el: ET.Element) -> dict:
     building = {
-        "id": el.get("{http://www.opengis.net/gml}id"),
+        "id": _gml_id(el),
         "name": None,
         "description": None,
         "bbox": parse_envelope(el),
@@ -392,62 +567,84 @@ def parse_building(el: ET.Element) -> dict:
         },
     }
 
-    name_el = el.find("gml:name", NS)
+    name_el = el.find("gml:name", NS) or el.find("gml32:name", NS)
     if name_el is not None:
         building["name"] = elem_text(name_el)
 
-    desc_el = el.find("gml:description", NS)
+    desc_el = el.find("gml:description", NS) or el.find("gml32:description", NS)
     if desc_el is not None:
         building["description"] = elem_text(desc_el)
 
-    # Simple scalar attributes
-    for attr, path in [
-        ("function",             "bldg:function"),
-        ("yearOfConstruction",   "bldg:yearOfConstruction"),
-        ("roofType",             "bldg:roofType"),
-        ("measuredHeight",       "bldg:measuredHeight"),
-        ("storeysAboveGround",   "bldg:storeysAboveGround"),
-        ("storeysBelowGround",   "bldg:storeysBelowGround"),
-        ("creationDate",         "core:creationDate"),
-        ("relativeToTerrain",    "core:relativeToTerrain"),
-        ("class",                "bldg:class"),
-        ("usage",                "bldg:usage"),
+    # Simple scalar attributes (CityGML 2.0 and 3.0 paths)
+    for attr, paths in [
+        ("function",             ["bldg:function",           "bldg3:function"]),
+        ("yearOfConstruction",   ["bldg:yearOfConstruction", "bldg3:yearOfConstruction"]),
+        ("roofType",             ["bldg:roofType",           "bldg3:roofType"]),
+        ("measuredHeight",       ["bldg:measuredHeight",     "bldg3:measuredHeight"]),
+        ("storeysAboveGround",   ["bldg:storeysAboveGround", "bldg3:storeysAboveGround"]),
+        ("storeysBelowGround",   ["bldg:storeysBelowGround", "bldg3:storeysBelowGround"]),
+        ("creationDate",         ["core:creationDate",       "core3:creationDate"]),
+        ("relativeToTerrain",    ["core:relativeToTerrain",  "core3:relativeToTerrain"]),
+        ("class",                ["bldg:class",              "bldg3:class"]),
+        ("usage",                ["bldg:usage",              "bldg3:usage"]),
     ]:
-        found = el.find(path, NS)
-        if found is not None and found.text:
-            building["attributes"][attr] = found.text.strip()
+        for path in paths:
+            found = el.find(path, NS)
+            if found is not None and found.text:
+                building["attributes"][attr] = found.text.strip()
+                break
 
-    # Address
+    # Address (CityGML 2.0)
     addr_el = el.find("bldg:address/core:Address", NS)
     if addr_el is not None:
         building["address"] = parse_address(addr_el)
 
-    # Boundary surfaces
-    SURFACE_TYPES = [
+    # Boundary surfaces — CityGML 2.0: bldg:boundedBy
+    SURFACE_TYPES_V2 = [
         "bldg:WallSurface", "bldg:RoofSurface", "bldg:GroundSurface",
         "bldg:ClosureSurface", "bldg:InteriorWallSurface",
         "bldg:CeilingSurface", "bldg:FloorSurface",
         "bldg:OuterCeilingSurface", "bldg:OuterFloorSurface",
     ]
     for bounded_by in el.findall("bldg:boundedBy", NS):
-        for surf_type in SURFACE_TYPES:
+        for surf_type in SURFACE_TYPES_V2:
             surf_el = bounded_by.find(surf_type, NS)
             if surf_el is not None:
                 building["surfaces"].append(parse_surface(surf_el))
 
-    # Energy ADE
+    # Boundary surfaces — CityGML 3.0: bldg3:boundary / con:* surface types
+    SURFACE_TYPES_V3 = [
+        "con:WallSurface", "con:RoofSurface", "con:GroundSurface",
+        "con:ClosureSurface", "con:InteriorWallSurface",
+        "con:CeilingSurface", "con:FloorSurface",
+        "con:OuterCeilingSurface", "con:OuterFloorSurface",
+    ]
+    for boundary in el.findall("bldg3:boundary", NS):
+        for surf_type in SURFACE_TYPES_V3:
+            surf_el = boundary.find(surf_type, NS)
+            if surf_el is not None:
+                building["surfaces"].append(parse_surface(surf_el))
+
+    # Energy ADE 2.0
     for tz_el in el.findall("energy:thermalZone/energy:ThermalZone", NS):
         building["energy"]["thermalZones"].append(parse_thermal_zone(tz_el))
-
-    # Building-level UsageZones (defined here, referenced by ThermalZone via xlink)
     for uz_el in el.findall("energy:usageZone/energy:UsageZone", NS):
         building["energy"]["usageZones"].append(parse_usage_zone(uz_el))
-
-    # Building-level floor areas
     for fa_el in el.findall("energy:floorArea/energy:FloorArea", NS):
         building["energy"]["floorAreas"].append({
             "type": text_of(fa_el, "energy:type"),
             "value": text_of(fa_el, "energy:value"),
+        })
+
+    # Energy ADE 3.0
+    for tz_el in el.findall("nrg3:thermalZone/nrg3:ThermalZone", NS):
+        building["energy"]["thermalZones"].append(parse_thermal_zone_nrg3(tz_el))
+    for uz_el in el.findall("nrg3:usageZone/nrg3:UsageZone", NS):
+        building["energy"]["usageZones"].append(parse_usage_zone_nrg3(uz_el))
+    for area_el in el.findall("nrg3:bdgFloorArea/nrg3:QualifiedArea", NS):
+        building["energy"]["floorAreas"].append({
+            "type": text_of(area_el, "nrg3:type"),
+            "value": text_of(area_el, "nrg3:value"),
         })
 
     return building
@@ -459,20 +656,35 @@ def parse_file(path: str) -> dict:
 
     model = {
         "file": str(path),
-        "id": root.get("{http://www.opengis.net/gml}id"),
+        "id": _gml_id(root),
         "bbox": parse_envelope(root),
         "buildings": [],
     }
 
+    # CityGML 2.0: core:cityObjectMember
     for member in root.findall("core:cityObjectMember", NS):
         bldg_el = member.find("bldg:Building", NS)
         if bldg_el is not None:
             model["buildings"].append(parse_building(bldg_el))
 
-    # Also check gml:featureMember (some files use this)
+    # CityGML 3.0: core3:cityObjectMember
+    for member in root.findall("core3:cityObjectMember", NS):
+        for bldg_tag in ("bldg3:Building", "bldg:Building"):
+            bldg_el = member.find(bldg_tag, NS)
+            if bldg_el is not None:
+                model["buildings"].append(parse_building(bldg_el))
+                break
+
+    # GML featureMember (used by some files for both global objects and buildings)
     for member in root.findall("gml:featureMember", NS):
         bldg_el = member.find("bldg:Building", NS)
         if bldg_el is not None:
             model["buildings"].append(parse_building(bldg_el))
+    for member in root.findall("gml32:featureMember", NS):
+        for bldg_tag in ("bldg3:Building", "bldg:Building"):
+            bldg_el = member.find(bldg_tag, NS)
+            if bldg_el is not None:
+                model["buildings"].append(parse_building(bldg_el))
+                break
 
     return model

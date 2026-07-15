@@ -14,7 +14,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from api.graph import TYPE_STYLE, build_graph
-from api.parser import parse_file
+from api.parsers import parse_file
+from api.parsers import citygml_20, citygml_30
 from api.dialect import detect_dialect
 
 logger = logging.getLogger("citygml_api")
@@ -24,8 +25,8 @@ logging.basicConfig(
 )
 
 MAX_UPLOAD_MB = int(os.getenv("CITYGML_MAX_UPLOAD_MB", "50"))
-SUPPORTED_CITYGML = {"2.0"}
-SUPPORTED_ENERGY_ADE = {None, "2.0"}
+SUPPORTED_CITYGML = {"2.0", "3.0"}
+SUPPORTED_ENERGY_ADE = {None, "2.0", "3.0"}
 
 app = FastAPI(title="CityGML Browser API", version="1.0.0")
 
@@ -107,7 +108,7 @@ def _validate_support(dialect_citygml: str | None, dialect_energy: str | None, r
             status_code=400,
             detail=_error_payload(
                 "unsupported_citygml_version",
-                f"Detected CityGML {dialect_citygml or 'unknown'}; only CityGML 2.0 is supported right now.",
+                f"Detected CityGML {dialect_citygml or 'unknown'}; supported versions: 2.0, 3.0.",
                 request_id,
             ),
         )
@@ -117,7 +118,7 @@ def _validate_support(dialect_citygml: str | None, dialect_energy: str | None, r
             status_code=400,
             detail=_error_payload(
                 "unsupported_energy_ade_version",
-                f"Detected Energy ADE {dialect_energy}; only Energy ADE 2.0 is supported right now.",
+                f"Detected Energy ADE {dialect_energy}; supported versions: 2.0, 3.0.",
                 request_id,
             ),
         )
@@ -227,8 +228,29 @@ async def parse_uploaded_file(request: Request, file: UploadFile = File(...)):
 
 @app.post("/api/v1/graph-file")
 async def graph_from_file(request: Request, file: UploadFile = File(...)):
+    """Auto-detect CityGML version and build the graph."""
+    return await _handle_graph(request, file, force_citygml=None)
+
+
+@app.post("/api/v1/graph/citygml20")
+async def graph_citygml20(request: Request, file: UploadFile = File(...)):
+    """Force CityGML 2.0 parser regardless of detected version."""
+    return await _handle_graph(request, file, force_citygml="2.0")
+
+
+@app.post("/api/v1/graph/citygml30")
+async def graph_citygml30(request: Request, file: UploadFile = File(...)):
+    """Force CityGML 3.0 parser regardless of detected version."""
+    return await _handle_graph(request, file, force_citygml="3.0")
+
+
+async def _handle_graph(
+    request: Request,
+    file: UploadFile,
+    force_citygml: str | None,
+) -> JSONResponse:
     request_id = _request_id_from_headers(request)
-    started = time.perf_counter()
+    started    = time.perf_counter()
     tmp_path: str | None = None
 
     try:
@@ -236,7 +258,7 @@ async def graph_from_file(request: Request, file: UploadFile = File(...)):
         dialect = detect_dialect(tmp_path)
         _validate_support(dialect.citygml, dialect.energy_ade, request_id)
 
-        model = parse_file(tmp_path)
+        model = parse_file(tmp_path, force_citygml=force_citygml)
         graph = build_graph(model, tmp_path)
 
         elapsed_ms = round((time.perf_counter() - started) * 1000, 2)
@@ -256,17 +278,17 @@ async def graph_from_file(request: Request, file: UploadFile = File(...)):
             data={
                 "file": filename,
                 "dialect": {
-                    "citygml": dialect.citygml,
+                    "citygml":   dialect.citygml,
                     "energyAde": dialect.energy_ade,
                 },
-                "graph": graph,
-                "typeColors": _type_colors(),
+                "graph":       graph,
+                "typeColors":  _type_colors(),
             },
             meta={
-                "apiVersion": "v1",
+                "apiVersion":   "v1",
                 "processingMs": elapsed_ms,
-                "nodeCount": len(graph.get("nodes", [])),
-                "edgeCount": len(graph.get("edges", [])),
+                "nodeCount":    len(graph.get("nodes", [])),
+                "edgeCount":    len(graph.get("edges", [])),
             },
         )
     except ET.ParseError:

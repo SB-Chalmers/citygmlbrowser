@@ -6,6 +6,7 @@ import xml.etree.ElementTree as ET
 CITYGML_2_URI = "http://www.opengis.net/citygml/2.0"
 CITYGML_3_URI = "http://www.opengis.net/citygml/3.0"
 ENERGY_ADE_2_URI = "http://www.sig3d.org/citygml/2.0/energy/2.0"
+ENERGY_ADE_3_URI = "http://www.citygml.org/ade/energy/3.0"
 
 
 @dataclass(frozen=True)
@@ -18,6 +19,8 @@ class DialectInfo:
 def _detect_energy_ade_version(uri: str) -> str | None:
     if uri == ENERGY_ADE_2_URI:
         return "2.0"
+    if uri == ENERGY_ADE_3_URI:
+        return "3.0"
 
     lowered = uri.lower()
     if "energy" not in lowered:

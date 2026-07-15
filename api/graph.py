@@ -1,7 +1,7 @@
 """Graph builder for the CityGML Browser API.
 
 Transforms the parsed CityGML model dict into vis-network compatible
-{nodes, edges} data. Self-contained: depends only on api.parser.
+{nodes, edges} data.
 """
 
 from __future__ import annotations
@@ -9,35 +9,37 @@ from __future__ import annotations
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-from api.parser import (
-    NS,
-    _parse_solid_material,
-    parse_construction,
-    text_of,
-)
+from api.parsers.base import NS, _gml_id, text_of
+from api.parsers import energy_ade_20, energy_ade_30
+from api.dialect import detect_dialect
 
 # ── Node styling ──────────────────────────────────────────────────────────────
 
 TYPE_STYLE = {
-    "CityModel":            {"bg": "#2C3E50", "border": "#1a252f", "font": "#ffffff", "size": 38, "shape": "diamond"},
-    "Building":             {"bg": "#E8720C", "border": "#b85a08", "font": "#ffffff", "size": 44, "shape": "dot"},
-    "WallSurface":          {"bg": "#4C8EDA", "border": "#2c6bb5", "font": "#ffffff", "size": 32, "shape": "dot"},
-    "RoofSurface":          {"bg": "#D0021B", "border": "#a80116", "font": "#ffffff", "size": 32, "shape": "dot"},
-    "GroundSurface":        {"bg": "#5CB85C", "border": "#3d9b3d", "font": "#ffffff", "size": 32, "shape": "dot"},
-    "ClosureSurface":       {"bg": "#7F8C8D", "border": "#5d6566", "font": "#ffffff", "size": 26, "shape": "dot"},
-    "InteriorWallSurface":  {"bg": "#F39C12", "border": "#c47d0e", "font": "#ffffff", "size": 28, "shape": "dot"},
-    "CeilingSurface":       {"bg": "#16A085", "border": "#0e6b5a", "font": "#ffffff", "size": 28, "shape": "dot"},
-    "FloorSurface":         {"bg": "#27AE60", "border": "#1a7a43", "font": "#ffffff", "size": 28, "shape": "dot"},
-    "Window":               {"bg": "#AED6F1", "border": "#5dade2", "font": "#ffffff", "size": 22, "shape": "dot"},
-    "Door":                 {"bg": "#A9DFBF", "border": "#52be80", "font": "#ffffff", "size": 22, "shape": "dot"},
-    "ThermalZone":          {"bg": "#9B59B6", "border": "#7d3c98", "font": "#ffffff", "size": 36, "shape": "dot"},
-    "ThermalBoundary":      {"bg": "#C39BD3", "border": "#9b59b6", "font": "#ffffff", "size": 26, "shape": "dot"},
-    "ThermalOpening":       {"bg": "#D7BDE2", "border": "#c39bd3", "font": "#ffffff", "size": 20, "shape": "dot"},
-    "Construction":         {"bg": "#F1C40F", "border": "#c29d0b", "font": "#ffffff", "size": 28, "shape": "dot"},
-    "SolidMaterial":        {"bg": "#95A5A6", "border": "#717d7e", "font": "#ffffff", "size": 20, "shape": "dot"},
-    "Gas":                  {"bg": "#BDC3C7", "border": "#95a5a6", "font": "#ffffff", "size": 20, "shape": "dot"},
-    "UsageZone":            {"bg": "#1ABC9C", "border": "#148f77", "font": "#ffffff", "size": 32, "shape": "dot"},
-    "ElectricalAppliances": {"bg": "#E74C3C", "border": "#c0392b", "font": "#ffffff", "size": 24, "shape": "dot"},
+    "CityModel":                    {"bg": "#2C3E50", "border": "#1a252f", "font": "#ffffff", "size": 38, "shape": "diamond"},
+    "Building":                     {"bg": "#E8720C", "border": "#b85a08", "font": "#ffffff", "size": 44, "shape": "dot"},
+    # CityGML 2.0 boundary surfaces
+    "WallSurface":                  {"bg": "#4C8EDA", "border": "#2c6bb5", "font": "#ffffff", "size": 32, "shape": "dot"},
+    "RoofSurface":                  {"bg": "#D0021B", "border": "#a80116", "font": "#ffffff", "size": 32, "shape": "dot"},
+    "GroundSurface":                {"bg": "#5CB85C", "border": "#3d9b3d", "font": "#ffffff", "size": 32, "shape": "dot"},
+    "ClosureSurface":               {"bg": "#7F8C8D", "border": "#5d6566", "font": "#ffffff", "size": 26, "shape": "dot"},
+    "InteriorWallSurface":          {"bg": "#F39C12", "border": "#c47d0e", "font": "#ffffff", "size": 28, "shape": "dot"},
+    "CeilingSurface":               {"bg": "#16A085", "border": "#0e6b5a", "font": "#ffffff", "size": 28, "shape": "dot"},
+    "FloorSurface":                 {"bg": "#27AE60", "border": "#1a7a43", "font": "#ffffff", "size": 28, "shape": "dot"},
+    "Window":                       {"bg": "#AED6F1", "border": "#5dade2", "font": "#ffffff", "size": 22, "shape": "dot"},
+    "Door":                         {"bg": "#A9DFBF", "border": "#52be80", "font": "#ffffff", "size": 22, "shape": "dot"},
+    # CityGML 3.0 constructive elements
+    "Storey":                       {"bg": "#5D6D7E", "border": "#2E4053", "font": "#ffffff", "size": 34, "shape": "dot"},
+    "BuildingConstructiveElement":  {"bg": "#4C8EDA", "border": "#2c6bb5", "font": "#ffffff", "size": 28, "shape": "dot"},
+    # Energy ADE
+    "ThermalZone":                  {"bg": "#9B59B6", "border": "#7d3c98", "font": "#ffffff", "size": 36, "shape": "dot"},
+    "ThermalBoundary":              {"bg": "#C39BD3", "border": "#9b59b6", "font": "#ffffff", "size": 26, "shape": "dot"},
+    "ThermalOpening":               {"bg": "#D7BDE2", "border": "#c39bd3", "font": "#ffffff", "size": 20, "shape": "dot"},
+    "Construction":                 {"bg": "#F1C40F", "border": "#c29d0b", "font": "#ffffff", "size": 28, "shape": "dot"},
+    "SolidMaterial":                {"bg": "#95A5A6", "border": "#717d7e", "font": "#ffffff", "size": 20, "shape": "dot"},
+    "Gas":                          {"bg": "#BDC3C7", "border": "#95a5a6", "font": "#ffffff", "size": 20, "shape": "dot"},
+    "UsageZone":                    {"bg": "#1ABC9C", "border": "#148f77", "font": "#ffffff", "size": 32, "shape": "dot"},
+    "ElectricalAppliances":         {"bg": "#E74C3C", "border": "#c0392b", "font": "#ffffff", "size": 24, "shape": "dot"},
 }
 DEFAULT_STYLE = {"bg": "#BDC3C7", "border": "#95a5a6", "font": "#ffffff", "size": 22, "shape": "dot"}
 
@@ -48,34 +50,18 @@ def _local(tag):
     return tag.split("}")[1] if "}" in tag else tag.split(":")[-1]
 
 
-def collect_global_energy(gml_file):
-    """Parse top-level energy:Construction / SolidMaterial / Gas from gml:featureMember."""
-    root = ET.parse(gml_file).getroot()
-    result = {}
-    for member in root.findall("gml:featureMember", NS):
-        for child in member:
-            gml_id = child.get("{http://www.opengis.net/gml}id")
-            if not gml_id:
-                continue
-            local = _local(child.tag)
-            if local == "Construction":
-                obj = parse_construction(child)
-                obj["_class"] = "Construction"
-                result[gml_id] = obj
-            elif local == "SolidMaterial":
-                obj = _parse_solid_material(child) or {}
-                obj["_class"] = "SolidMaterial"
-                result[gml_id] = obj
-            elif local == "Gas":
-                result[gml_id] = {
-                    "_class": "Gas",
-                    "id": gml_id,
-                    "name": text_of(child, "gml:name"),
-                    "description": text_of(child, "gml:description"),
-                    "isVentilated": text_of(child, "energy:isVentilated"),
-                    "rValue": text_of(child, "energy:rValue"),
-                }
-    return result
+def collect_global_energy(gml_file: str) -> dict:
+    """Return global energy objects keyed by gml:id.
+
+    Delegates to the version-specific ADE parser based on detected dialect.
+    """
+    root    = ET.parse(gml_file).getroot()
+    dialect = detect_dialect(gml_file)
+    if dialect.energy_ade == "3.0":
+        return energy_ade_30.collect_global_objects(root)
+    if dialect.energy_ade == "2.0":
+        return energy_ade_20.collect_global_objects(root)
+    return {}
 
 
 # ── Graph builder ─────────────────────────────────────────────────────────────
@@ -234,7 +220,7 @@ def build_graph(model, gml_file):
         b_id = add_node("Building", b["name"] or "Building", b_details)
         add_edge(cm_id, b_id, "contains")
 
-        # ── Boundary surfaces ──
+        # ── CityGML 2.0: boundary surfaces ──
         for s in b["surfaces"]:
             surf_type = s["type"].split(":")[-1]
             s_bbox = s.get("bbox") or {}
@@ -257,6 +243,39 @@ def build_graph(model, gml_file):
                     "polygons": len(o["polygons"]),
                 })
                 add_edge(s_id, o_id, "opening")
+
+        # ── CityGML 3.0: storeys + constructive elements ──
+        def _add_bce(bce: dict, parent_id: int) -> None:
+            bce_label = bce.get("name") or bce.get("class") or "Element"
+            bce_id = add_node("BuildingConstructiveElement", bce_label, {
+                "id":                 bce.get("id"),
+                "class":              bce.get("class"),
+                "isStructuralElement": bce.get("isStructuralElement"),
+                "polygons":           len(bce.get("polygons", [])),
+                "openings":           len(bce.get("openings", [])),
+            })
+            add_edge(parent_id, bce_id, "buildingConstructiveElement")
+            for o in bce.get("openings", []):
+                o_type = o["type"].split(":")[-1]
+                o_id = add_node(o_type, o.get("name") or o_type, {
+                    "id":       o.get("id"),
+                    "type":     o_type,
+                    "polygons": len(o.get("polygons", [])),
+                })
+                add_edge(bce_id, o_id, "filling")
+
+        for storey in b.get("storeys", []):
+            st_id = add_node("Storey", storey.get("name") or storey.get("class") or "Storey", {
+                "id":    storey.get("id"),
+                "class": storey.get("class"),
+                "elements": len(storey.get("constructiveElements", [])),
+            })
+            add_edge(b_id, st_id, "buildingSubdivision")
+            for bce in storey.get("constructiveElements", []):
+                _add_bce(bce, st_id)
+
+        for bce in b.get("constructiveElements", []):
+            _add_bce(bce, b_id)
 
         # ── Energy ADE ──
         # Build a map of GML-id → vis-node-id for building-level UsageZones
