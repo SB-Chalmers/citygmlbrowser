@@ -26,8 +26,18 @@ LCA_ADE_URI = "http://www.citygml.org/ade/lca/1.0"
 
 _MATERIAL_LOCALS = frozenset({"SolidMaterial", "Gas"})
 _DEVICE_LOCALS = frozenset({
-    "GenericDevice", "HeatPump", "CombinedHeatPower",
-    "ElectricalAppliances", "LightingFacilities",
+    # Generic
+    "GenericDevice", "GenericElectricalDevice",
+    # Heating / cooling
+    "Boiler", "HeatPump", "CombinedHeatPower", "ChillerUnit", "HeatExchanger",
+    # Solar
+    "PhotovoltaicCollector", "SolarThermalCollector", "GenericSolarCollector",
+    # Other electrical / lighting
+    "LightingDevice", "LightingFacilities", "ElectricalAppliances",
+    # Shading / storage
+    "MovableShadingDevice", "ThermalStorageDevice", "ElectricalStorageDevice",
+    # Ventilation
+    "MechanicalVentilation", "AirDistributionSystem",
 })
 
 
@@ -39,9 +49,12 @@ def _lca_props(el: ET.Element) -> dict:
     """
     props: dict = {}
 
-    env_id = text_of(el, "lca:environmentalId")
-    if env_id:
-        props["lca:environmentalId"] = env_id
+    env_el = el.find("lca:environmentalId", NS)
+    if env_el is not None and env_el.text and env_el.text.strip():
+        props["lca:environmentalId"] = env_el.text.strip()
+        source = env_el.get("source")
+        if source:
+            props["lca:environmentalIdSource"] = source
 
     rsl_el = el.find("lca:referenceServiceLife", NS)
     if rsl_el is not None and rsl_el.text and rsl_el.text.strip():
@@ -89,6 +102,14 @@ def collect_global_objects(root: ET.Element) -> dict:
         if props:
             gml_id = _gml_id(el)
             if gml_id:
+                # Tag devices with their type so the graph builder can render them
+                if local in _DEVICE_LOCALS:
+                    props["_class"] = local
+                    props["name"] = (
+                        text_of(el, "gml:name") or
+                        text_of(el, "gml32:name") or
+                        gml_id
+                    )
                 result[gml_id] = props
     return result
 

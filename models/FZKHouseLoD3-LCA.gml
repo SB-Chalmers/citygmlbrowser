@@ -1633,7 +1633,7 @@
                   <energy:totalValue uom="W/m2">4</energy:totalValue>
                 </energy:HeatExchangeType>
               </energy:heatDissipation>
-            </energy:ElectricalAppliances>
+            <lca:environmentalId>DEV-ELAPP-01</lca:environmentalId><lca:referenceServiceLife uom="a">10</lca:referenceServiceLife></energy:ElectricalAppliances>
           </energy:equippedWith>
         </energy:UsageZone>
       </energy:usageZone>

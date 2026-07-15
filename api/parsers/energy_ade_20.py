@@ -36,19 +36,25 @@ def parse_gas(el: ET.Element) -> dict:
 
 
 def parse_layer_component(el: ET.Element) -> dict:
-    mat_container = el.find("energy:material", NS)
+    """Parse a *energy:Layer* element (thickness lives here, not on LayerComponent)."""
+    # Thickness is a direct child of energy:Layer
+    thickness = text_of(el, "energy:thickness")
+    # Material reference is inside the nested LayerComponent
     material = None
-    if mat_container is not None:
-        href = mat_container.get("{http://www.w3.org/1999/xlink}href")
-        if href:
-            material = href
-        else:
-            for mat_el in mat_container:
-                if "SolidMaterial" in mat_el.tag or "Gas" in mat_el.tag:
-                    material = parse_solid_material(mat_el)
-                    break
+    lc = el.find("energy:layerComponent/energy:LayerComponent", NS)
+    if lc is not None:
+        mat_container = lc.find("energy:material", NS)
+        if mat_container is not None:
+            href = mat_container.get("{http://www.w3.org/1999/xlink}href")
+            if href:
+                material = href
+            else:
+                for mat_el in mat_container:
+                    if "SolidMaterial" in mat_el.tag or "Gas" in mat_el.tag:
+                        material = parse_solid_material(mat_el)
+                        break
     return {
-        "thickness": text_of(el, "energy:thickness"),
+        "thickness": thickness,
         "material":  material,
     }
 
@@ -59,11 +65,8 @@ def parse_construction(el: ET.Element) -> dict:
         "name":   text_of(el, "gml:name"),
         "uValue": text_of(el, "energy:uValue"),
         "layers": [
-            parse_layer_component(lc)
-            for lc in el.findall(
-                "energy:layer/energy:Layer/energy:layerComponent/energy:LayerComponent",
-                NS,
-            )
+            parse_layer_component(layer_el)
+            for layer_el in el.findall("energy:layer/energy:Layer", NS)
         ],
     }
 

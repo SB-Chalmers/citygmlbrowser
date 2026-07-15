@@ -39,7 +39,25 @@ TYPE_STYLE = {
     "SolidMaterial":                {"bg": "#95A5A6", "border": "#717d7e", "font": "#ffffff", "size": 20, "shape": "dot"},
     "Gas":                          {"bg": "#BDC3C7", "border": "#95a5a6", "font": "#ffffff", "size": 20, "shape": "dot"},
     "UsageZone":                    {"bg": "#1ABC9C", "border": "#148f77", "font": "#ffffff", "size": 32, "shape": "dot"},
+    # Energy ADE device types
     "ElectricalAppliances":         {"bg": "#E74C3C", "border": "#c0392b", "font": "#ffffff", "size": 24, "shape": "dot"},
+    "Boiler":                        {"bg": "#E67E22", "border": "#ca6f1e", "font": "#ffffff", "size": 24, "shape": "dot"},
+    "HeatPump":                      {"bg": "#E74C3C", "border": "#cb4335", "font": "#ffffff", "size": 24, "shape": "dot"},
+    "CombinedHeatPower":             {"bg": "#C0392B", "border": "#922b21", "font": "#ffffff", "size": 24, "shape": "dot"},
+    "ChillerUnit":                   {"bg": "#2980B9", "border": "#1f618d", "font": "#ffffff", "size": 24, "shape": "dot"},
+    "HeatExchanger":                 {"bg": "#1ABC9C", "border": "#148f77", "font": "#ffffff", "size": 22, "shape": "dot"},
+    "PhotovoltaicCollector":         {"bg": "#F1C40F", "border": "#b7950b", "font": "#000000", "size": 24, "shape": "dot"},
+    "SolarThermalCollector":         {"bg": "#F39C12", "border": "#b7770d", "font": "#ffffff", "size": 24, "shape": "dot"},
+    "GenericSolarCollector":         {"bg": "#F39C12", "border": "#b7770d", "font": "#ffffff", "size": 22, "shape": "dot"},
+    "LightingDevice":                {"bg": "#F7DC6F", "border": "#d4ac0d", "font": "#000000", "size": 22, "shape": "dot"},
+    "LightingFacilities":            {"bg": "#F7DC6F", "border": "#d4ac0d", "font": "#000000", "size": 22, "shape": "dot"},
+    "GenericElectricalDevice":       {"bg": "#E74C3C", "border": "#c0392b", "font": "#ffffff", "size": 20, "shape": "dot"},
+    "GenericDevice":                 {"bg": "#95A5A6", "border": "#717d7e", "font": "#ffffff", "size": 20, "shape": "dot"},
+    "MovableShadingDevice":          {"bg": "#85929E", "border": "#616a6b", "font": "#ffffff", "size": 22, "shape": "dot"},
+    "ThermalStorageDevice":          {"bg": "#6C3483", "border": "#4a235a", "font": "#ffffff", "size": 24, "shape": "dot"},
+    "ElectricalStorageDevice":       {"bg": "#1A5276", "border": "#154360", "font": "#ffffff", "size": 24, "shape": "dot"},
+    "MechanicalVentilation":         {"bg": "#148F77", "border": "#0e6655", "font": "#ffffff", "size": 24, "shape": "dot"},
+    "AirDistributionSystem":         {"bg": "#76D7C4", "border": "#1abc9c", "font": "#000000", "size": 22, "shape": "dot"},
 }
 DEFAULT_STYLE = {"bg": "#BDC3C7", "border": "#95a5a6", "font": "#ffffff", "size": 22, "shape": "dot"}
 
@@ -413,5 +431,22 @@ def build_graph(model, gml_file):
                         ea_details["operationSchedule"] = ops
                     ea_id = add_node("ElectricalAppliances", "Electrical\nAppliances", ea_details)
                     add_edge(uz_id, ea_id, "equippedWith")
+
+    # ── Global energy devices (Boiler, HeatPump, etc.) ──
+    # Render device objects from global_energy that haven't been drawn yet
+    # (materials/constructions are rendered inline; devices are global-only).
+    from api.parsers.lca_ade import _DEVICE_LOCALS
+    for gml_id, obj in global_energy.items():
+        dev_class = obj.get("_class", "")
+        if dev_class not in _DEVICE_LOCALS:
+            continue
+        if gml_id in created_refs:
+            continue  # already rendered
+        dev_name = obj.get("name") or gml_id
+        dev_details = {k: v for k, v in obj.items()
+                       if k not in ("_class", "name") and v is not None}
+        d_id = add_node(dev_class, dev_name, dev_details)
+        created_refs[gml_id] = d_id
+        add_edge(cm_id, d_id, "hasDevice")
 
     return {"nodes": nodes, "edges": edges}
