@@ -13,8 +13,8 @@ from fastapi import FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from app import TYPE_STYLE, build_graph
-from parse import parse_file
+from api.graph import TYPE_STYLE, build_graph
+from api.parser import parse_file
 from api.dialect import detect_dialect
 
 logger = logging.getLogger("citygml_api")

@@ -21,7 +21,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from parse import parse_file, NS, text_of, parse_construction, _parse_solid_material
+from archive.parse import parse_file, NS, text_of, parse_construction, _parse_solid_material
 
 # ── Node styling ──────────────────────────────────────────────────────────────
 
