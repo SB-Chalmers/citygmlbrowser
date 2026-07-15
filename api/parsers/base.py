@@ -29,7 +29,7 @@ NS: dict[str, str] = {
     # Energy ADE 3.0
     "nrg3":   "http://www.citygml.org/ade/energy/3.0",
     # LCA ADE 1.0
-    "lca":    "http://www.citygml.org/ade/lca/1.0",
+    "lca":    "http://sb.chalmers.se/ade/lca/1.0",
 }
 
 # Reverse map used by short_tag()

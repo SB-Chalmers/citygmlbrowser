@@ -3,15 +3,34 @@
 Usage:
     python scripts/inject_lca.py <input.gml> <output.gml>
 
-Adds, to every energy:SolidMaterial / energy:Gas element with a mapped gml:id:
-    <lca:environmentalId>            Boverket Klimatdatabas ResourceId
+Adds, to every nrg3:SolidMaterial / nrg3:Gas element with a mapped gml:id
+(see MATERIAL_MAP):
+    <lca:environmentalId source="...">   EPD database record ID
     <lca:referenceServiceLife uom="a">   Reference Service Life (years)
 
-Adds, to every bldg:Building element:
-    <lca:referenceStudyPeriod uom="a">   study-period system boundary (years)
+Adds, to every Energy ADE device whose local name is in DEVICE_TYPE_MAP:
+    <lca:environmentalId source="...">   EPD database record ID
+    <lca:referenceServiceLife uom="a">   Reference Service Life (years)
 
-The LCA ADE namespace is http://www.citygml.org/ade/lca/1.0 (prefix "lca").
-Only elements listed in MATERIAL_MAP are touched; unknown materials are skipped.
+Adds, to every nrg3:LayeredConstruction with a mapped gml:id AND zero layers
+(see CONSTRUCTION_MAP) — i.e. whole-unit product assemblies such as window
+glazing units that do not decompose into material layers:
+    <lca:environmentalId source="...">   EPD database record ID
+    <lca:referenceServiceLife uom="a">   Reference Service Life (years)
+Constructions that DO have layers are skipped, because their EPDs live on the
+individual SolidMaterial/Gas layers (avoids double-counting).
+
+Adds, once, at the core:CityModel level, a top-level LCA scenario object:
+    <core:cityObjectMember>
+      <lca:LCAScenario gml:id="lca_scenario_1">
+        <lca:referenceStudyPeriod uom="a">   system-boundary horizon (years)
+      </lca:LCAScenario>
+    </core:cityObjectMember>
+
+The LCA ADE namespace is http://sb.chalmers.se/ade/lca/1.0 (prefix "lca").
+Only elements listed in MATERIAL_MAP / DEVICE_TYPE_MAP are touched; unknown
+materials and devices are skipped.  Constructions, installations and
+resources are recognised by the parser but not written by this script.
 Uses only the Python standard library (xml.etree.ElementTree).
 """
 
@@ -21,7 +40,7 @@ import sys
 import xml.etree.ElementTree as ET
 
 # ── LCA ADE namespace ─────────────────────────────────────────────────────────
-LCA_NS  = "http://www.citygml.org/ade/lca/1.0"
+LCA_NS  = "http://sb.chalmers.se/ade/lca/1.0"
 LCA_PRE = "lca"
 
 # gml:id -> (boverket_resource_id, reference_service_life_years)
@@ -68,15 +87,25 @@ MATERIAL_MAP: dict[str, tuple[str, str]] = {
 
 REFERENCE_STUDY_PERIOD = "50"  # years, applied to every building
 
+# gml:id -> (boverket_resource_id, reference_service_life_years)
+# Whole-unit product constructions (window/door assemblies) that have NO
+# material layers. Only layerless LayeredConstruction elements are injected,
+# so opaque walls (which carry EPDs on their material layers) are untouched.
+CONSTRUCTION_MAP: dict[str, tuple[str, str]] = {
+    # Alderaan glazing construction (glazingRatio 0.95, triple-glazed, no layers)
+    "id_layered_construction_glazing_5": ("6000000104", "50"),
+    #                                     Window, wood, side hung, triple-glazed
+}
+_CONSTRUCTION_LOCALS = {"LayeredConstruction"}
+
 _GML_ID_ATTRS = (
     "{http://www.opengis.net/gml}id",
     "{http://www.opengis.net/gml/3.2}id",
 )
 _MATERIAL_LOCALS = {"SolidMaterial", "Gas"}
-_BUILDING_LOCAL = "Building"
 
 # Device type (XML local name) → (env_id, rsl_years, source)
-# source is "boverket" | "oekobaudat" | "placeholder"
+# source is "boverket" | "oekobaudat"
 # RSL values follow EN 15978 typical service-life assumptions.
 # Ökobaudat UUIDs verified to have A1-A3 Climate Change data (2026-07).
 DEVICE_TYPE_MAP: dict[str, tuple[str, str, str]] = {
@@ -85,40 +114,30 @@ DEVICE_TYPE_MAP: dict[str, tuple[str, str, str]] = {
     #                          Gas-Brennwertgerät 120-400 kW (Standgerät)
     "HeatPump":               ("1cd6b257-a4f8-4509-a83b-492cd34c7d98", "20", "oekobaudat"),
     #                          Strom-Wärmepumpe (Luft-Wasser) 14 kW
-    "CombinedHeatPower":      ("98471e41-8d40-4f09-8b08-af2a8489f6cf", "20", "oekobaudat"),
-    #                          Gas Blockheizkraftwerk 500 kW
-    "ChillerUnit":            ("cc071698-9d73-4315-b470-e13dfcdba10a", "15", "oekobaudat"),
-    #                          Kältemaschine 500 kW
     "LightingDevice":         ("6293ec16-2f99-4620-a032-fd6e57912a6c", "15", "oekobaudat"),
     #                          Rasterleuchte 2×T8-36W (LFL)
     "ThermalStorageDevice":   ("1aa165a1-32ca-461a-a006-3736d3c9c8e2", "20", "oekobaudat"),
     #                          Pufferspeicher (Edelstahl)
     "ElectricalStorageDevice": ("5b430e64-fcd6-42b6-9b2a-18661249a335", "15", "oekobaudat"),
     #                          Lithium Eisenphosphat (LFP) Batterie (1 kWh)
-    "AirDistributionSystem":  ("40edb030-3b81-47f6-a24f-acd8b2be0d20", "25", "oekobaudat"),
-    #                          Lüftungskanal (verzinktes Stahlblech)
 
     # ── Boverket EPD ──────────────────────────────────────────────────────────
-    "PhotovoltaicCollector":  ("6000000203", "30", "boverket"),
-    #                          Photovoltaic cells, mono-Si
+    "PhotovoltaicCollector":       ("6000000203", "30", "boverket"),
+    #                               Photovoltaic cells, mono-Si
+    "PhotovoltaicThermalCollector": ("6000000203", "25", "boverket"),
+    #                               PVT panel — proxy: same PV cell EPD, shorter RSL
+    #                               (no dedicated PVT EPD in Boverket/Ökobaudat 2026-07)
 
     # ── Placeholder (no suitable EPD found in Boverket or Ökobaudat) ─────────
-    "HeatExchanger":          ("DEV-HEX-01",        "20", "placeholder"),
-    # No generic residential heat exchanger EPD in Ökobaudat; closest is
-    # Übergabestation Fernwärme (61aad695) but that is district-heating-specific.
+    # GenericDevice and GenericElectricalDevice have no matching EPD in either
+    # supported database and are therefore not injected.
+    "MovableShadingDevice":   ("650a4800-0bc1-4d1e-b673-85e05cfc2310", "15", "oekobaudat"),
+    #                          Außenliegender Raffstore (exterior roller blind)
+    # ── Solar (generic proxy — no dedicated PVT/generic EPD in supported DBs) ──
     "SolarThermalCollector":  ("413ba0ce-2a78-44e2-89d2-d9adfd4e492c", "25", "oekobaudat"),
     #                          Flat solar collector  (A1-A3=95.6 kgCO₂eq)
     "GenericSolarCollector":  ("413ba0ce-2a78-44e2-89d2-d9adfd4e492c", "25", "oekobaudat"),
     #                          Flat solar collector  (same generic proxy)
-    "LightingFacilities":     ("cbd2e78d-8930-4214-9715-553cee8e376e", "15", "oekobaudat"),
-    #                          RS PRO R-Series (Steinel GmbH) presence sensor light
-    "ElectricalAppliances":   ("DEV-ELAPP-01",      "10", "placeholder"),
-    "GenericElectricalDevice": ("DEV-ELGN-01",      "15", "placeholder"),
-    "GenericDevice":          ("DEV-GN-01",         "15", "placeholder"),
-    "MovableShadingDevice":   ("650a4800-0bc1-4d1e-b673-85e05cfc2310", "15", "oekobaudat"),
-    #                          Außenliegender Raffstore (exterior roller blind)
-    "MechanicalVentilation":  ("8159a95f-3224-4b8a-8eab-1590eeaefe6a", "20", "oekobaudat"),
-    #                          SIEGENIA AEROMAT VT decentralised HRV ventilation unit
 }
 
 # Register the common CityGML / Energy ADE prefixes so ElementTree preserves
@@ -167,6 +186,12 @@ def _lca(name: str) -> str:
     return f"{{{LCA_NS}}}{name}"
 
 
+def _energy_layer_tag(el: ET.Element) -> str:
+    """Return the {ns}layer tag matching the construction element's namespace."""
+    ns = el.tag[1:].split("}")[0] if el.tag.startswith("{") else ""
+    return f"{{{ns}}}layer" if ns else "layer"
+
+
 def inject(root: ET.Element) -> tuple[int, int, int]:
     mats_done = 0
     devs_done = 0
@@ -188,6 +213,23 @@ def inject(root: ET.Element) -> tuple[int, int, int]:
             life.text = rsl
             mats_done += 1
 
+        elif local in _CONSTRUCTION_LOCALS:
+            mapping = CONSTRUCTION_MAP.get(_gml_id(el) or "")
+            if mapping is None:
+                continue
+            # Only inject whole-unit assemblies (no material layers) to avoid
+            # double-counting EPDs already carried by layer materials.
+            if el.find(_energy_layer_tag(el)) is not None:
+                continue
+            resource_id, rsl = mapping
+            env = ET.SubElement(el, _lca("environmentalId"))
+            env.set("source", "boverket")
+            env.text = resource_id
+            life = ET.SubElement(el, _lca("referenceServiceLife"))
+            life.set("uom", "a")
+            life.text = rsl
+            mats_done += 1
+
         elif local in DEVICE_TYPE_MAP:
             resource_id, rsl, src = DEVICE_TYPE_MAP[local]
             env = ET.SubElement(el, _lca("environmentalId"))
@@ -199,10 +241,16 @@ def inject(root: ET.Element) -> tuple[int, int, int]:
             devs_done += 1
 
         elif local == "CityModel":
-            rsp = ET.Element(_lca("referenceStudyPeriod"))
+            # Wrap referenceStudyPeriod in a proper top-level LCAScenario city object
+            # rather than attaching it directly to CityModel (which is invalid per CityGML XSD).
+            core_ns = "http://www.opengis.net/citygml/2.0"
+            gml_ns  = "http://www.opengis.net/gml"
+            member   = ET.SubElement(el, f"{{{core_ns}}}cityObjectMember")
+            scenario = ET.SubElement(member, _lca("LCAScenario"))
+            scenario.set(f"{{{gml_ns}}}id", "lca_scenario_1")
+            rsp = ET.SubElement(scenario, _lca("referenceStudyPeriod"))
             rsp.set("uom", "a")
             rsp.text = REFERENCE_STUDY_PERIOD
-            el.insert(0, rsp)   # first child of CityModel
             bldgs_done += 1     # counter reused for RSP injections
 
     return mats_done, devs_done, bldgs_done

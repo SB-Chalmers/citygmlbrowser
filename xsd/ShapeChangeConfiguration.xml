@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+===========================================================================
+  ShapeChange configuration for CityGML LCA ADE 1.0
+  ShapeChange version: ≥ 2.13  (https://github.com/ShapeChange/ShapeChange)
+
+  Usage:
+    java -jar ShapeChange-<version>.jar -c ShapeChangeConfiguration.xml
+
+  Output:
+    xsd/LCA_ADE_1.0.xsd      — ADE XML Schema
+    xsd/codelists/*.xml       — GML Dictionary files for codelists
+
+  Input:
+    LCA_ADE_1.0.xmi           — XMI 1.0 export from Modelio / Eclipse Papyrus
+                                (UML source: reference/LCA_ADE_1.0.puml)
+
+  IMPORTANT — XMI version:
+    ShapeChange's GML 3.2 / GML-SF rules expect XMI 1.0 / UML 1.4 format.
+    In Modelio: File → Export → XMI → select "XMI 1.1 (UML 2.x compatible)"
+    In Eclipse Papyrus: File → Export → UML → XMI 1.0
+    Do NOT use XMI 2.1+ unless the target rules are adjusted.
+===========================================================================
+-->
+<ShapeChangeConfiguration
+  xmlns="http://www.interactive-instruments.de/ShapeChange/Configuration/1.1"
+  xmlns:sc="http://www.interactive-instruments.de/ShapeChange/Configuration/1.1"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.interactive-instruments.de/ShapeChange/Configuration/1.1
+    https://shapechange.net/resources/schema/ShapeChangeConfiguration.xsd">
+
+  <!-- ================================================================ -->
+  <!-- Input: XMI model                                                  -->
+  <!-- ================================================================ -->
+  <input id="INPUT">
+    <parameter name="inputModelType"     value="XMI10"/>
+    <parameter name="inputFile"          value="./LCA_ADE_1.0.xmi"/>
+    <parameter name="appSchemaName"      value="LCA ADE 1.0"/>
+    <parameter name="appSchemaNamespaceRegex"
+      value="http://sb\.chalmers\.se/ade/lca/1\.0"/>
+    <parameter name="publicOnly"         value="true"/>
+    <parameter name="checkingConstraints" value="false"/>
+
+    <!-- Base schemas: CityGML 2.0 + GML 3.1.1 -->
+    <parameter name="addedSchemas"
+      value="http://schemas.opengis.net/citygml/2.0/cityGMLBase.xsd
+             http://schemas.opengis.net/citygml/building/2.0/building.xsd
+             http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+
+    <!-- Tag recognised by ShapeChange for topLevel annotation -->
+    <stereotypeAliases>
+      <StereotypeAlias wellknown="FeatureType"  alias="featureType"/>
+      <StereotypeAlias wellknown="DataType"     alias="dataType"/>
+      <StereotypeAlias wellknown="CodeList"     alias="codeList"/>
+      <StereotypeAlias wellknown="Enumeration"  alias="enumeration"/>
+      <StereotypeAlias wellknown="Interface"    alias="interface"/>
+    </stereotypeAliases>
+    <taggedValues>
+      <TaggedValue name="topLevel"       rule="all"/>
+      <TaggedValue name="maxOccurs"      rule="all"/>
+      <TaggedValue name="minOccurs"      rule="all"/>
+      <TaggedValue name="relationType"   rule="all"/>
+      <TaggedValue name="sequenceNumber" rule="all"/>
+    </taggedValues>
+  </input>
+
+  <!-- ================================================================ -->
+  <!-- Log                                                               -->
+  <!-- ================================================================ -->
+  <log>
+    <parameter name="reportLevel" value="INFO"/>
+    <parameter name="logFile"     value="./ShapeChange.log"/>
+  </log>
+
+  <!-- ================================================================ -->
+  <!-- Targets                                                           -->
+  <!-- ================================================================ -->
+  <targets>
+
+    <!-- Target 1: GML Application Schema (XSD) -->
+    <Target
+      class="de.interactive_instruments.ShapeChange.Target.XmlSchema.XmlSchema"
+      mode="enabled"
+      inputs="INPUT">
+
+      <targetParameter name="outputDirectory" value="./xsd"/>
+      <targetParameter name="defaultEncodingRule" value="iso19136_2007"/>
+
+      <!-- Map CityGML / GML base types to their published schemas -->
+      <xmlNamespaceInfos>
+        <XmlNamespaceInfo
+          ns="http://www.opengis.net/gml"
+          nsabr="gml"
+          location="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+        <XmlNamespaceInfo
+          ns="http://www.opengis.net/citygml/2.0"
+          nsabr="core"
+          location="http://schemas.opengis.net/citygml/2.0/cityGMLBase.xsd"/>
+        <XmlNamespaceInfo
+          ns="http://www.opengis.net/citygml/building/2.0"
+          nsabr="bldg"
+          location="http://schemas.opengis.net/citygml/building/2.0/building.xsd"/>
+        <XmlNamespaceInfo
+          ns="http://www.citygml.org/ade/energy/3.0"
+          nsabr="nrg3"
+          location="./Energy_ADE_3.0_beta7.xsd"/>
+        <XmlNamespaceInfo
+          ns="http://sb.chalmers.se/ade/lca/1.0"
+          nsabr="lca"
+          location="LCA_ADE_1.0.xsd"/>
+      </xmlNamespaceInfos>
+
+      <!-- Encoding rules: inherit GML 3.1.1 / ISO 19136:2007 -->
+      <rules>
+        <EncodingRule name="iso19136_2007" extends="iso19136_2007_ShapeChange">
+          <rule name="req-all-prop-in-sequence"/>
+          <rule name="rec-xsd-cls-adehook-substitutiongroup"/>
+        </EncodingRule>
+      </rules>
+
+      <!-- Type mappings for external CityGML / GML types -->
+      <mapEntries>
+        <MapEntry type="GM_Point"       rule="all"
+          targetType="gml:PointPropertyType"  param="propertyType"/>
+        <MapEntry type="GM_Surface"     rule="all"
+          targetType="gml:SurfacePropertyType" param="propertyType"/>
+        <MapEntry type="Measure"        rule="all"
+          targetType="gml:MeasureType"         param="simpleType"/>
+        <MapEntry type="Scale"          rule="all"
+          targetType="gml:ScaleType"           param="simpleType"/>
+        <MapEntry type="Area"           rule="all"
+          targetType="gml:AreaType"            param="simpleType"/>
+        <MapEntry type="Length"         rule="all"
+          targetType="gml:LengthType"          param="simpleType"/>
+        <MapEntry type="Angle"          rule="all"
+          targetType="gml:AngleType"           param="simpleType"/>
+        <MapEntry type="CharacterString" rule="all"
+          targetType="xs:string"               param="simpleType"/>
+        <MapEntry type="Boolean"        rule="all"
+          targetType="xs:boolean"              param="simpleType"/>
+        <MapEntry type="Integer"        rule="all"
+          targetType="xs:integer"              param="simpleType"/>
+        <MapEntry type="Real"           rule="all"
+          targetType="xs:double"               param="simpleType"/>
+        <MapEntry type="Date"           rule="all"
+          targetType="xs:date"                 param="simpleType"/>
+        <MapEntry type="Code"           rule="all"
+          targetType="gml:CodeType"            param="simpleType"/>
+        <!-- CityGML base -->
+        <MapEntry type="AbstractCityObject" rule="all"
+          targetType="core:AbstractCityObjectType" param="propertyType"/>
+      </mapEntries>
+    </Target>
+
+    <!-- Target 2: GML Dictionary codelists -->
+    <Target
+      class="de.interactive_instruments.ShapeChange.Target.Codelists.GmlDictionary"
+      mode="enabled"
+      inputs="INPUT">
+      <targetParameter name="outputDirectory" value="./xsd/codelists"/>
+      <targetParameter name="language"        value="en"/>
+      <targetParameter name="defaultCodeSpace"
+        value="http://sb.chalmers.se/ade/lca/1.0/codelists/"/>
+    </Target>
+
+  </targets>
+
+</ShapeChangeConfiguration>

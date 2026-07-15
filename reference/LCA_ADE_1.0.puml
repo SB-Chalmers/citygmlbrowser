@@ -1,0 +1,146 @@
+@startuml LCA_ADE_1.0
+' CityGML LCA ADE 1.0 - Additions to the Energy ADE 3.0 (beta7)
+' Namespace : http://sb.chalmers.se/ade/lca/1.0
+' Organised after Hollberg et al. Table 1: GENERAL / EMBODIED / OPERATIONAL.
+' Depends on: CityGML 2.0 + Energy ADE 3.0 beta7.
+' NOTE: Energy ADE 3.0 beta7 targets CityGML 2.0, not 3.0. The ADE hook
+'       (_GenericApplicationPropertyOfCityObject) is a CityGML 2.0 concept.
+' Version : 1.0 beta | 2026-07
+
+hide empty members
+
+skinparam packageStyle rectangle
+skinparam classBackgroundColor white
+skinparam classBorderColor #555
+skinparam ArrowColor #555
+skinparam nodesep 45
+skinparam ranksep 70
+skinparam classFontSize 11
+skinparam classAttributeFontSize 10
+skinparam packageFontSize 12
+
+' Colour key follows the official Energy ADE 3.0 module colours:
+'   cyan = CityGML _CityObject   orange = Devices   blue = Layered Construction
+'   purple = Resources   green = LCA additions   peach = dataType
+'   Rows marked "+ LCA ADE" are the NEW parameters proposed by this schema.
+
+' ════════════════════════════════════════════════════════════════════
+' SHARED LCA BUILDING BLOCKS
+' The Environmental ID links a city object to an external EPD / national
+' database record, instead of storing volatile impact factors inline.
+' ════════════════════════════════════════════════════════════════════
+package "LCA ADE 1.0 - shared types" as LCAShared #EAF7EA {
+  class "LCAEnvironmentalReference" <<dataType>> #FCE9C6 {
+    +id : CharacterString
+    +source : EPDSourceValue [0..1]
+  }
+  class "EPDSourceValue" <<codeList>> #FFFFFF {
+    boverket
+    oekobaudat
+  }
+}
+"LCAEnvironmentalReference" ..> "EPDSourceValue" : +source
+
+' ════════════════════════════════════════════════════════════════════
+' GENERAL  -  RSP as a top-level LCAScenario object
+' Follows the Energy ADE library pattern (AbstractLibrary / WeatherStation):
+' a document-scope parameter lives in a top-level _CityObject-derived object,
+' NOT as a loose CityModel property nor a per-building ADE hook.
+' Required for all life-cycle modules beyond A1-A5 (the assessment horizon).
+' ════════════════════════════════════════════════════════════════════
+package "GENERAL   [assessment period]" as PkgGeneral #FFFFFF {
+  abstract class "Core::_CityObject" <<featureType>> #7FE0DE {
+    +gml:id : ID
+  }
+  class "lca::LCAScenario" <<featureType>> #A8E4A0 {
+    <<topLevel>>
+    --
+    +lca:referenceStudyPeriod : Measure
+  }
+  "lca::LCAScenario" -up-|> "Core::_CityObject"
+  note bottom of "lca::LCAScenario"
+    One per CityGML document, written as a
+    core:cityObjectMember (like MaterialLibrary,
+    WeatherStation). RSP uom = "a" (years).
+  end note
+}
+
+' ════════════════════════════════════════════════════════════════════
+' EMBODIED  -  A1-A5, C1-C4, D  (+ B4 replacements via RSL)
+' Environmental ID + reference service life added to the physical
+' components: HVAC/PV devices, window/door construction units, and the
+' solid materials of opaque constructions.
+' ════════════════════════════════════════════════════════════════════
+package "EMBODIED   [A1-A5, C1-C4, D + B4]" as PkgEmbodied #FFFFFF {
+
+  ' --- Equipment / Devices (Devices module) ---
+  abstract class "nrg3::AbstractDevice" <<featureType>> #FFB570 {
+    +model : CharacterString [0..1]
+    +installedPower : Measure [0..1]
+    +nominalEfficiency : Measure [0..1]
+    -- + LCA ADE --
+    +lca:environmentalId : LCAEnvironmentalReference
+    +lca:referenceServiceLife : Measure
+  }
+
+  ' --- Window / door construction unit (Layered construction module) ---
+  ' Only whole-unit constructions WITHOUT material layers (glazingRatio > 0,
+  ' no Layer children) carry a product-level EPD here.
+  class "nrg3::LayeredConstruction" <<featureType>> #66C5F0 {
+    +libraryCode : Code [0..1]
+    +uValue : Measure [0..1]
+    +gValue : Scale [0..1]
+    +glazingRatio : Scale [0..1]
+    -- + LCA ADE  (layerless window/door units only) --
+    +lca:environmentalId : LCAEnvironmentalReference
+    +lca:referenceServiceLife : Measure
+  }
+
+  ' --- Solid material (Layered construction module) ---
+  class "nrg3::SolidMaterial" <<featureType>> #66C5F0 {
+    +thermalConductivity : Measure [0..1]
+    +density : Measure [0..1]
+    +embodiedEnergy : Measure [0..1]
+    +embodiedCarbon : Measure [0..1]
+    -- + LCA ADE --
+    +lca:environmentalId : LCAEnvironmentalReference
+    +lca:referenceServiceLife : Measure
+  }
+}
+
+note right of "nrg3::LayeredConstruction"
+  A construction WITH material layers carries EPDs on its
+  SolidMaterial layers, NOT on the construction (no double-counting).
+  A construction WITHOUT layers (window/door unit) carries the EPD itself.
+end note
+
+' ════════════════════════════════════════════════════════════════════
+' OPERATIONAL  -  B6, B7
+' Environmental ID added to AbstractResource. No RSL: operational flows
+' (energy, water) are consumed, not replaced. Impact = carrier factor x
+' amount, resolved through the EPD/database record.
+' ════════════════════════════════════════════════════════════════════
+package "OPERATIONAL   [B6, B7]" as PkgOperational #FFFFFF {
+  abstract class "nrg3::AbstractResource" <<featureType>> #CBA6E0 {
+    +status : ResourceStatusValue
+    +amount : Measure [0..1]
+    +co2Equivalent : Measure [0..1]
+    -- + LCA ADE --
+    +lca:environmentalId : LCAEnvironmentalReference
+  }
+  note bottom of "nrg3::AbstractResource"
+    Subclasses: Energy, Water, Food, Waste,
+    ConstructionMaterial, OtherResource, UrbanSpace.
+    Only environmentalId is added (no referenceServiceLife).
+  end note
+}
+
+' ════════════════════════════════════════════════════════════════════
+' TYPE USAGE  -  every environmentalId is typed by LCAEnvironmentalReference
+' ════════════════════════════════════════════════════════════════════
+"nrg3::AbstractDevice"      ..> "LCAEnvironmentalReference" : environmentalId
+"nrg3::LayeredConstruction" ..> "LCAEnvironmentalReference" : environmentalId
+"nrg3::SolidMaterial"       ..> "LCAEnvironmentalReference" : environmentalId
+"nrg3::AbstractResource"    ..> "LCAEnvironmentalReference" : environmentalId
+
+@enduml

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<core:CityModel xmlns:bldg="http://www.opengis.net/citygml/building/2.0" xmlns:core="http://www.opengis.net/citygml/2.0" xmlns:energy="http://www.sig3d.org/citygml/2.0/energy/2.0" xmlns:gml="http://www.opengis.net/gml" xmlns:lca="http://www.citygml.org/ade/lca/1.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/citygml/2.0 ../../../DataModel/Schema/EnergyADE.xsd" gml:id="GML_b0b1cbd6-5740-47b1-8c81-e708a53a19d2">
-  <lca:referenceStudyPeriod uom="a">50</lca:referenceStudyPeriod><gml:boundedBy>
+<core:CityModel xmlns:bldg="http://www.opengis.net/citygml/building/2.0" xmlns:core="http://www.opengis.net/citygml/2.0" xmlns:energy="http://www.sig3d.org/citygml/2.0/energy/2.0" xmlns:gml="http://www.opengis.net/gml" xmlns:lca="http://sb.chalmers.se/ade/lca/1.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/citygml/2.0 ../../../DataModel/Schema/EnergyADE.xsd" gml:id="GML_b0b1cbd6-5740-47b1-8c81-e708a53a19d2">
+  <gml:boundedBy>
     <gml:Envelope srsName="urn:adv:crs:ETRS89_UTM32*DE_DHHN92_NH">
       <gml:lowerCorner>458877 5438353 111.8</gml:lowerCorner>
       <gml:upperCorner>458889 5438363 118.3176914</gml:upperCorner>
@@ -1633,7 +1633,7 @@
                   <energy:totalValue uom="W/m2">4</energy:totalValue>
                 </energy:HeatExchangeType>
               </energy:heatDissipation>
-            <lca:environmentalId>DEV-ELAPP-01</lca:environmentalId><lca:referenceServiceLife uom="a">10</lca:referenceServiceLife></energy:ElectricalAppliances>
+            </energy:ElectricalAppliances>
           </energy:equippedWith>
         </energy:UsageZone>
       </energy:usageZone>
@@ -1910,7 +1910,7 @@
       <energy:conductivity uom="W/K*m">2</energy:conductivity>
       <energy:density uom="kg/m3">2400</energy:density>
       <energy:specificHeat uom="kJ/K*kg">1</energy:specificHeat>
-    <lca:environmentalId>6000000029</lca:environmentalId><lca:referenceServiceLife uom="a">50</lca:referenceServiceLife></energy:SolidMaterial>
+    <lca:environmentalId source="boverket">6000000029</lca:environmentalId><lca:referenceServiceLife uom="a">50</lca:referenceServiceLife></energy:SolidMaterial>
   </gml:featureMember>
   
   <gml:featureMember>
@@ -1920,7 +1920,7 @@
       <energy:conductivity uom="W/K*m">0.17</energy:conductivity>
       <energy:density uom="kg/m3">1200</energy:density>
       <energy:specificHeat uom="kJ/K*kg">1.5</energy:specificHeat>
-    <lca:environmentalId>6000000141</lca:environmentalId><lca:referenceServiceLife uom="a">40</lca:referenceServiceLife></energy:SolidMaterial>
+    <lca:environmentalId source="boverket">6000000141</lca:environmentalId><lca:referenceServiceLife uom="a">40</lca:referenceServiceLife></energy:SolidMaterial>
   </gml:featureMember>
   
   <gml:featureMember>
@@ -1930,7 +1930,7 @@
       <energy:conductivity uom="W/K*m">0.25</energy:conductivity>
       <energy:density uom="kg/m3">900</energy:density>
       <energy:specificHeat uom="kJ/K*kg">1</energy:specificHeat>
-    <lca:environmentalId>6000000020</lca:environmentalId><lca:referenceServiceLife uom="a">50</lca:referenceServiceLife></energy:SolidMaterial>
+    <lca:environmentalId source="boverket">6000000020</lca:environmentalId><lca:referenceServiceLife uom="a">50</lca:referenceServiceLife></energy:SolidMaterial>
   </gml:featureMember>
   
   <gml:featureMember>
@@ -1940,7 +1940,7 @@
       <energy:conductivity uom="W/K*m">0.13</energy:conductivity>
       <energy:density uom="kg/m3">500</energy:density>
       <energy:specificHeat uom="kJ/K*kg">1.6</energy:specificHeat>
-    <lca:environmentalId>6000000007</lca:environmentalId><lca:referenceServiceLife uom="a">50</lca:referenceServiceLife></energy:SolidMaterial>
+    <lca:environmentalId source="boverket">6000000007</lca:environmentalId><lca:referenceServiceLife uom="a">50</lca:referenceServiceLife></energy:SolidMaterial>
   </gml:featureMember>
   
   <gml:featureMember>
@@ -1950,7 +1950,7 @@
       <energy:conductivity uom="W/K*m">0.18</energy:conductivity>
       <energy:density uom="kg/m3">700</energy:density>
       <energy:specificHeat uom="kJ/K*kg">1.6</energy:specificHeat>
-    <lca:environmentalId>6000000118</lca:environmentalId><lca:referenceServiceLife uom="a">50</lca:referenceServiceLife></energy:SolidMaterial>
+    <lca:environmentalId source="boverket">6000000118</lca:environmentalId><lca:referenceServiceLife uom="a">50</lca:referenceServiceLife></energy:SolidMaterial>
   </gml:featureMember>
   
   <gml:featureMember>
@@ -1969,7 +1969,7 @@
       <energy:conductivity uom="W/K*m">0.33</energy:conductivity>
       <energy:density uom="kg/m3">960</energy:density>
       <energy:specificHeat uom="kJ/K*kg">1.5</energy:specificHeat>
-    <lca:environmentalId>6000000198</lca:environmentalId><lca:referenceServiceLife uom="a">50</lca:referenceServiceLife></energy:SolidMaterial>
+    <lca:environmentalId source="boverket">6000000198</lca:environmentalId><lca:referenceServiceLife uom="a">50</lca:referenceServiceLife></energy:SolidMaterial>
   </gml:featureMember>
   
   <gml:featureMember>
@@ -1979,7 +1979,7 @@
       <energy:conductivity uom="W/K*m">0.035</energy:conductivity>
       <energy:density uom="kg/m3">25</energy:density>
       <energy:specificHeat uom="kJ/K*kg">1.5</energy:specificHeat>
-    <lca:environmentalId>6000000132</lca:environmentalId><lca:referenceServiceLife uom="a">50</lca:referenceServiceLife></energy:SolidMaterial>
+    <lca:environmentalId source="boverket">6000000132</lca:environmentalId><lca:referenceServiceLife uom="a">50</lca:referenceServiceLife></energy:SolidMaterial>
   </gml:featureMember>
   
   <gml:featureMember>
@@ -1989,7 +1989,7 @@
       <energy:conductivity uom="W/K*m">0.04</energy:conductivity>
       <energy:density uom="kg/m3">30</energy:density>
       <energy:specificHeat uom="kJ/K*kg">1.5</energy:specificHeat>
-    <lca:environmentalId>6000000131</lca:environmentalId><lca:referenceServiceLife uom="a">50</lca:referenceServiceLife></energy:SolidMaterial>
+    <lca:environmentalId source="boverket">6000000131</lca:environmentalId><lca:referenceServiceLife uom="a">50</lca:referenceServiceLife></energy:SolidMaterial>
   </gml:featureMember>
   
   <gml:featureMember>
@@ -1999,7 +1999,7 @@
       <energy:conductivity uom="W/K*m">0.13</energy:conductivity>
       <energy:density uom="kg/m3">400</energy:density>
       <energy:specificHeat uom="kJ/K*kg">1</energy:specificHeat>
-    <lca:environmentalId>6000000096</lca:environmentalId><lca:referenceServiceLife uom="a">50</lca:referenceServiceLife></energy:SolidMaterial>
+    <lca:environmentalId source="boverket">6000000096</lca:environmentalId><lca:referenceServiceLife uom="a">50</lca:referenceServiceLife></energy:SolidMaterial>
   </gml:featureMember>
   <gml:featureMember>
     <energy:SolidMaterial gml:id="KIT-FZK-Haus-Putz-Aussen">
@@ -2008,7 +2008,7 @@
       <energy:conductivity uom="W/K*m">1.2</energy:conductivity>
       <energy:density uom="kg/m3">1800</energy:density>
       <energy:specificHeat uom="kJ/K*kg">1</energy:specificHeat>
-    <lca:environmentalId>6000000091</lca:environmentalId><lca:referenceServiceLife uom="a">50</lca:referenceServiceLife></energy:SolidMaterial>
+    <lca:environmentalId source="boverket">6000000091</lca:environmentalId><lca:referenceServiceLife uom="a">50</lca:referenceServiceLife></energy:SolidMaterial>
   </gml:featureMember>
   
   <gml:featureMember>
@@ -2018,7 +2018,7 @@
       <energy:conductivity uom="W/K*m">0.7</energy:conductivity>
       <energy:density uom="kg/m3">1400</energy:density>
       <energy:specificHeat uom="kJ/K*kg">1</energy:specificHeat>
-    <lca:environmentalId>6000000092</lca:environmentalId><lca:referenceServiceLife uom="a">50</lca:referenceServiceLife></energy:SolidMaterial>
+    <lca:environmentalId source="boverket">6000000092</lca:environmentalId><lca:referenceServiceLife uom="a">50</lca:referenceServiceLife></energy:SolidMaterial>
   </gml:featureMember>
   
   <gml:featureMember>
@@ -2028,7 +2028,7 @@
       <energy:conductivity uom="W/K*m">1.4</energy:conductivity>
       <energy:density uom="kg/m3">2000</energy:density>
       <energy:specificHeat uom="kJ/K*kg">1</energy:specificHeat>
-    <lca:environmentalId>6000000098</lca:environmentalId><lca:referenceServiceLife uom="a">50</lca:referenceServiceLife></energy:SolidMaterial>
+    <lca:environmentalId source="boverket">6000000098</lca:environmentalId><lca:referenceServiceLife uom="a">50</lca:referenceServiceLife></energy:SolidMaterial>
   </gml:featureMember>
   
   <gml:featureMember>
@@ -2038,6 +2038,6 @@
       <energy:conductivity uom="W/K*m">1</energy:conductivity>
       <energy:density uom="kg/m3">2000</energy:density>
       <energy:specificHeat uom="kJ/K*kg">0.8</energy:specificHeat>
-    <lca:environmentalId>6000000082</lca:environmentalId><lca:referenceServiceLife uom="a">50</lca:referenceServiceLife></energy:SolidMaterial>
+    <lca:environmentalId source="boverket">6000000082</lca:environmentalId><lca:referenceServiceLife uom="a">50</lca:referenceServiceLife></energy:SolidMaterial>
   </gml:featureMember>
-</core:CityModel>
+<core:cityObjectMember><lca:LCAScenario gml:id="lca_scenario_1"><lca:referenceStudyPeriod uom="a">50</lca:referenceStudyPeriod></lca:LCAScenario></core:cityObjectMember></core:CityModel>

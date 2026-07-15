@@ -7,7 +7,7 @@ CITYGML_2_URI = "http://www.opengis.net/citygml/2.0"
 CITYGML_3_URI = "http://www.opengis.net/citygml/3.0"
 ENERGY_ADE_2_URI = "http://www.sig3d.org/citygml/2.0/energy/2.0"
 ENERGY_ADE_3_URI = "http://www.citygml.org/ade/energy/3.0"
-LCA_ADE_URI      = "http://www.citygml.org/ade/lca/1.0"
+LCA_ADE_URI      = "http://sb.chalmers.se/ade/lca/1.0"
 
 
 @dataclass(frozen=True)

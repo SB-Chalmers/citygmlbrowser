@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+===========================================================================
+  CityGML LCA ADE 1.0 — XML Schema Definition
+  Namespace  : http://sb.chalmers.se/ade/lca/1.0  (prefix: lca)
+  Depends on : CityGML 2.0 Core, Energy ADE 3.0 beta7
+  Version    : 1.0 beta  |  2026-07
+  Authors    : Chalmers University of Technology
+
+  NOTE — ADE hook coverage
+  ─────────────────────────
+  lca:environmentalId and lca:referenceServiceLife are declared as
+  substitutes for core:_GenericApplicationPropertyOfCityObject.  This
+  hook applies to all core:_CityObject subclasses, which covers:
+
+    [via _CityObject hook, formally validated]
+      nrg3:AbstractDevice subclasses (12 concrete types)
+      bldg:BuildingInstallation
+      bldg:IntBuildingInstallation
+
+  The following nrg3 classes extend gml:AbstractFeatureType rather than
+  core:AbstractCityObjectType and therefore do NOT participate in the
+  _GenericApplicationPropertyOfCityObject substitution group.  For those
+  classes the LCA properties are injected as sibling XML children by
+  convention (not schema-validated unless the target XSD is patched):
+
+    [convention injection, not schema-validated]
+      nrg3:SolidMaterial, nrg3:Gas
+      nrg3:LayeredConstruction, nrg3:ReverseLayeredConstruction
+      nrg3:Energy, nrg3:Water, nrg3:ConstructionMaterial,
+      nrg3:Waste, nrg3:Food, nrg3:OtherResource, nrg3:UrbanSpace
+===========================================================================
+-->
+<xs:schema
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:gml="http://www.opengis.net/gml"
+  xmlns:core="http://www.opengis.net/citygml/2.0"
+  xmlns:lca="http://sb.chalmers.se/ade/lca/1.0"
+  elementFormDefault="qualified"
+  targetNamespace="http://sb.chalmers.se/ade/lca/1.0"
+  version="1.0">
+
+  <xs:import namespace="http://www.opengis.net/gml"
+    schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+  <xs:import namespace="http://www.opengis.net/citygml/2.0"
+    schemaLocation="http://schemas.opengis.net/citygml/2.0/cityGMLBase.xsd"/>
+
+  <!-- ================================================================ -->
+  <!-- Code List: EPDSourceValue                                         -->
+  <!-- External GML dictionary: codelists/EPDSourceValue.xml            -->
+  <!-- ================================================================ -->
+
+  <xs:simpleType name="EPDSourceValueType">
+    <xs:annotation>
+      <xs:documentation>
+        Closed enumeration of supported EPD databases.
+        Only Boverket Klimatdatabas and Ökobaudat are supported.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="boverket">
+        <xs:annotation>
+          <xs:documentation>Boverket Klimatdatabas (Sweden)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="oekobaudat">
+        <xs:annotation>
+          <xs:documentation>Ökobaudat EPD database (Germany / EU)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- ================================================================ -->
+  <!-- Data Type: LCAEnvironmentalReference                              -->
+  <!-- ================================================================ -->
+
+  <xs:complexType name="LCAEnvironmentalReferenceType">
+    <xs:annotation>
+      <xs:documentation>
+        Reference to an Environmental Product Declaration (EPD) record in
+        an external database.
+
+        The element content holds the database-specific record ID:
+          - Boverket  : 10-digit integer ResourceId  (e.g. "6000000029")
+          - Ökobaudat : UUID                          (e.g. "fe91b985-60da-...")
+
+        The optional 'source' attribute identifies the database using
+        the EPDSourceValue codelist.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="source" type="lca:EPDSourceValueType" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <!-- ================================================================ -->
+  <!-- LCAScenario — top-level city object                              -->
+  <!-- ================================================================ -->
+
+  <xs:element name="LCAScenario" substitutionGroup="core:_CityObject"
+    type="lca:LCAScenarioType">
+    <xs:annotation>
+      <xs:appinfo>
+        <taggedValue tag="topLevel">true</taggedValue>
+      </xs:appinfo>
+      <xs:documentation>
+        Top-level LCA scenario city object.  Exactly one LCAScenario per
+        CityGML document, written as a core:cityObjectMember at the end of
+        the file.
+
+        Example:
+          &lt;core:cityObjectMember&gt;
+            &lt;lca:LCAScenario gml:id="lca_scenario_1"&gt;
+              &lt;lca:referenceStudyPeriod uom="a"&gt;50&lt;/lca:referenceStudyPeriod&gt;
+            &lt;/lca:LCAScenario&gt;
+          &lt;/core:cityObjectMember&gt;
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:complexType name="LCAScenarioType">
+    <xs:complexContent>
+      <xs:extension base="core:AbstractCityObjectType">
+        <xs:sequence>
+          <xs:element name="referenceStudyPeriod" type="gml:MeasureType">
+            <xs:annotation>
+              <xs:documentation>
+                System boundary horizon in years (uom="a").
+                Applied uniformly to every building in the city model.
+                Typical values: 30 a (commercial), 50 a (residential, EN 15978).
+
+                Used together with lca:referenceServiceLife on each product to
+                calculate the number of replacement cycles in module B4:
+                  replacements = ceil( referenceStudyPeriod / referenceServiceLife ) − 1
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="LCAScenarioPropertyType">
+    <xs:sequence minOccurs="0">
+      <xs:element ref="lca:LCAScenario"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="gml:AssociationAttributeGroup"/>
+  </xs:complexType>
+
+  <!-- ================================================================ -->
+  <!-- ADE hook: environmentalId                                         -->
+  <!-- Applies to: core:_CityObject subclasses (formal hook)            -->
+  <!--   → all nrg3:AbstractDevice concrete types (12)                  -->
+  <!--   → bldg:BuildingInstallation                                     -->
+  <!--   → bldg:IntBuildingInstallation                                  -->
+  <!-- Convention injection on gml:_Feature types — see file header.    -->
+  <!-- ================================================================ -->
+
+  <xs:element name="environmentalId"
+    substitutionGroup="core:_GenericApplicationPropertyOfCityObject"
+    type="lca:LCAEnvironmentalReferenceType">
+    <xs:annotation>
+      <xs:appinfo>
+        <taggedValue tag="maxOccurs">1</taggedValue>
+        <taggedValue tag="relationType">composition</taggedValue>
+      </xs:appinfo>
+      <xs:documentation>
+        EPD database record identifier for this object.
+        Together with lca:referenceServiceLife it enables automated LCA
+        calculation by resolving the record to retrieve A1–A3 impact data
+        (GWP, PEnr, AP, EP, …) from the named EPD source.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <!-- ================================================================ -->
+  <!-- ADE hook: referenceServiceLife                                    -->
+  <!-- Same coverage as environmentalId (see above).                    -->
+  <!-- ================================================================ -->
+
+  <xs:element name="referenceServiceLife"
+    substitutionGroup="core:_GenericApplicationPropertyOfCityObject"
+    type="gml:MeasureType">
+    <xs:annotation>
+      <xs:appinfo>
+        <taggedValue tag="maxOccurs">1</taggedValue>
+        <taggedValue tag="relationType">composition</taggedValue>
+      </xs:appinfo>
+      <xs:documentation>
+        Reference Service Life (RSL) in years (uom="a").
+
+        Basis for module B4 (replacement) calculations in EN 15978 LCA.
+        Derived from the EPD, manufacturer data, or standardised tables
+        (e.g. BBSR, BNB, EN 15978 Annex B).
+
+        Replaced every N cycles within the reference study period:
+          N = ceil( LCAScenario/referenceStudyPeriod / referenceServiceLife ) − 1
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+</xs:schema>

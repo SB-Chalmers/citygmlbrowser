@@ -7,11 +7,17 @@ Transforms the parsed CityGML model dict into vis-network compatible
 from __future__ import annotations
 
 import xml.etree.ElementTree as ET
+from functools import lru_cache
 from pathlib import Path
 
 from api.parsers.base import NS, _gml_id, text_of
 from api.parsers import energy_ade_20, energy_ade_30, lca_ade
 from api.dialect import detect_dialect
+
+try:
+    from scripts.databases import lookup_gwp
+except Exception:  # pragma: no cover - databases are optional at runtime
+    lookup_gwp = None
 
 # ── Node styling ──────────────────────────────────────────────────────────────
 
@@ -68,11 +74,60 @@ def _local(tag):
     return tag.split("}")[1] if "}" in tag else tag.split(":")[-1]
 
 
+@lru_cache(maxsize=512)
+def _cached_gwp(resource_id: str, source: str) -> tuple:
+    """Cached GWP lookup. Returns a hashable tuple of (key, value) pairs."""
+    if lookup_gwp is None:
+        return ()
+    try:
+        gwp = lookup_gwp(resource_id, source)
+    except Exception:
+        return ()
+    if not gwp:
+        return ()
+    return tuple(sorted(gwp.items()))
+
+
+def _enrich_with_epd(props: dict) -> None:
+    """Add GWP values from the referenced EPD database to *props* in place.
+
+    Reads lca:environmentalId + lca:environmentalIdSource, resolves the record
+    in the Boverket / Ökobaudat database, and adds readable GWP rows.  Silent
+    no-op when the id/source is missing or the record cannot be resolved.
+    """
+    env_id = props.get("lca:environmentalId")
+    source = props.get("lca:environmentalIdSource")
+    if not env_id or not source:
+        return
+
+    gwp = dict(_cached_gwp(str(env_id), str(source)))
+    if not gwp:
+        return
+
+    name = gwp.get("name")
+    if name:
+        props["lca:epdName"] = name
+
+    # kg CO2-eq per declared/inventory unit of the product
+    for module, key in (("A1-A3", "lca:gwpA1A3"),
+                        ("A4", "lca:gwpA4"),
+                        ("A5.1", "lca:gwpA5_1")):
+        val = gwp.get(module)
+        if val is not None:
+            props[key] = f"{val} kgCO2e"
+
+    waste = gwp.get("WasteFactor")
+    if waste is not None:
+        props["lca:wasteFactor"] = waste
+
+
 def collect_global_energy(gml_file: str) -> dict:
     """Return global energy objects keyed by gml:id, enriched with LCA props.
 
     Delegates to the version-specific ADE parser, then overlays any LCA ADE
-    properties found on the same elements.
+    properties found on the same elements.  When an object carries an
+    lca:environmentalId, the corresponding GWP figures are looked up from the
+    referenced EPD database (Boverket / Ökobaudat) and added to its details.
     """
     root    = ET.parse(gml_file).getroot()
     dialect = detect_dialect(gml_file)
@@ -89,6 +144,9 @@ def collect_global_energy(gml_file: str) -> dict:
                 result[gml_id].update(lca_props)
             else:
                 result[gml_id] = lca_props
+        # Enrich with actual GWP values from the referenced EPD database
+        for props in result.values():
+            _enrich_with_epd(props)
     return result
 
 
