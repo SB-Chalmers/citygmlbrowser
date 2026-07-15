@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Build and packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# Logs
+*.log
+
+# Environment and local settings
+.env
+.env.*
+!.env.example
+
+# Node
+node_modules/
+
+# Project data and schema/reference/script archives
+/data/
+/scripts/
+/xsd/
+/reference/
+/archive/
+
+# Frontend outputs
+web/dist/
+web/dist-ssr/
+
+# OS/editor files
+.DS_Store
+.idea/
+.vscode/
