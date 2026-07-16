@@ -12,9 +12,10 @@ Adds, to every Energy ADE device whose local name is in DEVICE_TYPE_MAP:
     <lca:environmentalId source="...">   EPD database record ID
     <lca:referenceServiceLife uom="a">   Reference Service Life (years)
 
-Adds, to every nrg3:LayeredConstruction with a mapped gml:id AND zero layers
-(see CONSTRUCTION_MAP) — i.e. whole-unit product assemblies such as window
-glazing units that do not decompose into material layers:
+Adds, to every nrg3:LayeredConstruction / energy:Construction with a mapped
+gml:id AND zero layers (see CONSTRUCTION_MAP) — i.e. whole-unit product
+assemblies such as window glazing units that do not decompose into material
+layers:
     <lca:environmentalId source="...">   EPD database record ID
     <lca:referenceServiceLife uom="a">   Reference Service Life (years)
 Constructions that DO have layers are skipped, because their EPDs live on the
@@ -89,14 +90,20 @@ REFERENCE_STUDY_PERIOD = "50"  # years, applied to every building
 
 # gml:id -> (boverket_resource_id, reference_service_life_years)
 # Whole-unit product constructions (window/door assemblies) that have NO
-# material layers. Only layerless LayeredConstruction elements are injected,
-# so opaque walls (which carry EPDs on their material layers) are untouched.
+# material layers. Only layerless construction elements are injected, so opaque
+# walls (which carry EPDs on their material layers) are untouched.
 CONSTRUCTION_MAP: dict[str, tuple[str, str]] = {
+    # FZK Haus Energy ADE 2.0 whole-unit glazing assemblies.
+    # Boverket 6000000104 covers wood triple-glazed windows and explicitly
+    # includes balcony/terrace doors in the same product group.
+    "KIT-FZK-Haus-Fenster":      ("6000000104", "50"),
+    "KIT-FZK-Haus-Terrassentuer": ("6000000104", "50"),
+
     # Alderaan glazing construction (glazingRatio 0.95, triple-glazed, no layers)
     "id_layered_construction_glazing_5": ("6000000104", "50"),
     #                                     Window, wood, side hung, triple-glazed
 }
-_CONSTRUCTION_LOCALS = {"LayeredConstruction"}
+_CONSTRUCTION_LOCALS = {"Construction", "LayeredConstruction"}
 
 _GML_ID_ATTRS = (
     "{http://www.opengis.net/gml}id",
