@@ -60,3 +60,6 @@ web/dist-ssr/
 *.pyc
 *.pyo
 *.pyd
+
+# Pycache
+__pycache__/
