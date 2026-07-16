@@ -43,6 +43,11 @@ node_modules/
 web/dist/
 web/dist-ssr/
 
+# Keep tracked demo files for the web app
+!web/public/demos/
+!web/public/demos/alderaan-lca.gml
+!web/public/demos/fzk-haus-lca.gml
+
 # OS/editor files
 .DS_Store
 .idea/
