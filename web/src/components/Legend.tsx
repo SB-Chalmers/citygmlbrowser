@@ -18,12 +18,28 @@ export function Legend({ nodes, typeColors, activeType, onSelectType }: LegendPr
     return [...counts.entries()].sort((a, b) => b[1] - a[1])
   }, [nodes])
 
+  const typeSwatches = useMemo(() => {
+    const swatches = new Map<string, { background: string; border: string; font: string }>()
+    for (const node of nodes) {
+      if (swatches.has(node.group)) continue
+      const color = node.color
+      if (color?.background && color?.border) {
+        swatches.set(node.group, {
+          background: color.background,
+          border: color.border,
+          font: color.highlight?.background ? '#fff' : '#fff',
+        })
+      }
+    }
+    return swatches
+  }, [nodes])
+
   if (!typeCounts.length) return null
 
   return (
     <div className="flex flex-wrap items-center gap-1.5 border-t border-slate-700 bg-slate-950/60 px-3 py-2">
       {typeCounts.map(([type, count]) => {
-        const color = typeColors[type] ?? { background: '#64748b', border: '#475569', font: '#fff' }
+        const color = typeSwatches.get(type) ?? typeColors[type] ?? { background: '#64748b', border: '#475569', font: '#fff' }
         const isActive = activeType === type
         return (
           <button

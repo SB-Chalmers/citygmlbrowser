@@ -47,3 +47,8 @@ web/dist-ssr/
 .DS_Store
 .idea/
 .vscode/
+
+# Python pyc files
+*.pyc
+*.pyo
+*.pyd
