@@ -66,13 +66,15 @@ Database Importer/Exporter.
 (modules A1–A3) requires a reference study period (RSP): the number of years over
 which the building is assessed. The RSP governs how many times a component is
 replaced (module B4) and over how long operational impacts (B6, B7) accumulate.
-It is a single, document-wide value; it is not a property of an individual wall,
-device or building.
+For any given scenario it is a document-wide value; it is not a property of an
+individual wall, device or building.
 
 **Action.** The LCA ADE introduces one new top-level class, `LCAScenario`, which
 carries a single property, `referenceStudyPeriod`, expressed as a measure in
-years (`uom="a"`). Exactly one `LCAScenario` is written per CityGML document, as
-a `core:cityObjectMember`:
+years (`uom="a"`). One or more `LCAScenario` objects may be written per CityGML
+document as `core:cityObjectMember` entries. For interoperable exchange profiles,
+exactly one scenario should be designated as the active/default baseline (tooling
+may overwrite or switch this selection):
 
 ```xml
 <core:cityObjectMember>
@@ -184,26 +186,26 @@ together). Such an assembly does not decompose into the material layers used for
 opaque walls, so its impact cannot be attributed to individual materials.
 
 **Action.** The Environmental ID and reference service life are recognised on
-`nrg3::LayeredConstruction`, but only for **layerless** constructions — those
-that carry a `glazingRatio` and have no `Layer` children. The injection tooling
-enforces this by skipping any construction that already contains layers. In the
-Alderaan test model this rule selects exactly one construction, the triple-glazed
-glazing unit, which is linked to the Boverket record `6000000104` (*Window, wood,
-side hung, triple-glazed*).
+`nrg3::LayeredConstruction` and `nrg3::ReverseLayeredConstruction`, but only for
+**layerless** constructions — those that carry a `glazingRatio` and have no
+`Layer` children. The injection tooling enforces this by skipping any
+construction that already contains layers. In the Alderaan test model this rule
+selects exactly one construction, the triple-glazed glazing unit, which is linked
+to the Boverket record `6000000104` (*Window, wood, side hung, triple-glazed*).
 
-**UML compliance.** The UML model shows the LCA rows on `LayeredConstruction`
-annotated *"layerless window/door units only"*, and an adjacent note states the
-decomposition rule explicitly: a construction with layers carries its EPDs on the
-layer materials, while a construction without layers carries the EPD itself, and
-never both.
+**UML compliance.** The UML model shows the LCA rows on `LayeredConstruction` and
+`ReverseLayeredConstruction`, annotated *"layerless window/door units only"*, and
+an adjacent note states the decomposition rule explicitly: a construction with
+layers carries its EPDs on the layer materials, while a construction without
+layers carries the EPD itself, and never both.
 
 **Interoperability.** This rule is the schema-level guarantee against
 **double-counting**, the single most important correctness property of a
 component LCA. Because opaque constructions expose their materials through the
 `Layer → material` composition, attributing an EPD to both the construction and
 its materials would count the same impact twice. Restricting construction-level
-EPDs to layerless assemblies makes the two encodings mutually exclusive by
-construction.
+EPDs to layerless `LayeredConstruction` and `ReverseLayeredConstruction`
+assemblies makes the two encodings mutually exclusive by construction.
 
 ### Embodied impact of construction materials
 
@@ -303,7 +305,7 @@ This is the **formal** CityGML 2.0 ADE hook, and such properties are validated b
 the schema on any `_CityObject` subclass.
 
 For the Energy ADE features that extend `gml:_Feature` rather than
-`core:_CityObject` — namely `SolidMaterial`, `Gas`, `LayeredConstruction`,
+`core:_CityObject` — namely `SolidMaterial`, `LayeredConstruction`,
 `ReverseLayeredConstruction` and the resource classes — no such hook exists in the
 host schema. Here the LCA properties are attached by **convention injection** as
 direct sibling children of the target element. This is a common and legitimate
@@ -333,10 +335,10 @@ attachment mechanism, and the EN 15978 modules each supports.
 
 | Category | Class | Module of origin | Added parameter(s) | Mechanism | LCA modules |
 |---|---|---|---|---|---|
-| General | `LCAScenario` (new) | LCA ADE | `referenceStudyPeriod` | top-level object | horizon for all B/C |
+| General | `LCAScenario` (new, one or more) | LCA ADE | `referenceStudyPeriod` | top-level object | horizon for all B/C |
 | Embodied | `AbstractDevice` | Devices | `environmentalId`, `referenceServiceLife` | formal hook | A1–A5, C1–C4, D, B4 |
 | Embodied | `BuildingInstallation` / `IntBuildingInstallation` | CityGML Building | `environmentalId`, `referenceServiceLife` | formal hook | A1–A5, C1–C4, D, B4 |
-| Embodied | `LayeredConstruction` (layerless) | Layered construction | `environmentalId`, `referenceServiceLife` | convention injection | A1–A5, C1–C4, D, B4 |
+| Embodied | `LayeredConstruction` / `ReverseLayeredConstruction` (layerless) | Layered construction | `environmentalId`, `referenceServiceLife` | convention injection | A1–A5, C1–C4, D, B4 |
 | Embodied | `SolidMaterial` | Layered construction | `environmentalId`, `referenceServiceLife` | convention injection | A1–A5, C1–C4, D, B4 |
 | Operational | `AbstractResource` | Resources | `environmentalId` | convention injection | B6, B7 |
 
