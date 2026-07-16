@@ -75,8 +75,10 @@ def _parse_wrapped_opening(el: ET.Element) -> dict:
     c_ref = el.find("nrg3:layeredConstruction", NS)
     if c_ref is None:
         c_ref = el.find("energy:construction/energy:Construction", NS)
+    name_el = el.find("gml:name", NS) or el.find("gml32:name", NS)
     return {
         "id":           _gml_id(el),
+        "name":         elem_text(name_el) if name_el is not None else None,
         "area":         text_of(el, "nrg3:bdgOpnArea") or text_of(el, "energy:area"),
         "uValue":       text_of(el, "nrg3:bdgOpnUValue") or text_of(el, "energy:uValue"),
         "glazingRatio": text_of(el, "nrg3:bdgOpnGlazingRatio") or text_of(el, "energy:glazingRatio"),

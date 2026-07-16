@@ -504,13 +504,15 @@ def build_graph(model, gml_file):
                 for idx, to in enumerate(tb.get("thermalOpenings", []), 1):
                     to_details = {
                         "id":           to.get("id"),
+                        "name":         to.get("name"),
                         "area":         to.get("area"),
                         "uValue":       to.get("uValue"),
                         "glazingRatio": to.get("glazingRatio"),
                     }
                     if to.get("opticalProperties"):
                         to_details.update(to["opticalProperties"])
-                    to_id = add_node("ThermalOpening", f"Opening {idx}", to_details)
+                    to_label = to.get("name") or to.get("id") or f"Opening {idx}"
+                    to_id = add_node("ThermalOpening", to_label, to_details)
                     add_edge(tb_id, to_id, "contains")
                     build_construction_node(to.get("construction"), to_id)
 
