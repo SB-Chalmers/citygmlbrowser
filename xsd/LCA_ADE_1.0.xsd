@@ -25,7 +25,7 @@
   convention (not schema-validated unless the target XSD is patched):
 
     [convention injection, not schema-validated]
-      nrg3:SolidMaterial, nrg3:Gas
+      nrg3:SolidMaterial
       nrg3:LayeredConstruction, nrg3:ReverseLayeredConstruction
       nrg3:Energy, nrg3:Water, nrg3:ConstructionMaterial,
       nrg3:Waste, nrg3:Food, nrg3:OtherResource, nrg3:UrbanSpace
@@ -107,9 +107,10 @@
         <taggedValue tag="topLevel">true</taggedValue>
       </xs:appinfo>
       <xs:documentation>
-        Top-level LCA scenario city object.  Exactly one LCAScenario per
-        CityGML document, written as a core:cityObjectMember at the end of
-        the file.
+        Top-level LCA scenario city object. One or more LCAScenario objects
+        may be present in a CityGML document as core:cityObjectMember entries.
+        For interoperable exchange profiles, exactly one scenario should be
+        designated as the active/default baseline.
 
         Example:
           &lt;core:cityObjectMember&gt;

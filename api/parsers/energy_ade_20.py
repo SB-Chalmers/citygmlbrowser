@@ -95,8 +95,10 @@ def parse_optical_props(el: ET.Element | None) -> dict | None:
 
 
 def parse_thermal_opening(el: ET.Element) -> dict:
+    name_el = el.find("gml:name", NS)
     return {
         "id":               _gml_id(el),
+        "name":             elem_text(name_el) if name_el is not None else None,
         "area":             text_of(el, "energy:area"),
         "uValue":           text_of(el, "energy:uValue"),
         "glazingRatio":     text_of(el, "energy:glazingRatio"),

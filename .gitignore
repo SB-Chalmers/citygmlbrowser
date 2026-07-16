@@ -14,6 +14,9 @@ htmlcov/
 venv/
 env/
 
+# Tools
+.tools/
+
 # Build and packaging
 build/
 dist/
@@ -57,3 +60,6 @@ web/dist-ssr/
 *.pyc
 *.pyo
 *.pyd
+
+# Pycache
+__pycache__/

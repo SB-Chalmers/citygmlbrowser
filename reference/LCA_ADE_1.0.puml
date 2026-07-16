@@ -1,4 +1,4 @@
-@startuml LCA_ADE_1.0
+@startuml
 ' CityGML LCA ADE 1.0 - Additions to the Energy ADE 3.0 (beta7)
 ' Namespace : http://sb.chalmers.se/ade/lca/1.0
 ' Organised after Hollberg et al. Table 1: GENERAL / EMBODIED / OPERATIONAL.
@@ -8,13 +8,15 @@
 ' Version : 1.0 beta | 2026-07
 
 hide empty members
+top to bottom direction
 
 skinparam packageStyle rectangle
 skinparam classBackgroundColor white
 skinparam classBorderColor #555
 skinparam ArrowColor #555
-skinparam nodesep 45
-skinparam ranksep 70
+skinparam linetype ortho
+skinparam nodesep 25
+skinparam ranksep 90
 skinparam classFontSize 11
 skinparam classAttributeFontSize 10
 skinparam packageFontSize 12
@@ -59,9 +61,10 @@ package "GENERAL   [assessment period]" as PkgGeneral #FFFFFF {
   }
   "lca::LCAScenario" -up-|> "Core::_CityObject"
   note bottom of "lca::LCAScenario"
-    One per CityGML document, written as a
-    core:cityObjectMember (like MaterialLibrary,
-    WeatherStation). RSP uom = "a" (years).
+    One or more per CityGML document, written as
+    core:cityObjectMember entries (like MaterialLibrary,
+    WeatherStation). Exchange profile: one active/default.
+    RSP uom = "a" (years).
   end note
 }
 
@@ -96,6 +99,16 @@ package "EMBODIED   [A1-A5, C1-C4, D + B4]" as PkgEmbodied #FFFFFF {
     +lca:referenceServiceLife : Measure
   }
 
+  class "nrg3::ReverseLayeredConstruction" <<featureType>> #66C5F0 {
+    +libraryCode : Code [0..1]
+    +uValue : Measure [0..1]
+    +gValue : Scale [0..1]
+    +glazingRatio : Scale [0..1]
+    -- + LCA ADE  (layerless window/door units only) --
+    +lca:environmentalId : LCAEnvironmentalReference
+    +lca:referenceServiceLife : Measure
+  }
+
   ' --- Solid material (Layered construction module) ---
   class "nrg3::SolidMaterial" <<featureType>> #66C5F0 {
     +thermalConductivity : Measure [0..1]
@@ -112,6 +125,7 @@ note right of "nrg3::LayeredConstruction"
   A construction WITH material layers carries EPDs on its
   SolidMaterial layers, NOT on the construction (no double-counting).
   A construction WITHOUT layers (window/door unit) carries the EPD itself.
+  Same rule applies to ReverseLayeredConstruction.
 end note
 
 ' ════════════════════════════════════════════════════════════════════
@@ -140,6 +154,7 @@ package "OPERATIONAL   [B6, B7]" as PkgOperational #FFFFFF {
 ' ════════════════════════════════════════════════════════════════════
 "nrg3::AbstractDevice"      ..> "LCAEnvironmentalReference" : environmentalId
 "nrg3::LayeredConstruction" ..> "LCAEnvironmentalReference" : environmentalId
+"nrg3::ReverseLayeredConstruction" ..> "LCAEnvironmentalReference" : environmentalId
 "nrg3::SolidMaterial"       ..> "LCAEnvironmentalReference" : environmentalId
 "nrg3::AbstractResource"    ..> "LCAEnvironmentalReference" : environmentalId
 

@@ -36,6 +36,8 @@ export function GraphCanvas({
   const collapsedMapRef = useRef<Map<number, Set<number>>>(new Map())
   const allEdgesRef = useRef<GraphEdge[]>([])
   const searchQueryRef = useRef<string>('')
+  const collapseSignalRef = useRef<number | null>(null)
+  const expandSignalRef = useRef<number | null>(null)
 
   // Shared "spotlight": dim everything except the given node ids (and edges between them).
   // Passing null clears the spotlight and restores full opacity. Reused by both
@@ -217,6 +219,13 @@ export function GraphCanvas({
   }, [fitSignal])
 
   useEffect(() => {
+    if (collapseSignalRef.current === null) {
+      collapseSignalRef.current = collapseAllSignal
+      return
+    }
+    if (collapseSignalRef.current === collapseAllSignal) return
+    collapseSignalRef.current = collapseAllSignal
+
     const nodeSet = nodesRef.current
     const edgeSet = edgesRef.current
     if (!nodeSet || !edgeSet) return
@@ -231,6 +240,13 @@ export function GraphCanvas({
   }, [collapseAllSignal])
 
   useEffect(() => {
+    if (expandSignalRef.current === null) {
+      expandSignalRef.current = expandAllSignal
+      return
+    }
+    if (expandSignalRef.current === expandAllSignal) return
+    expandSignalRef.current = expandAllSignal
+
     const nodeSet = nodesRef.current
     const edgeSet = edgesRef.current
     if (!nodeSet || !edgeSet) return
@@ -247,20 +263,25 @@ export function GraphCanvas({
 }
 
 function bfsOrder(nodeSet: DataSet<any>, allEdges: GraphEdge[]): number[] {
+  const hasParent = new Set<number>()
+  for (const edge of allEdges) {
+    hasParent.add(edge.to)
+  }
+
   const roots: number[] = []
   const order: number[] = []
 
   nodeSet.forEach((node) => {
-    const hasParent = allEdges.some((edge) => edge.to === node.id)
-    if (!hasParent) roots.push(node.id)
+    if (!hasParent.has(node.id)) roots.push(node.id)
   })
 
   const queue = [...roots]
   const visited = new Set(queue)
+  let index = 0
 
-  while (queue.length) {
-    const id = queue.shift()
-    if (id === undefined) continue
+  while (index < queue.length) {
+    const id = queue[index]
+    index += 1
 
     order.push(id)
     const node = nodeSet.get(id)

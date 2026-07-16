@@ -11,7 +11,7 @@ export function UploadPanel({ onUpload, loading }: UploadPanelProps) {
     { label: 'FZK Haus LCA Example', path: '/demos/fzk-haus-lca.gml', fileName: 'FZKHouseLoD3-LCA.gml' },
   ] as const
 
-  const [selectedDemoPath, setSelectedDemoPath] = useState<string>(demoFiles[0].path)
+  const [selectedDemoPath, setSelectedDemoPath] = useState<string>(demoFiles[1].path)
 
   async function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0]
