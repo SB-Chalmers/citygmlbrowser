@@ -1,5 +1,5 @@
 {
-  "name": "citygml2neo4j",
+  "name": "citygmlbrowser",
   "private": true,
   "version": "0.1.0",
   "scripts": {

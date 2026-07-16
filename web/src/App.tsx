@@ -79,7 +79,7 @@ function App() {
     <div className="mx-auto flex h-screen max-w-[1600px] flex-col overflow-hidden px-4 py-4 text-slate-100 md:px-6">
       <header className="mb-3 rounded-xl border border-slate-700 bg-slate-900/80 p-4 backdrop-blur">
         <div className="flex flex-wrap items-center gap-3">
-          <h1 className="text-lg font-bold tracking-wide text-amber-400">CityGML Browser</h1>
+          <h1 className="text-lg font-bold tracking-wide text-amber-400">Chalmers CityGML Browser</h1>
           <UploadPanel onUpload={handleUpload} loading={loading} />
           {graphMeta ? (
             <div className="text-xs text-slate-300">
