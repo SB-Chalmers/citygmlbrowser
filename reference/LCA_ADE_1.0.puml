@@ -1,4 +1,4 @@
-@startuml LCA_ADE_1.0
+@startuml
 ' CityGML LCA ADE 1.0 - Additions to the Energy ADE 3.0 (beta7)
 ' Namespace : http://sb.chalmers.se/ade/lca/1.0
 ' Organised after Hollberg et al. Table 1: GENERAL / EMBODIED / OPERATIONAL.
@@ -8,13 +8,15 @@
 ' Version : 1.0 beta | 2026-07
 
 hide empty members
+top to bottom direction
 
 skinparam packageStyle rectangle
 skinparam classBackgroundColor white
 skinparam classBorderColor #555
 skinparam ArrowColor #555
-skinparam nodesep 45
-skinparam ranksep 70
+skinparam linetype ortho
+skinparam nodesep 25
+skinparam ranksep 90
 skinparam classFontSize 11
 skinparam classAttributeFontSize 10
 skinparam packageFontSize 12
