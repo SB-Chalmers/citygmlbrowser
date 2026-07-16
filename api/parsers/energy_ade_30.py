@@ -70,6 +70,20 @@ def parse_layered_construction(el: ET.Element) -> dict:
     }
 
 
+def _parse_wrapped_opening(el: ET.Element) -> dict:
+    """Parse a Window/Door element wrapped by a thermal boundary."""
+    c_ref = el.find("nrg3:layeredConstruction", NS)
+    if c_ref is None:
+        c_ref = el.find("energy:construction/energy:Construction", NS)
+    return {
+        "id":           _gml_id(el),
+        "area":         text_of(el, "nrg3:bdgOpnArea") or text_of(el, "energy:area"),
+        "uValue":       text_of(el, "nrg3:bdgOpnUValue") or text_of(el, "energy:uValue"),
+        "glazingRatio": text_of(el, "nrg3:bdgOpnGlazingRatio") or text_of(el, "energy:glazingRatio"),
+        "construction": c_ref.get(_XLINK) if c_ref is not None else None,
+    }
+
+
 # ── Thermal boundaries ────────────────────────────────────────────────────────
 
 def parse_thermal_boundary(surf_el: ET.Element) -> dict:
@@ -90,7 +104,11 @@ def parse_thermal_boundary(surf_el: ET.Element) -> dict:
         "area":        text_of(surf_el, "nrg3:bdgBdrySurfTotalSurfaceArea"),
         # construction href keeps its '#' prefix as in ADE 2.0
         "construction":    c_ref.get(_XLINK) if c_ref is not None else None,
-        "thermalOpenings": [],
+        "thermalOpenings": [
+            _parse_wrapped_opening(opening_el)
+            for opening_prop in list(surf_el.findall("bldg:opening", NS)) + list(surf_el.findall("con:filling", NS))
+            for opening_el in opening_prop
+        ],
         "surfaceGeometry": None,
     }
 

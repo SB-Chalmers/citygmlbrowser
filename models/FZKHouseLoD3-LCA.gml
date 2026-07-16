@@ -1862,7 +1862,7 @@
         </energy:OpticalProperties>
       </energy:opticalProperties>
       <energy:glazingRatio uom="scale">0.7</energy:glazingRatio>
-    </energy:Construction>
+    <lca:environmentalId source="boverket">6000000104</lca:environmentalId><lca:referenceServiceLife uom="a">50</lca:referenceServiceLife></energy:Construction>
   </gml:featureMember>
   
   <gml:featureMember>
@@ -1900,7 +1900,7 @@
         </energy:OpticalProperties>
       </energy:opticalProperties>
       <energy:glazingRatio uom="scale">0.7</energy:glazingRatio>
-    </energy:Construction>
+    <lca:environmentalId source="boverket">6000000104</lca:environmentalId><lca:referenceServiceLife uom="a">50</lca:referenceServiceLife></energy:Construction>
   </gml:featureMember>
   
   <gml:featureMember>

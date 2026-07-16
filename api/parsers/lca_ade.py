@@ -66,6 +66,8 @@ LCA_ADE_URI = "http://sb.chalmers.se/ade/lca/1.0"
 
 _MATERIAL_LOCALS = frozenset({"SolidMaterial", "Gas"})
 _CONSTRUCTION_LOCALS = frozenset({
+    # Energy ADE 2.0 construction object
+    "Construction",
     # nrg3 construction assembly objects — for whole-unit product EPDs.
     # Typical targets: window glazing systems, prefabricated door units.
     # Every CityObject in Energy ADE 3.0 can reference an AbstractLayeredConstruction,

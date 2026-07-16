@@ -7,6 +7,7 @@ Transforms the parsed CityGML model dict into vis-network compatible
 from __future__ import annotations
 
 import xml.etree.ElementTree as ET
+from concurrent.futures import ThreadPoolExecutor
 from functools import lru_cache
 from pathlib import Path
 
@@ -158,6 +159,29 @@ def _enrich_with_epd(props: dict) -> None:
         props["db:wasteFactor"] = waste
 
 
+def _prefetch_epd_cache(objects: dict[str, dict]) -> None:
+    """Pre-warm cached EPD lookups for remote sources.
+
+    Ökobaudat lookups are network-bound and dominate graph build time on
+    cold cache. We prefetch unique (id, source) pairs concurrently so the
+    subsequent per-object enrichment loop is mostly cache hits.
+    """
+    pairs = {
+        (str(props.get("lca:environmentalId")), str(props.get("lca:environmentalIdSource")))
+        for props in objects.values()
+        if props.get("lca:environmentalId") and props.get("lca:environmentalIdSource")
+    }
+    remote_pairs = [pair for pair in pairs if pair[1] == "oekobaudat"]
+    if not remote_pairs:
+        return
+
+    # Keep concurrency conservative to avoid overloading the remote API.
+    max_workers = min(8, len(remote_pairs))
+    with ThreadPoolExecutor(max_workers=max_workers) as pool:
+        for _ in pool.map(lambda p: _cached_gwp(p[0], p[1]), remote_pairs):
+            pass
+
+
 def collect_global_energy(gml_file: str) -> dict:
     """Return global energy objects keyed by gml:id, enriched with LCA props.
 
@@ -181,6 +205,7 @@ def collect_global_energy(gml_file: str) -> dict:
                 result[gml_id].update(lca_props)
             else:
                 result[gml_id] = lca_props
+        _prefetch_epd_cache(result)
         # Enrich with actual GWP values from the referenced EPD database
         for props in result.values():
             _enrich_with_epd(props)
