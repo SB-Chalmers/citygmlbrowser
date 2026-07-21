@@ -7,8 +7,8 @@ type UploadPanelProps = {
 
 export function UploadPanel({ onUpload, loading }: UploadPanelProps) {
   const demoFiles = [
-    { label: 'Alderaan LCA Example', path: '/demos/alderaan-lca.gml', fileName: 'Alderaan-LCA.gml' },
-    { label: 'FZK Haus LCA Example', path: '/demos/fzk-haus-lca.gml', fileName: 'FZKHouseLoD3-LCA.gml' },
+    { label: 'Alderaan LCA Example', path: `${import.meta.env.BASE_URL}demos/alderaan-lca.gml`, fileName: 'Alderaan-LCA.gml' },
+    { label: 'FZK Haus LCA Example', path: `${import.meta.env.BASE_URL}demos/fzk-haus-lca.gml`, fileName: 'FZKHouseLoD3-LCA.gml' },
   ] as const
 
   const [selectedDemoPath, setSelectedDemoPath] = useState<string>(demoFiles[1].path)
