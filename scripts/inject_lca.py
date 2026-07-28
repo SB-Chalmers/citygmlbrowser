@@ -147,6 +147,53 @@ DEVICE_TYPE_MAP: dict[str, tuple[str, str, str]] = {
     #                          Flat solar collector  (same generic proxy)
 }
 
+# ── Schema-valid insertion helpers ───────────────────────────────────────────
+#
+# The CityGML 2.0 ADE hook mechanism uses xs:sequence ordering.  For any type
+# that extends core:AbstractCityObjectType (all nrg3:AbstractDevice subclasses),
+# the _GenericApplicationPropertyOfCityObject substitution slot appears AFTER
+# the last core-level property and BEFORE any Energy ADE-specific child elements.
+#
+# inject_lca.py must therefore insert LCA elements at that position rather than
+# appending them at the end of the element.  Appending causes cvc-complex-type
+# validation errors ("lca:environmentalId found where nrg3:deviceOperation is
+# expected") because the validator has already passed the legal insertion window.
+#
+# For types that extend gml:AbstractFeatureType directly (SolidMaterial, Gas,
+# LayeredConstruction, ReverseLayeredConstruction, AbstractResource subclasses)
+# no such hook exists in the host schema.  For those elements the properties are
+# appended at the end by convention injection — see LCA_ADE_1.0.md §"Encoding
+# and conformance" for the full discussion.
+
+# Energy ADE namespace URIs — LCA properties for AbstractDevice targets must
+# be placed BEFORE any child element from these namespaces.
+_ADE_NAMESPACES: frozenset[str] = frozenset({
+    "http://www.citygml.org/ade/energy/3.0",
+    "http://www.sig3d.org/citygml/2.0/energy/2.0",
+})
+
+
+def _ade_insert_pos(el: ET.Element) -> int:
+    """Return the index before which LCA properties must be inserted.
+
+    Scans the element's current children and returns the position of the first
+    child belonging to an Energy ADE namespace.  If no such child is found the
+    function returns len(el) so that ET.Element.insert() acts as an append.
+
+    This satisfies the xs:sequence ordering constraint for AbstractDevice types:
+      1. gml:AbstractFeatureType properties  (gml:description, gml:name, …)
+      2. core:AbstractCityObjectType props   (creationDate, terminationDate, …)
+      3. core:_GenericApplicationPropertyOfCityObject  ← LCA elements go here
+      4. Energy ADE-specific properties      (nrg3:model, nrg3:deviceOperation, …)
+    """
+    for i, child in enumerate(el):
+        if "{" in child.tag and "}" in child.tag:
+            ns = child.tag[1:child.tag.index("}")]
+            if ns in _ADE_NAMESPACES:
+                return i
+    return len(el)
+
+
 # Register the common CityGML / Energy ADE prefixes so ElementTree preserves
 # readable prefixes on output instead of emitting ns0:, ns1:, …
 _NAMESPACE_PREFIXES = {
@@ -239,12 +286,20 @@ def inject(root: ET.Element) -> tuple[int, int, int]:
 
         elif local in DEVICE_TYPE_MAP:
             resource_id, rsl, src = DEVICE_TYPE_MAP[local]
-            env = ET.SubElement(el, _lca("environmentalId"))
+            # Build elements first, then insert at the correct schema position.
+            # AbstractDevice extends core:AbstractCityObjectType, so the
+            # _GenericApplicationPropertyOfCityObject slot (where these elements
+            # legally substitute) falls BEFORE any Energy ADE-specific children.
+            # Using insert() rather than SubElement() satisfies xs:sequence order.
+            env = ET.Element(_lca("environmentalId"))
             env.set("source", src)
             env.text = resource_id
-            life = ET.SubElement(el, _lca("referenceServiceLife"))
+            life = ET.Element(_lca("referenceServiceLife"))
             life.set("uom", "a")
             life.text = rsl
+            pos = _ade_insert_pos(el)
+            el.insert(pos, life)   # insert life first so env ends up before it
+            el.insert(pos, env)
             devs_done += 1
 
         elif local == "CityModel":

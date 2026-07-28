@@ -24,7 +24,13 @@ skinparam packageFontSize 12
 ' Colour key follows the official Energy ADE 3.0 module colours:
 '   cyan = CityGML _CityObject   orange = Devices   blue = Layered Construction
 '   purple = Resources   green = LCA additions   peach = dataType
-'   Rows marked "+ LCA ADE" are the NEW parameters proposed by this schema.
+'   Rows marked "+ LCA ADE [F]" use the formal CityGML 2.0 ADE hook
+'     (_GenericApplicationPropertyOfCityObject substitution group).
+'     These are SCHEMA-VALIDATED and element-order constrained (see note below).
+'   Rows marked "+ LCA ADE [C]" use convention injection
+'     (direct sibling children of a gml:AbstractFeatureType element).
+'     These are NOT schema-validated by the host XSD.
+'     Formal hook coverage requires Energy ADE XSD extension — see proposal.
 
 ' ════════════════════════════════════════════════════════════════════
 ' SHARED LCA BUILDING BLOCKS
@@ -81,10 +87,18 @@ package "EMBODIED   [A1-A5, C1-C4, D + B4]" as PkgEmbodied #FFFFFF {
     +model : CharacterString [0..1]
     +installedPower : Measure [0..1]
     +nominalEfficiency : Measure [0..1]
-    -- + LCA ADE --
+    -- + LCA ADE [F] formal hook --
     +lca:environmentalId : LCAEnvironmentalReference
     +lca:referenceServiceLife : Measure
   }
+  note right of "nrg3::AbstractDevice"
+    [F] Formal hook: substitutes
+    core:_GenericApplicationPropertyOfCityObject.
+    Element ordering constraint (xs:sequence):
+    lca: properties MUST appear before any
+    nrg3: child elements in the XML document.
+    Validated by citygml-tools v2.5.0.
+  end note
 
   ' --- Window / door construction unit (Layered construction module) ---
   ' Only whole-unit constructions WITHOUT material layers (glazingRatio > 0,
@@ -94,7 +108,7 @@ package "EMBODIED   [A1-A5, C1-C4, D + B4]" as PkgEmbodied #FFFFFF {
     +uValue : Measure [0..1]
     +gValue : Scale [0..1]
     +glazingRatio : Scale [0..1]
-    -- + LCA ADE  (layerless window/door units only) --
+    -- + LCA ADE [C] convention injection --
     +lca:environmentalId : LCAEnvironmentalReference
     +lca:referenceServiceLife : Measure
   }
@@ -104,7 +118,7 @@ package "EMBODIED   [A1-A5, C1-C4, D + B4]" as PkgEmbodied #FFFFFF {
     +uValue : Measure [0..1]
     +gValue : Scale [0..1]
     +glazingRatio : Scale [0..1]
-    -- + LCA ADE  (layerless window/door units only) --
+    -- + LCA ADE [C] convention injection --
     +lca:environmentalId : LCAEnvironmentalReference
     +lca:referenceServiceLife : Measure
   }
@@ -115,10 +129,18 @@ package "EMBODIED   [A1-A5, C1-C4, D + B4]" as PkgEmbodied #FFFFFF {
     +density : Measure [0..1]
     +embodiedEnergy : Measure [0..1]
     +embodiedCarbon : Measure [0..1]
-    -- + LCA ADE --
+    -- + LCA ADE [C] convention injection --
     +lca:environmentalId : LCAEnvironmentalReference
     +lca:referenceServiceLife : Measure
   }
+  note left of "nrg3::SolidMaterial"
+    [C] Convention injection: these classes
+    extend gml:AbstractFeatureType, not
+    core:AbstractCityObjectType, so no
+    _GenericApplicationPropertyOfCityObject
+    hook is available. Formal hook requires
+    Energy ADE XSD extension (see proposal).
+  end note
 }
 
 note right of "nrg3::LayeredConstruction"
@@ -139,7 +161,7 @@ package "OPERATIONAL   [B6, B7]" as PkgOperational #FFFFFF {
     +status : ResourceStatusValue
     +amount : Measure [0..1]
     +co2Equivalent : Measure [0..1]
-    -- + LCA ADE --
+    -- + LCA ADE [C] convention injection --
     +lca:environmentalId : LCAEnvironmentalReference
   }
   note bottom of "nrg3::AbstractResource"

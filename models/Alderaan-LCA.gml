@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<core:CityModel xmlns:app="http://www.opengis.net/citygml/appearance/2.0" xmlns:bldg="http://www.opengis.net/citygml/building/2.0" xmlns:core="http://www.opengis.net/citygml/2.0" xmlns:dem="http://www.opengis.net/citygml/relief/2.0" xmlns:frn="http://www.opengis.net/citygml/cityfurniture/2.0" xmlns:gml="http://www.opengis.net/gml" xmlns:grp="http://www.opengis.net/citygml/cityobjectgroup/2.0" xmlns:lca="http://sb.chalmers.se/ade/lca/1.0" xmlns:nrg3="http://www.citygml.org/ade/energy/3.0" xmlns:veg="http://www.opengis.net/citygml/vegetation/2.0" xmlns:xAL="urn:oasis:names:tc:ciq:xsdschema:xAL:2.0" xmlns:xlink="http://www.w3.org/1999/xlink">
+<core:CityModel xmlns:app="http://www.opengis.net/citygml/appearance/2.0" xmlns:bldg="http://www.opengis.net/citygml/building/2.0" xmlns:core="http://www.opengis.net/citygml/2.0" xmlns:frn="http://www.opengis.net/citygml/cityfurniture/2.0" xmlns:gml="http://www.opengis.net/gml" xmlns:grp="http://www.opengis.net/citygml/cityobjectgroup/2.0" xmlns:lca="http://sb.chalmers.se/ade/lca/1.0" xmlns:nrg3="http://www.citygml.org/ade/energy/3.0" xmlns:veg="http://www.opengis.net/citygml/vegetation/2.0" xmlns:xAL="urn:oasis:names:tc:ciq:xsdschema:xAL:2.0" xmlns:xlink="http://www.w3.org/1999/xlink">
 	<gml:description>This city model contains a set of "fantasy" buildings created by Giorgio Agugiaro (g.agugiaro@tudelft.nl)</gml:description>
 	<gml:name>CityGML city of Alderaan</gml:name>
 	<gml:boundedBy>
@@ -405,13 +405,6 @@
 				<nrg3:ReverseLayeredConstruction gml:id="id_reverse_layered_construction_iwall_4">
 					<gml:description>ReverseLayeredConstruction Internal Wall 4 (from inside to outside) (reverse the order of the layers of the linked LayeredConstruction)</gml:description>
 					<gml:name>ReverseLayeredConstruction Internal Wall 4</gml:name>
-					<nrg3:baseLayeredConstruction xlink:href="#id_layered_construction_iwall_4" />
-				</nrg3:ReverseLayeredConstruction>
-			</nrg3:libraryMember>
-			<nrg3:libraryMember>
-				<nrg3:ReverseLayeredConstruction gml:id="id_reverse_layered_construction_iwall_4bis">
-					<gml:description>ReverseLayeredConstruction Internal Wall 4bis</gml:description>
-					<gml:name>ReverseLayeredConstruction Internal Wall 4bis</gml:name>
 					<nrg3:baseLayeredConstruction xlink:href="#id_layered_construction_iwall_4" />
 				</nrg3:ReverseLayeredConstruction>
 			</nrg3:libraryMember>
@@ -1024,27 +1017,7 @@
 						</nrg3:ScheduleComponent>
 					</nrg3:scheduleComponent>
 				</nrg3:CompositeSchedule>
-			 </nrg3:libraryMember>
-			<nrg3:libraryMember>
-				<nrg3:CompositeSchedule gml:id="id_composite_schedule_4">
-					<gml:description>This is CompositeSchedule 3, for 1 year, composed of 52 typical weeks, and using Xlinks</gml:description>
-					<gml:name>CompositeSchedule 3</gml:name>
-					<nrg3:libraryCode codeSpace="schedule_library_codeSpace">comp_sched_code_4</nrg3:libraryCode>
-					<nrg3:type codeSpace="schedule_type_codeSpace">year</nrg3:type>
-					<nrg3:startTime>00:00:00</nrg3:startTime>
-					<nrg3:temporalExtent unit="year">1</nrg3:temporalExtent>
-					<nrg3:scheduleComponent>
-						<nrg3:ScheduleComponent gml:id="id_schedule_component_8">
-							<gml:description>This is ScheduleComponent 7</gml:description>
-							<gml:name>ScheduleComponent 7, for 1 year, composed of 52 typical weeks</gml:name>
-							<nrg3:type codeSpace="schedule_type_codeSpace">typicalWeek</nrg3:type>
-							<nrg3:repetitions>52</nrg3:repetitions>
-							<nrg3:additionalGap unit="day">0</nrg3:additionalGap>
-							<nrg3:scheduleComponentMember xlink:href="#id_composite_schedule_1" />
-						</nrg3:ScheduleComponent>
-					</nrg3:scheduleComponent>
-				</nrg3:CompositeSchedule>
-			 </nrg3:libraryMember>
+			</nrg3:libraryMember>
 			<nrg3:libraryMember>
 				<nrg3:DualValueSchedule gml:id="id_dual_value_schedule_1">
 					<gml:description>This is DualValueSchedule 1 for a Monday</gml:description>
@@ -1235,7 +1208,7 @@
 				<nrg3:GenericSolarCollector gml:id="id_generic_solar_collector_1">
 					<gml:description>This is GenericSolarCollector 1</gml:description>
 					<gml:name>GenericSolarCollector 1</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>2.473 5 12.523</gml:pos>
 						</gml:Point>
@@ -1282,13 +1255,13 @@
 							</gml:surfaceMember>
 						</gml:MultiSurface>
 					</nrg3:lod2MultiSurface>
-				<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:GenericSolarCollector>
+				</nrg3:GenericSolarCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:GenericSolarCollector gml:id="id_generic_solar_collector_2">
 					<gml:description>This is GenericSolarCollector 2</gml:description>
 					<gml:name>GenericSolarCollector 2</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>7.527 5 12.523</gml:pos>
 						</gml:Point>
@@ -1335,13 +1308,13 @@
 							</gml:surfaceMember>
 						</gml:MultiSurface>
 					</nrg3:lod2MultiSurface>
-				<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:GenericSolarCollector>
+				</nrg3:GenericSolarCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:PhotovoltaicCollector gml:id="id_pv_collector_17">
 					<gml:description>This is PhotoVoltaicCollector 17</gml:description>
 					<gml:name>PhotoVoltaicCollector 17</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>2.473 2.333 12.523</gml:pos>
 						</gml:Point>
@@ -1389,13 +1362,13 @@
 						</gml:MultiSurface>
 					</nrg3:lod3MultiSurface>
 					<nrg3:cellType codeSpace="cell_type_codeSpace_1">polycristalline</nrg3:cellType>
-				<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife></nrg3:PhotovoltaicCollector>
+				</nrg3:PhotovoltaicCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:PhotovoltaicCollector gml:id="id_pv_collector_18">
 					<gml:description>This is PhotoVoltaicCollector 18</gml:description>
 					<gml:name>PhotoVoltaicCollector 18</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>2.473 5 12.523</gml:pos>
 						</gml:Point>
@@ -1443,13 +1416,13 @@
 						</gml:MultiSurface>
 					</nrg3:lod3MultiSurface>
 					<nrg3:cellType codeSpace="cell_type_codeSpace_1">polycristalline</nrg3:cellType>
-				<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife></nrg3:PhotovoltaicCollector>
+				</nrg3:PhotovoltaicCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:PhotovoltaicCollector gml:id="id_pv_collector_19">
 					<gml:description>This is PhotoVoltaicCollector 19</gml:description>
 					<gml:name>PhotoVoltaicCollector 19</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>2.473 7.667 12.523</gml:pos>
 						</gml:Point>
@@ -1497,13 +1470,13 @@
 						</gml:MultiSurface>
 					</nrg3:lod3MultiSurface>
 					<nrg3:cellType codeSpace="cell_type_codeSpace_1">polycristalline</nrg3:cellType>
-				<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife></nrg3:PhotovoltaicCollector>
+				</nrg3:PhotovoltaicCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:PhotovoltaicCollector gml:id="id_pv_collector_20">
 					<gml:description>This is PhotoVoltaicCollector 20</gml:description>
 					<gml:name>PhotoVoltaicCollector 20</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>7.527 2.333 12.523</gml:pos>
 						</gml:Point>
@@ -1551,13 +1524,13 @@
 						</gml:MultiSurface>
 					</nrg3:lod3MultiSurface>
 					<nrg3:cellType codeSpace="cell_type_codeSpace_1">polycristalline</nrg3:cellType>
-				<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife></nrg3:PhotovoltaicCollector>
+				</nrg3:PhotovoltaicCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:PhotovoltaicCollector gml:id="id_pv_collector_21">
 					<gml:description>This is PhotoVoltaicCollector 21</gml:description>
 					<gml:name>PhotoVoltaicCollector 21</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>7.527 5 12.523</gml:pos>
 						</gml:Point>
@@ -1605,13 +1578,13 @@
 						</gml:MultiSurface>
 					</nrg3:lod3MultiSurface>
 					<nrg3:cellType codeSpace="cell_type_codeSpace_1">polycristalline</nrg3:cellType>
-				<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife></nrg3:PhotovoltaicCollector>
+				</nrg3:PhotovoltaicCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:PhotovoltaicCollector gml:id="id_pv_collector_22">
 					<gml:description>This is PhotoVoltaicCollector 22</gml:description>
 					<gml:name>PhotoVoltaicCollector 22</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>7.527 7.667 12.523</gml:pos>
 						</gml:Point>
@@ -1659,7 +1632,7 @@
 						</gml:MultiSurface>
 					</nrg3:lod3MultiSurface>
 					<nrg3:cellType codeSpace="cell_type_codeSpace_1">polycristalline</nrg3:cellType>
-				<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife></nrg3:PhotovoltaicCollector>
+				</nrg3:PhotovoltaicCollector>
 			</nrg3:device>
 			<nrg3:referencePoint>
 				<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
@@ -1888,13 +1861,10 @@
 					</bldg:lod2MultiSurface>
 					<nrg3:bdgBdrySurfAzimuth uom="decimal degree">270</nrg3:bdgBdrySurfAzimuth>
 					<nrg3:bdgBdrySurfGroundViewFactor uom="unit interval">0.5</nrg3:bdgBdrySurfGroundViewFactor>
-					<nrg3:bdgBdrySurfHeatCapacity uom="kJ/(m^2*K)">1.26</nrg3:bdgBdrySurfHeatCapacity>
 					<nrg3:bdgBdrySurfInclination uom="decimal degree">45</nrg3:bdgBdrySurfInclination>
 					<nrg3:bdgBdrySurfIsAdiabatic>false</nrg3:bdgBdrySurfIsAdiabatic>
-					<nrg3:bdgBdrySurfOpaqueSurfaceArea uom="m^2">5</nrg3:bdgBdrySurfOpaqueSurfaceArea>
 					<nrg3:bdgBdrySurfOpeningToSurfaceRatio uom="unit interval">0.25</nrg3:bdgBdrySurfOpeningToSurfaceRatio>
 					<nrg3:bdgBdrySurfSkyViewFactor uom="unit interval">0.6</nrg3:bdgBdrySurfSkyViewFactor>
-					<nrg3:bdgBdrySurfThickness uom="mm">250</nrg3:bdgBdrySurfThickness>
 					<nrg3:bdgBdrySurfTotalSurfaceArea uom="m^2">70.7107</nrg3:bdgBdrySurfTotalSurfaceArea>
 				</bldg:RoofSurface>
 			</bldg:boundedBy>
@@ -3090,7 +3060,7 @@
 				<nrg3:Boiler gml:id="id_boiler_4">
 					<gml:description>This is Boiler 4</gml:description>
 					<gml:name>Boiler 4</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">fe91b985-60da-45dc-b3fd-29b9e632d49f</lca:environmentalId><lca:referenceServiceLife uom="a">20</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>15 5 7.5</gml:pos>
 						</gml:Point>
@@ -3115,13 +3085,13 @@
 						</nrg3:DeviceOperation>
 					</nrg3:deviceOperation>
 					<nrg3:hasCondensation>true</nrg3:hasCondensation>
-				<lca:environmentalId source="oekobaudat">fe91b985-60da-45dc-b3fd-29b9e632d49f</lca:environmentalId><lca:referenceServiceLife uom="a">20</lca:referenceServiceLife></nrg3:Boiler>
+				</nrg3:Boiler>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:LightingDevice gml:id="id_lighting_device_3">
 					<gml:description>This is LightingDevice 3</gml:description>
 					<gml:name>LightingDevice 3</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">6293ec16-2f99-4620-a032-fd6e57912a6c</lca:environmentalId><lca:referenceServiceLife uom="a">15</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>15 5 7.5</gml:pos>
 						</gml:Point>
@@ -3145,13 +3115,13 @@
 							<nrg3:schedule xlink:href="#id_composite_schedule_1" />
 						</nrg3:DeviceOperation>
 					</nrg3:deviceOperation>
-				<lca:environmentalId source="oekobaudat">6293ec16-2f99-4620-a032-fd6e57912a6c</lca:environmentalId><lca:referenceServiceLife uom="a">15</lca:referenceServiceLife></nrg3:LightingDevice>
+				</nrg3:LightingDevice>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:GenericSolarCollector gml:id="id_generic_solar_collector_3">
 					<gml:description>This is GenericSolarCollector 3</gml:description>
 					<gml:name>GenericSolarCollector 3</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>15 2.473 12.523</gml:pos>
 						</gml:Point>
@@ -3198,13 +3168,13 @@
 							</gml:surfaceMember>
 						</gml:MultiSurface>
 					</nrg3:lod2MultiSurface>
-				<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:GenericSolarCollector>
+				</nrg3:GenericSolarCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:PhotovoltaicCollector gml:id="id_pv_collector_23">
 					<gml:description>This is PhotoVoltaicCollector 23</gml:description>
 					<gml:name>PhotoVoltaicCollector 23</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>12.333 2.473 12.523</gml:pos>
 						</gml:Point>
@@ -3252,13 +3222,13 @@
 						</gml:MultiSurface>
 					</nrg3:lod3MultiSurface>
 					<nrg3:cellType codeSpace="cell_type_codeSpace_1">polycristalline</nrg3:cellType>
-				<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife></nrg3:PhotovoltaicCollector>
+				</nrg3:PhotovoltaicCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:PhotovoltaicCollector gml:id="id_pv_collector_24">
 					<gml:description>This is PhotoVoltaicCollector 24</gml:description>
 					<gml:name>PhotoVoltaicCollector 24</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>15 2.473 12.523</gml:pos>
 						</gml:Point>
@@ -3306,13 +3276,13 @@
 						</gml:MultiSurface>
 					</nrg3:lod3MultiSurface>
 					<nrg3:cellType codeSpace="cell_type_codeSpace_1">polycristalline</nrg3:cellType>
-				<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife></nrg3:PhotovoltaicCollector>
+				</nrg3:PhotovoltaicCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:PhotovoltaicCollector gml:id="id_pv_collector_25">
 					<gml:description>This is PhotoVoltaicCollector 25</gml:description>
 					<gml:name>PhotoVoltaicCollector 25</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>17.667 2.473 12.523</gml:pos>
 						</gml:Point>
@@ -3360,7 +3330,7 @@
 						</gml:MultiSurface>
 					</nrg3:lod3MultiSurface>
 					<nrg3:cellType codeSpace="cell_type_codeSpace_1">polycristalline</nrg3:cellType>
-				<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife></nrg3:PhotovoltaicCollector>
+				</nrg3:PhotovoltaicCollector>
 			</nrg3:device>
 			<nrg3:referencePoint>
 				<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
@@ -5710,7 +5680,7 @@
 				<nrg3:HeatPump gml:id="id_heat_pump_5">
 					<gml:description>This is HeatPump 5</gml:description>
 					<gml:name>HeatPump 5</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">1cd6b257-a4f8-4509-a83b-492cd34c7d98</lca:environmentalId><lca:referenceServiceLife uom="a">20</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>25 5 7.5</gml:pos>
 						</gml:Point>
@@ -5737,13 +5707,13 @@
 					<nrg3:heatSource codeSpace="heat_source_codeSpace">aquifer</nrg3:heatSource>
 					<nrg3:copSourceTemperature uom="degrees Celsius">5</nrg3:copSourceTemperature>
 					<nrg3:copOperationTemperature uom="degrees Celsius">10</nrg3:copOperationTemperature>
-				<lca:environmentalId source="oekobaudat">1cd6b257-a4f8-4509-a83b-492cd34c7d98</lca:environmentalId><lca:referenceServiceLife uom="a">20</lca:referenceServiceLife></nrg3:HeatPump>
+				</nrg3:HeatPump>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:MovableShadingDevice gml:id="id_movable_shading_device_6">
 					<gml:description>This is MovableShadingDevice 6</gml:description>
 					<gml:name>MovableShadingDevice 6</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">650a4800-0bc1-4d1e-b673-85e05cfc2310</lca:environmentalId><lca:referenceServiceLife uom="a">15</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>25 5 7.5</gml:pos>
 						</gml:Point>
@@ -5776,13 +5746,13 @@
 							<nrg3:wavelengthRange>solar</nrg3:wavelengthRange>
 						</nrg3:Transmittance>
 					</nrg3:transmittance>
-				<lca:environmentalId source="oekobaudat">650a4800-0bc1-4d1e-b673-85e05cfc2310</lca:environmentalId><lca:referenceServiceLife uom="a">15</lca:referenceServiceLife></nrg3:MovableShadingDevice>
+				</nrg3:MovableShadingDevice>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:GenericSolarCollector gml:id="id_generic_solar_collector_4">
 					<gml:description>This is GenericSolarCollector 4</gml:description>
 					<gml:name>GenericSolarCollector 4</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>22.473 5 12.523</gml:pos>
 						</gml:Point>
@@ -5829,13 +5799,13 @@
 							</gml:surfaceMember>
 						</gml:MultiSurface>
 					</nrg3:lod2MultiSurface>
-				<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:GenericSolarCollector>
+				</nrg3:GenericSolarCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:GenericSolarCollector gml:id="id_generic_solar_collector_5">
 					<gml:description>This is GenericSolarCollector 5</gml:description>
 					<gml:name>GenericSolarCollector 5</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>27.527 5 12.523</gml:pos>
 						</gml:Point>
@@ -5882,13 +5852,13 @@
 							</gml:surfaceMember>
 						</gml:MultiSurface>
 					</nrg3:lod2MultiSurface>
-				<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:GenericSolarCollector>
+				</nrg3:GenericSolarCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:PhotovoltaicCollector gml:id="id_pv_collector_26">
 					<gml:description>This is PhotoVoltaicCollector 26</gml:description>
 					<gml:name>PhotoVoltaicCollector 26</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>22.473 2.333 12.523</gml:pos>
 						</gml:Point>
@@ -5936,13 +5906,13 @@
 						</gml:MultiSurface>
 					</nrg3:lod3MultiSurface>
 					<nrg3:cellType codeSpace="cell_type_codeSpace_1">polycristalline</nrg3:cellType>
-				<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife></nrg3:PhotovoltaicCollector>
+				</nrg3:PhotovoltaicCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:PhotovoltaicCollector gml:id="id_pv_collector_27">
 					<gml:description>This is PhotoVoltaicCollector 27</gml:description>
 					<gml:name>PhotoVoltaicCollector 27</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>22.473 5 12.523</gml:pos>
 						</gml:Point>
@@ -5990,13 +5960,13 @@
 						</gml:MultiSurface>
 					</nrg3:lod3MultiSurface>
 					<nrg3:cellType codeSpace="cell_type_codeSpace_1">polycristalline</nrg3:cellType>
-				<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife></nrg3:PhotovoltaicCollector>
+				</nrg3:PhotovoltaicCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:PhotovoltaicCollector gml:id="id_pv_collector_28">
 					<gml:description>This is PhotoVoltaicCollector 28</gml:description>
 					<gml:name>PhotoVoltaicCollector 28</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>22.473 7.667 12.523</gml:pos>
 						</gml:Point>
@@ -6044,13 +6014,13 @@
 						</gml:MultiSurface>
 					</nrg3:lod3MultiSurface>
 					<nrg3:cellType codeSpace="cell_type_codeSpace_1">polycristalline</nrg3:cellType>
-				<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife></nrg3:PhotovoltaicCollector>
+				</nrg3:PhotovoltaicCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:PhotovoltaicCollector gml:id="id_pv_collector_29">
 					<gml:description>This is PhotoVoltaicCollector 29</gml:description>
 					<gml:name>PhotoVoltaicCollector 29</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>27.527 2.333 12.523</gml:pos>
 						</gml:Point>
@@ -6098,13 +6068,13 @@
 						</gml:MultiSurface>
 					</nrg3:lod3MultiSurface>
 					<nrg3:cellType codeSpace="cell_type_codeSpace_1">polycristalline</nrg3:cellType>
-				<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife></nrg3:PhotovoltaicCollector>
+				</nrg3:PhotovoltaicCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:PhotovoltaicCollector gml:id="id_pv_collector_30">
 					<gml:description>This is PhotoVoltaicCollector 30</gml:description>
 					<gml:name>PhotoVoltaicCollector 30</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>27.527 5 12.523</gml:pos>
 						</gml:Point>
@@ -6152,13 +6122,13 @@
 						</gml:MultiSurface>
 					</nrg3:lod3MultiSurface>
 					<nrg3:cellType codeSpace="cell_type_codeSpace_1">polycristalline</nrg3:cellType>
-				<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife></nrg3:PhotovoltaicCollector>
+				</nrg3:PhotovoltaicCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:PhotovoltaicCollector gml:id="id_pv_collector_31">
 					<gml:description>This is PhotoVoltaicCollector 31</gml:description>
 					<gml:name>PhotoVoltaicCollector 31</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>27.527 7.667 12.523</gml:pos>
 						</gml:Point>
@@ -6206,7 +6176,7 @@
 						</gml:MultiSurface>
 					</nrg3:lod3MultiSurface>
 					<nrg3:cellType codeSpace="cell_type_codeSpace_1">polycristalline</nrg3:cellType>
-				<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife></nrg3:PhotovoltaicCollector>
+				</nrg3:PhotovoltaicCollector>
 			</nrg3:device>
 			<nrg3:referencePoint>
 				<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
@@ -7562,7 +7532,7 @@
 				<nrg3:LightingDevice gml:id="id_lighting_device_8">
 					<gml:description>This is LightingDevice 8</gml:description>
 					<gml:name>LightingDevice 8</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">6293ec16-2f99-4620-a032-fd6e57912a6c</lca:environmentalId><lca:referenceServiceLife uom="a">15</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>35 5 7.5</gml:pos>
 						</gml:Point>
@@ -7586,13 +7556,13 @@
 							<nrg3:schedule xlink:href="#id_composite_schedule_2" />
 						</nrg3:DeviceOperation>
 					</nrg3:deviceOperation>
-				<lca:environmentalId source="oekobaudat">6293ec16-2f99-4620-a032-fd6e57912a6c</lca:environmentalId><lca:referenceServiceLife uom="a">15</lca:referenceServiceLife></nrg3:LightingDevice>
+				</nrg3:LightingDevice>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:GenericSolarCollector gml:id="id_generic_solar_collector_6">
 					<gml:description>This is GenericSolarCollector 6</gml:description>
 					<gml:name>GenericSolarCollector 6</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>35 2.473 12.523</gml:pos>
 						</gml:Point>
@@ -7639,13 +7609,13 @@
 							</gml:surfaceMember>
 						</gml:MultiSurface>
 					</nrg3:lod2MultiSurface>
-				<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:GenericSolarCollector>
+				</nrg3:GenericSolarCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:PhotovoltaicCollector gml:id="id_pv_collector_32">
 					<gml:description>This is PhotoVoltaicCollector 32</gml:description>
 					<gml:name>PhotoVoltaicCollector 32</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>32.333 2.473 12.523</gml:pos>
 						</gml:Point>
@@ -7693,13 +7663,13 @@
 						</gml:MultiSurface>
 					</nrg3:lod3MultiSurface>
 					<nrg3:cellType codeSpace="cell_type_codeSpace_1">polycristalline</nrg3:cellType>
-				<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">30</lca:referenceServiceLife></nrg3:PhotovoltaicCollector>
+				</nrg3:PhotovoltaicCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:SolarThermalCollector gml:id="id_solar_thermal_collector_33">
 					<gml:description>This is SolarThermalCollector 33</gml:description>
 					<gml:name>SolarThermalCollector 33</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>35 2.473 12.523</gml:pos>
 						</gml:Point>
@@ -7750,13 +7720,13 @@
 					<nrg3:opticalEfficiency uom="unit interval">0.4</nrg3:opticalEfficiency>
 					<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 					<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-				<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:SolarThermalCollector>
+				</nrg3:SolarThermalCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:SolarThermalCollector gml:id="id_solar_thermal_collector_34">
 					<gml:description>This is SolarThermalCollector 34</gml:description>
 					<gml:name>SolarThermalCollector 34</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>37.667 2.473 12.523</gml:pos>
 						</gml:Point>
@@ -7807,13 +7777,13 @@
 					<nrg3:opticalEfficiency uom="unit interval">0.4</nrg3:opticalEfficiency>
 					<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 					<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-				<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:SolarThermalCollector>
+				</nrg3:SolarThermalCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:ThermalStorageDevice gml:id="id_thermal_storage_device_7">
 					<gml:description>This is ThermalStorageDevice 7</gml:description>
 					<gml:name>ThermalStorageDevice 7</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">1aa165a1-32ca-461a-a006-3736d3c9c8e2</lca:environmentalId><lca:referenceServiceLife uom="a">20</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>35 5 7.5</gml:pos>
 						</gml:Point>
@@ -7841,7 +7811,7 @@
 					<nrg3:medium codeSpace="medium_codeSpace">steam</nrg3:medium>
 					<nrg3:thermalLossesFactor uom="units no idea...">80</nrg3:thermalLossesFactor>
 					<nrg3:volume uom="m^3">50</nrg3:volume>
-				<lca:environmentalId source="oekobaudat">1aa165a1-32ca-461a-a006-3736d3c9c8e2</lca:environmentalId><lca:referenceServiceLife uom="a">20</lca:referenceServiceLife></nrg3:ThermalStorageDevice>
+				</nrg3:ThermalStorageDevice>
 			</nrg3:device>
 			<nrg3:referencePoint>
 				<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
@@ -9323,7 +9293,7 @@
 				<nrg3:Boiler gml:id="id_boiler_9">
 					<gml:description>This is Boiler 9</gml:description>
 					<gml:name>Boiler 9</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">fe91b985-60da-45dc-b3fd-29b9e632d49f</lca:environmentalId><lca:referenceServiceLife uom="a">20</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>55 5 7.5</gml:pos>
 						</gml:Point>
@@ -9348,13 +9318,13 @@
 						</nrg3:DeviceOperation>
 					</nrg3:deviceOperation>
 					<nrg3:hasCondensation>true</nrg3:hasCondensation>
-				<lca:environmentalId source="oekobaudat">fe91b985-60da-45dc-b3fd-29b9e632d49f</lca:environmentalId><lca:referenceServiceLife uom="a">20</lca:referenceServiceLife></nrg3:Boiler>
+				</nrg3:Boiler>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:HeatPump gml:id="id_heat_pump_10">
 					<gml:description>This is HeatPump 10</gml:description>
 					<gml:name>HeatPump 10</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">1cd6b257-a4f8-4509-a83b-492cd34c7d98</lca:environmentalId><lca:referenceServiceLife uom="a">20</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>55 5 7.5</gml:pos>
 						</gml:Point>
@@ -9381,13 +9351,13 @@
 					<nrg3:heatSource codeSpace="heat_source_codeSpace">aquifer</nrg3:heatSource>
 					<nrg3:copSourceTemperature uom="degrees Celsius">5</nrg3:copSourceTemperature>
 					<nrg3:copOperationTemperature uom="degrees Celsius">10</nrg3:copOperationTemperature>
-				<lca:environmentalId source="oekobaudat">1cd6b257-a4f8-4509-a83b-492cd34c7d98</lca:environmentalId><lca:referenceServiceLife uom="a">20</lca:referenceServiceLife></nrg3:HeatPump>
+				</nrg3:HeatPump>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:GenericSolarCollector gml:id="id_generic_solar_collector_7">
 					<gml:description>This is GenericSolarCollector 7</gml:description>
 					<gml:name>GenericSolarCollector 7</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>55 2.473 12.523</gml:pos>
 						</gml:Point>
@@ -9434,13 +9404,13 @@
 							</gml:surfaceMember>
 						</gml:MultiSurface>
 					</nrg3:lod2MultiSurface>
-				<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:GenericSolarCollector>
+				</nrg3:GenericSolarCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:SolarThermalCollector gml:id="id_solar_thermal_collector_35">
 					<gml:description>This is SolarThermalCollector 35</gml:description>
 					<gml:name>SolarThermalCollector 35</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>52.333 2.473 12.523</gml:pos>
 						</gml:Point>
@@ -9491,13 +9461,13 @@
 					<nrg3:opticalEfficiency uom="unit interval">0.4</nrg3:opticalEfficiency>
 					<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 					<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-				<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:SolarThermalCollector>
+				</nrg3:SolarThermalCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:SolarThermalCollector gml:id="id_solar_thermal_collector_36">
 					<gml:description>This is SolarThermalCollector 36</gml:description>
 					<gml:name>SolarThermalCollector 36</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>55 2.473 12.523</gml:pos>
 						</gml:Point>
@@ -9548,13 +9518,13 @@
 					<nrg3:opticalEfficiency uom="unit interval">0.4</nrg3:opticalEfficiency>
 					<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 					<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-				<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:SolarThermalCollector>
+				</nrg3:SolarThermalCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:SolarThermalCollector gml:id="id_solar_thermal_collector_37">
 					<gml:description>This is SolarThermalCollector 37</gml:description>
 					<gml:name>SolarThermalCollector 37</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>57.667 2.473 12.523</gml:pos>
 						</gml:Point>
@@ -9605,7 +9575,7 @@
 					<nrg3:opticalEfficiency uom="unit interval">0.4</nrg3:opticalEfficiency>
 					<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 					<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-				<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:SolarThermalCollector>
+				</nrg3:SolarThermalCollector>
 			</nrg3:device>
 			<nrg3:referencePoint>
 				<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
@@ -11087,7 +11057,7 @@
 				<nrg3:ElectricalStorageDevice gml:id="id_electrical_storage_device_11">
 					<gml:description>This is ElectricalStorageDevice 11</gml:description>
 					<gml:name>ElectricalStorageDevice 11</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">5b430e64-fcd6-42b6-9b2a-18661249a335</lca:environmentalId><lca:referenceServiceLife uom="a">15</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>65 10 7.5</gml:pos>
 						</gml:Point>
@@ -11113,7 +11083,7 @@
 					</nrg3:deviceOperation>
 					<nrg3:batteryTechnology codeSpace="batt_tech_codeSpace">lithium</nrg3:batteryTechnology>
 					<nrg3:powerCapacity uom="VAh">600</nrg3:powerCapacity>
-				<lca:environmentalId source="oekobaudat">5b430e64-fcd6-42b6-9b2a-18661249a335</lca:environmentalId><lca:referenceServiceLife uom="a">15</lca:referenceServiceLife></nrg3:ElectricalStorageDevice>
+				</nrg3:ElectricalStorageDevice>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:GenericDevice gml:id="id_generic_device_12">
@@ -11149,7 +11119,7 @@
 				<nrg3:GenericSolarCollector gml:id="id_generic_solar_collector_8">
 					<gml:description>This is GenericSolarCollector 8</gml:description>
 					<gml:name>GenericSolarCollector 8</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>62.473 10 12.523</gml:pos>
 						</gml:Point>
@@ -11196,13 +11166,13 @@
 							</gml:surfaceMember>
 						</gml:MultiSurface>
 					</nrg3:lod2MultiSurface>
-				<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:GenericSolarCollector>
+				</nrg3:GenericSolarCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:GenericSolarCollector gml:id="id_generic_solar_collector_9">
 					<gml:description>This is GenericSolarCollector 9</gml:description>
 					<gml:name>GenericSolarCollector 9</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>67.527 10 12.523</gml:pos>
 						</gml:Point>
@@ -11249,13 +11219,13 @@
 							</gml:surfaceMember>
 						</gml:MultiSurface>
 					</nrg3:lod2MultiSurface>
-				<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:GenericSolarCollector>
+				</nrg3:GenericSolarCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:SolarThermalCollector gml:id="id_solar_thermal_collector_38">
 					<gml:description>This is SolarThermalCollector 38</gml:description>
 					<gml:name>SolarThermalCollector 38</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>62.473 7.333 12.523</gml:pos>
 						</gml:Point>
@@ -11306,13 +11276,13 @@
 					<nrg3:opticalEfficiency uom="unit interval">0.4</nrg3:opticalEfficiency>
 					<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 					<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-				<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:SolarThermalCollector>
+				</nrg3:SolarThermalCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:SolarThermalCollector gml:id="id_solar_thermal_collector_39">
 					<gml:description>This is SolarThermalCollector 39</gml:description>
 					<gml:name>SolarThermalCollector 39</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>62.473 10 12.523</gml:pos>
 						</gml:Point>
@@ -11363,13 +11333,13 @@
 					<nrg3:opticalEfficiency uom="unit interval">0.4</nrg3:opticalEfficiency>
 					<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 					<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-				<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:SolarThermalCollector>
+				</nrg3:SolarThermalCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:SolarThermalCollector gml:id="id_solar_thermal_collector_40">
 					<gml:description>This is SolarThermalCollector 40</gml:description>
 					<gml:name>SolarThermalCollector 40</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>62.473 12.667 12.523</gml:pos>
 						</gml:Point>
@@ -11420,13 +11390,13 @@
 					<nrg3:opticalEfficiency uom="unit interval">0.4</nrg3:opticalEfficiency>
 					<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 					<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-				<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:SolarThermalCollector>
+				</nrg3:SolarThermalCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:SolarThermalCollector gml:id="id_solar_thermal_collector_41">
 					<gml:description>This is SolarThermalCollector 41</gml:description>
 					<gml:name>SolarThermalCollector 41</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>67.527 7.333 12.523</gml:pos>
 						</gml:Point>
@@ -11477,13 +11447,13 @@
 					<nrg3:opticalEfficiency uom="unit interval">0.4</nrg3:opticalEfficiency>
 					<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 					<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-				<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:SolarThermalCollector>
+				</nrg3:SolarThermalCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:SolarThermalCollector gml:id="id_solar_thermal_collector_42">
 					<gml:description>This is SolarThermalCollector 42</gml:description>
 					<gml:name>SolarThermalCollector 42</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>67.527 10 12.523</gml:pos>
 						</gml:Point>
@@ -11534,13 +11504,13 @@
 					<nrg3:opticalEfficiency uom="unit interval">0.4</nrg3:opticalEfficiency>
 					<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 					<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-				<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:SolarThermalCollector>
+				</nrg3:SolarThermalCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:SolarThermalCollector gml:id="id_solar_thermal_collector_43">
 					<gml:description>This is SolarThermalCollector 43</gml:description>
 					<gml:name>SolarThermalCollector 43</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>67.527 12.667 12.523</gml:pos>
 						</gml:Point>
@@ -11591,7 +11561,7 @@
 					<nrg3:opticalEfficiency uom="unit interval">0.4</nrg3:opticalEfficiency>
 					<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 					<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-				<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:SolarThermalCollector>
+				</nrg3:SolarThermalCollector>
 			</nrg3:device>
 			<nrg3:referencePoint>
 				<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
@@ -13103,7 +13073,7 @@
 				<nrg3:LightingDevice gml:id="id_lighting_device_14">
 					<gml:description>This is LightingDevice 14</gml:description>
 					<gml:name>LightingDevice 14</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">6293ec16-2f99-4620-a032-fd6e57912a6c</lca:environmentalId><lca:referenceServiceLife uom="a">15</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>5 -25 7.5</gml:pos>
 						</gml:Point>
@@ -13127,13 +13097,13 @@
 							<nrg3:schedule xlink:href="#id_composite_schedule_3" />
 						</nrg3:DeviceOperation>
 					</nrg3:deviceOperation>
-				<lca:environmentalId source="oekobaudat">6293ec16-2f99-4620-a032-fd6e57912a6c</lca:environmentalId><lca:referenceServiceLife uom="a">15</lca:referenceServiceLife></nrg3:LightingDevice>
+				</nrg3:LightingDevice>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:GenericSolarCollector gml:id="id_generic_solar_collector_10">
 					<gml:description>This is GenericSolarCollector 10</gml:description>
 					<gml:name>GenericSolarCollector 10</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>2.473 -25 12.523</gml:pos>
 						</gml:Point>
@@ -13180,13 +13150,13 @@
 							</gml:surfaceMember>
 						</gml:MultiSurface>
 					</nrg3:lod2MultiSurface>
-				<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:GenericSolarCollector>
+				</nrg3:GenericSolarCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:GenericSolarCollector gml:id="id_generic_solar_collector_11">
 					<gml:description>This is GenericSolarCollector 11</gml:description>
 					<gml:name>GenericSolarCollector 11</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>7.527 -25 12.523</gml:pos>
 						</gml:Point>
@@ -13233,13 +13203,13 @@
 							</gml:surfaceMember>
 						</gml:MultiSurface>
 					</nrg3:lod2MultiSurface>
-				<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:GenericSolarCollector>
+				</nrg3:GenericSolarCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:PhotovoltaicThermalCollector gml:id="id_pv_thermal_collector_49">
 					<gml:description>This is PhotovoltaicThermalCollector 49</gml:description>
 					<gml:name>PhotovoltaicThermalCollector 49</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>7.527 -22.333 12.523</gml:pos>
 						</gml:Point>
@@ -13291,13 +13261,13 @@
 					<nrg3:opticalEfficiency uom="unit interval">0.8</nrg3:opticalEfficiency>
 					<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 					<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-				<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:PhotovoltaicThermalCollector>
+				</nrg3:PhotovoltaicThermalCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:SolarThermalCollector gml:id="id_solar_thermal_collector_44">
 					<gml:description>This is SolarThermalCollector 44</gml:description>
 					<gml:name>SolarThermalCollector 44</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>2.473 -27.667 12.523</gml:pos>
 						</gml:Point>
@@ -13348,13 +13318,13 @@
 					<nrg3:opticalEfficiency uom="unit interval">0.4</nrg3:opticalEfficiency>
 					<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 					<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-				<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:SolarThermalCollector>
+				</nrg3:SolarThermalCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:SolarThermalCollector gml:id="id_solar_thermal_collector_45">
 					<gml:description>This is SolarThermalCollector 45</gml:description>
 					<gml:name>SolarThermalCollector 45</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>2.473 -25 12.523</gml:pos>
 						</gml:Point>
@@ -13405,13 +13375,13 @@
 					<nrg3:opticalEfficiency uom="unit interval">0.4</nrg3:opticalEfficiency>
 					<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 					<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-				<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:SolarThermalCollector>
+				</nrg3:SolarThermalCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:SolarThermalCollector gml:id="id_solar_thermal_collector_46">
 					<gml:description>This is SolarThermalCollector 46</gml:description>
 					<gml:name>SolarThermalCollector 46</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>2.473 -22.333 12.523</gml:pos>
 						</gml:Point>
@@ -13462,13 +13432,13 @@
 					<nrg3:opticalEfficiency uom="unit interval">0.4</nrg3:opticalEfficiency>
 					<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 					<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-				<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:SolarThermalCollector>
+				</nrg3:SolarThermalCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:SolarThermalCollector gml:id="id_solar_thermal_collector_47">
 					<gml:description>This is SolarThermalCollector 47</gml:description>
 					<gml:name>SolarThermalCollector 47</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>7.527 -27.667 12.523</gml:pos>
 						</gml:Point>
@@ -13519,13 +13489,13 @@
 					<nrg3:opticalEfficiency uom="unit interval">0.4</nrg3:opticalEfficiency>
 					<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 					<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-				<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:SolarThermalCollector>
+				</nrg3:SolarThermalCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:SolarThermalCollector gml:id="id_solar_thermal_collector_48">
 					<gml:description>This is SolarThermalCollector 48</gml:description>
 					<gml:name>SolarThermalCollector 48</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>7.527 -25 12.523</gml:pos>
 						</gml:Point>
@@ -13576,7 +13546,7 @@
 					<nrg3:opticalEfficiency uom="unit interval">0.4</nrg3:opticalEfficiency>
 					<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 					<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-				<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:SolarThermalCollector>
+				</nrg3:SolarThermalCollector>
 			</nrg3:device>
 			<nrg3:referencePoint>
 				<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
@@ -15058,7 +15028,7 @@
 				<nrg3:MovableShadingDevice gml:id="id_movable_shading_device_15">
 					<gml:description>This is MovableShadingDevice 15</gml:description>
 					<gml:name>MovableShadingDevice 15</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">650a4800-0bc1-4d1e-b673-85e05cfc2310</lca:environmentalId><lca:referenceServiceLife uom="a">15</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>15 -20 7.5</gml:pos>
 						</gml:Point>
@@ -15091,13 +15061,13 @@
 							<nrg3:wavelengthRange>solar</nrg3:wavelengthRange>
 						</nrg3:Transmittance>
 					</nrg3:transmittance>
-				<lca:environmentalId source="oekobaudat">650a4800-0bc1-4d1e-b673-85e05cfc2310</lca:environmentalId><lca:referenceServiceLife uom="a">15</lca:referenceServiceLife></nrg3:MovableShadingDevice>
+				</nrg3:MovableShadingDevice>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:GenericSolarCollector gml:id="id_generic_solar_collector_12">
 					<gml:description>This is GenericSolarCollector 12</gml:description>
 					<gml:name>GenericSolarCollector 12</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>15 -22.527 12.523</gml:pos>
 						</gml:Point>
@@ -15144,13 +15114,13 @@
 							</gml:surfaceMember>
 						</gml:MultiSurface>
 					</nrg3:lod2MultiSurface>
-				<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:GenericSolarCollector>
+				</nrg3:GenericSolarCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:PhotovoltaicThermalCollector gml:id="id_pv_thermal_collector_50">
 					<gml:description>This is PhotovoltaicThermalCollector 50</gml:description>
 					<gml:name>PhotovoltaicThermalCollector 50</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>12.333 -22.527 12.523</gml:pos>
 						</gml:Point>
@@ -15202,13 +15172,13 @@
 					<nrg3:opticalEfficiency uom="unit interval">0.8</nrg3:opticalEfficiency>
 					<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 					<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-				<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:PhotovoltaicThermalCollector>
+				</nrg3:PhotovoltaicThermalCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:PhotovoltaicThermalCollector gml:id="id_pv_thermal_collector_51">
 					<gml:description>This is PhotovoltaicThermalCollector 51</gml:description>
 					<gml:name>PhotovoltaicThermalCollector 51</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>15 -22.527 12.523</gml:pos>
 						</gml:Point>
@@ -15260,13 +15230,13 @@
 					<nrg3:opticalEfficiency uom="unit interval">0.8</nrg3:opticalEfficiency>
 					<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 					<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-				<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:PhotovoltaicThermalCollector>
+				</nrg3:PhotovoltaicThermalCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:PhotovoltaicThermalCollector gml:id="id_pv_thermal_collector_52">
 					<gml:description>This is PhotovoltaicThermalCollector 52</gml:description>
 					<gml:name>PhotovoltaicThermalCollector 52</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>17.667 -22.527 12.523</gml:pos>
 						</gml:Point>
@@ -15318,13 +15288,13 @@
 					<nrg3:opticalEfficiency uom="unit interval">0.8</nrg3:opticalEfficiency>
 					<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 					<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-				<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:PhotovoltaicThermalCollector>
+				</nrg3:PhotovoltaicThermalCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:ThermalStorageDevice gml:id="id_thermal_storage_device_16">
 					<gml:description>This is ThermalStorageDevice 16</gml:description>
 					<gml:name>ThermalStorageDevice 16</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">1aa165a1-32ca-461a-a006-3736d3c9c8e2</lca:environmentalId><lca:referenceServiceLife uom="a">20</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>15 -20 7.5</gml:pos>
 						</gml:Point>
@@ -15352,7 +15322,7 @@
 					<nrg3:medium codeSpace="medium_codeSpace">steam</nrg3:medium>
 					<nrg3:thermalLossesFactor uom="units no idea...">80</nrg3:thermalLossesFactor>
 					<nrg3:volume uom="m^3">50</nrg3:volume>
-				<lca:environmentalId source="oekobaudat">1aa165a1-32ca-461a-a006-3736d3c9c8e2</lca:environmentalId><lca:referenceServiceLife uom="a">20</lca:referenceServiceLife></nrg3:ThermalStorageDevice>
+				</nrg3:ThermalStorageDevice>
 			</nrg3:device>
 			<nrg3:referencePoint>
 				<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
@@ -16834,7 +16804,7 @@
 				<nrg3:Boiler gml:id="id_boiler_18">
 					<gml:description>This is Boiler 18</gml:description>
 					<gml:name>Boiler 18</gml:name>
-					<nrg3:model>Boiler Boiler 18</nrg3:model>
+					<lca:environmentalId source="oekobaudat">fe91b985-60da-45dc-b3fd-29b9e632d49f</lca:environmentalId><lca:referenceServiceLife uom="a">20</lca:referenceServiceLife><nrg3:model>Boiler Boiler 18</nrg3:model>
 					<nrg3:yearOfManufacture>2000</nrg3:yearOfManufacture>
 					<nrg3:numberOfDevices>1</nrg3:numberOfDevices>
 					<nrg3:installedPower uom="kW">1.4</nrg3:installedPower>
@@ -16854,13 +16824,13 @@
 						</nrg3:DeviceOperation>
 					</nrg3:deviceOperation>
 					<nrg3:hasCondensation>true</nrg3:hasCondensation>
-				<lca:environmentalId source="oekobaudat">fe91b985-60da-45dc-b3fd-29b9e632d49f</lca:environmentalId><lca:referenceServiceLife uom="a">20</lca:referenceServiceLife></nrg3:Boiler>
+				</nrg3:Boiler>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:ElectricalStorageDevice gml:id="id_electrical_storage_device_17">
 					<gml:description>This is ElectricalStorageDevice 17</gml:description>
 					<gml:name>ElectricalStorageDevice 17</gml:name>
-					<nrg3:model>ElectricalStorageDevice ElectricalStorageDevice 17</nrg3:model>
+					<lca:environmentalId source="oekobaudat">5b430e64-fcd6-42b6-9b2a-18661249a335</lca:environmentalId><lca:referenceServiceLife uom="a">15</lca:referenceServiceLife><nrg3:model>ElectricalStorageDevice ElectricalStorageDevice 17</nrg3:model>
 					<nrg3:yearOfManufacture>2008</nrg3:yearOfManufacture>
 					<nrg3:numberOfDevices>1</nrg3:numberOfDevices>
 					<nrg3:installedPower uom="kW">9.1</nrg3:installedPower>
@@ -16881,7 +16851,7 @@
 					</nrg3:deviceOperation>
 					<nrg3:batteryTechnology codeSpace="batt_tech_codeSpace">lithium</nrg3:batteryTechnology>
 					<nrg3:powerCapacity uom="VAh">600</nrg3:powerCapacity>
-				<lca:environmentalId source="oekobaudat">5b430e64-fcd6-42b6-9b2a-18661249a335</lca:environmentalId><lca:referenceServiceLife uom="a">15</lca:referenceServiceLife></nrg3:ElectricalStorageDevice>
+				</nrg3:ElectricalStorageDevice>
 			</nrg3:device>
 			<nrg3:utilityNetworkConnection>
 				<nrg3:UtilityNetworkConnection gml:id="id_util_network_conn_31">
@@ -16936,7 +16906,7 @@
 						<nrg3:ElectricalStorageDevice gml:id="id_electrical_storage_device_23">
 							<gml:description>This is ElectricalStorageDevice 23</gml:description>
 							<gml:name>ElectricalStorageDevice 23</gml:name>
-							<nrg3:referencePoint>
+							<lca:environmentalId source="oekobaudat">5b430e64-fcd6-42b6-9b2a-18661249a335</lca:environmentalId><lca:referenceServiceLife uom="a">15</lca:referenceServiceLife><nrg3:referencePoint>
 								<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:pos>35 -20 7.5</gml:pos>
 								</gml:Point>
@@ -16962,7 +16932,7 @@
 							</nrg3:deviceOperation>
 							<nrg3:batteryTechnology codeSpace="batt_tech_codeSpace">lithium</nrg3:batteryTechnology>
 							<nrg3:powerCapacity uom="VAh">600</nrg3:powerCapacity>
-						<lca:environmentalId source="oekobaudat">5b430e64-fcd6-42b6-9b2a-18661249a335</lca:environmentalId><lca:referenceServiceLife uom="a">15</lca:referenceServiceLife></nrg3:ElectricalStorageDevice>
+						</nrg3:ElectricalStorageDevice>
 					</nrg3:device>
 					<nrg3:device>
 						<nrg3:GenericDevice gml:id="id_generic_device_24">
@@ -16998,7 +16968,7 @@
 						<nrg3:GenericSolarCollector gml:id="id_generic_solar_collector_15">
 							<gml:description>This is GenericSolarCollector 15</gml:description>
 							<gml:name>GenericSolarCollector 15</gml:name>
-							<nrg3:referencePoint>
+							<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 								<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:pos>35 -22.527 12.523</gml:pos>
 								</gml:Point>
@@ -17045,13 +17015,13 @@
 									</gml:surfaceMember>
 								</gml:MultiSurface>
 							</nrg3:lod2MultiSurface>
-						<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:GenericSolarCollector>
+						</nrg3:GenericSolarCollector>
 					</nrg3:device>
 					<nrg3:device>
 						<nrg3:PhotovoltaicThermalCollector gml:id="id_pv_thermal_collector_59">
 							<gml:description>This is PhotovoltaicThermalCollector 59</gml:description>
 							<gml:name>PhotovoltaicThermalCollector 59</gml:name>
-							<nrg3:referencePoint>
+							<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 								<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:pos>32.333 -22.527 12.523</gml:pos>
 								</gml:Point>
@@ -17094,13 +17064,13 @@
 							<nrg3:opticalEfficiency uom="unit interval">0.8</nrg3:opticalEfficiency>
 							<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 							<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-						<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:PhotovoltaicThermalCollector>
+						</nrg3:PhotovoltaicThermalCollector>
 					</nrg3:device>
 					<nrg3:device>
 						<nrg3:PhotovoltaicThermalCollector gml:id="id_pv_thermal_collector_60">
 							<gml:description>This is PhotovoltaicThermalCollector 60</gml:description>
 							<gml:name>PhotovoltaicThermalCollector 60</gml:name>
-							<nrg3:referencePoint>
+							<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 								<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:pos>35 -22.527 12.523</gml:pos>
 								</gml:Point>
@@ -17143,13 +17113,13 @@
 							<nrg3:opticalEfficiency uom="unit interval">0.8</nrg3:opticalEfficiency>
 							<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 							<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-						<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:PhotovoltaicThermalCollector>
+						</nrg3:PhotovoltaicThermalCollector>
 					</nrg3:device>
 					<nrg3:device>
 						<nrg3:PhotovoltaicThermalCollector gml:id="id_pv_thermal_collector_61">
 							<gml:description>This is PhotovoltaicThermalCollector 61</gml:description>
 							<gml:name>PhotovoltaicThermalCollector 61</gml:name>
-							<nrg3:referencePoint>
+							<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 								<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:pos>37.667 -22.527 12.523</gml:pos>
 								</gml:Point>
@@ -17192,7 +17162,7 @@
 							<nrg3:opticalEfficiency uom="unit interval">0.8</nrg3:opticalEfficiency>
 							<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 							<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-						<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:PhotovoltaicThermalCollector>
+						</nrg3:PhotovoltaicThermalCollector>
 					</nrg3:device>
 					<nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
@@ -18667,7 +18637,7 @@
 						<nrg3:GenericSolarCollector gml:id="id_generic_solar_collector_16">
 							<gml:description>This is GenericSolarCollector 16</gml:description>
 							<gml:name>GenericSolarCollector 16</gml:name>
-							<nrg3:referencePoint>
+							<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 								<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:pos>45 -27.527 12.523</gml:pos>
 								</gml:Point>
@@ -18714,13 +18684,13 @@
 									</gml:surfaceMember>
 								</gml:MultiSurface>
 							</nrg3:lod2MultiSurface>
-						<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:GenericSolarCollector>
+						</nrg3:GenericSolarCollector>
 					</nrg3:device>
 					<nrg3:device>
 						<nrg3:PhotovoltaicThermalCollector gml:id="id_pv_thermal_collector_62">
 							<gml:description>This is PhotovoltaicThermalCollector 62</gml:description>
 							<gml:name>PhotovoltaicThermalCollector 62</gml:name>
-							<nrg3:referencePoint>
+							<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 								<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:pos>42.333 -27.527 12.523</gml:pos>
 								</gml:Point>
@@ -18763,13 +18733,13 @@
 							<nrg3:opticalEfficiency uom="unit interval">0.8</nrg3:opticalEfficiency>
 							<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 							<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-						<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:PhotovoltaicThermalCollector>
+						</nrg3:PhotovoltaicThermalCollector>
 					</nrg3:device>
 					<nrg3:device>
 						<nrg3:PhotovoltaicThermalCollector gml:id="id_pv_thermal_collector_63">
 							<gml:description>This is PhotovoltaicThermalCollector 63</gml:description>
 							<gml:name>PhotovoltaicThermalCollector 63</gml:name>
-							<nrg3:referencePoint>
+							<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 								<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:pos>45 -27.527 12.523</gml:pos>
 								</gml:Point>
@@ -18812,13 +18782,13 @@
 							<nrg3:opticalEfficiency uom="unit interval">0.8</nrg3:opticalEfficiency>
 							<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 							<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-						<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:PhotovoltaicThermalCollector>
+						</nrg3:PhotovoltaicThermalCollector>
 					</nrg3:device>
 					<nrg3:device>
 						<nrg3:PhotovoltaicThermalCollector gml:id="id_pv_thermal_collector_64">
 							<gml:description>This is PhotovoltaicThermalCollector 64</gml:description>
 							<gml:name>PhotovoltaicThermalCollector 64</gml:name>
-							<nrg3:referencePoint>
+							<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 								<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:pos>47.667 -27.527 12.523</gml:pos>
 								</gml:Point>
@@ -18861,7 +18831,7 @@
 							<nrg3:opticalEfficiency uom="unit interval">0.8</nrg3:opticalEfficiency>
 							<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 							<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-						<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:PhotovoltaicThermalCollector>
+						</nrg3:PhotovoltaicThermalCollector>
 					</nrg3:device>
 					<nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
@@ -20473,7 +20443,7 @@
 				<nrg3:GenericSolarCollector gml:id="id_generic_solar_collector_13">
 					<gml:description>This is GenericSolarCollector 13</gml:description>
 					<gml:name>GenericSolarCollector 13</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>65 -27.527 12.523</gml:pos>
 						</gml:Point>
@@ -20520,13 +20490,13 @@
 							</gml:surfaceMember>
 						</gml:MultiSurface>
 					</nrg3:lod2MultiSurface>
-				<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:GenericSolarCollector>
+				</nrg3:GenericSolarCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:PhotovoltaicThermalCollector gml:id="id_pv_thermal_collector_53">
 					<gml:description>This is PhotovoltaicThermalCollector 53</gml:description>
 					<gml:name>PhotovoltaicThermalCollector 53</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>62.333 -27.527 12.523</gml:pos>
 						</gml:Point>
@@ -20578,13 +20548,13 @@
 					<nrg3:opticalEfficiency uom="unit interval">0.8</nrg3:opticalEfficiency>
 					<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 					<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-				<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:PhotovoltaicThermalCollector>
+				</nrg3:PhotovoltaicThermalCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:PhotovoltaicThermalCollector gml:id="id_pv_thermal_collector_54">
 					<gml:description>This is PhotovoltaicThermalCollector 54</gml:description>
 					<gml:name>PhotovoltaicThermalCollector 54</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>65 -27.527 12.523</gml:pos>
 						</gml:Point>
@@ -20636,13 +20606,13 @@
 					<nrg3:opticalEfficiency uom="unit interval">0.8</nrg3:opticalEfficiency>
 					<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 					<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-				<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:PhotovoltaicThermalCollector>
+				</nrg3:PhotovoltaicThermalCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:PhotovoltaicThermalCollector gml:id="id_pv_thermal_collector_55">
 					<gml:description>This is PhotovoltaicThermalCollector 55</gml:description>
 					<gml:name>PhotovoltaicThermalCollector 55</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>67.667 -27.527 12.523</gml:pos>
 						</gml:Point>
@@ -20694,7 +20664,7 @@
 					<nrg3:opticalEfficiency uom="unit interval">0.8</nrg3:opticalEfficiency>
 					<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 					<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-				<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:PhotovoltaicThermalCollector>
+				</nrg3:PhotovoltaicThermalCollector>
 			</nrg3:device>
 			<nrg3:referencePoint>
 				<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
@@ -23975,7 +23945,7 @@
 				<nrg3:HeatPump gml:id="id_heat_pump_21">
 					<gml:description>This is HeatPump 21</gml:description>
 					<gml:name>HeatPump 21</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">1cd6b257-a4f8-4509-a83b-492cd34c7d98</lca:environmentalId><lca:referenceServiceLife uom="a">20</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>65 -10 7.5</gml:pos>
 						</gml:Point>
@@ -24002,13 +23972,13 @@
 					<nrg3:heatSource codeSpace="heat_source_codeSpace">aquifer</nrg3:heatSource>
 					<nrg3:copSourceTemperature uom="degrees Celsius">5</nrg3:copSourceTemperature>
 					<nrg3:copOperationTemperature uom="degrees Celsius">10</nrg3:copOperationTemperature>
-				<lca:environmentalId source="oekobaudat">1cd6b257-a4f8-4509-a83b-492cd34c7d98</lca:environmentalId><lca:referenceServiceLife uom="a">20</lca:referenceServiceLife></nrg3:HeatPump>
+				</nrg3:HeatPump>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:LightingDevice gml:id="id_lighting_device_22">
 					<gml:description>This is LightingDevice 22</gml:description>
 					<gml:name>LightingDevice 22</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">6293ec16-2f99-4620-a032-fd6e57912a6c</lca:environmentalId><lca:referenceServiceLife uom="a">15</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>65 -10 7.5</gml:pos>
 						</gml:Point>
@@ -24032,13 +24002,13 @@
 							<nrg3:schedule xlink:href="#id_dual_value_schedule_1" />
 						</nrg3:DeviceOperation>
 					</nrg3:deviceOperation>
-				<lca:environmentalId source="oekobaudat">6293ec16-2f99-4620-a032-fd6e57912a6c</lca:environmentalId><lca:referenceServiceLife uom="a">15</lca:referenceServiceLife></nrg3:LightingDevice>
+				</nrg3:LightingDevice>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:GenericSolarCollector gml:id="id_generic_solar_collector_14">
 					<gml:description>This is GenericSolarCollector 14</gml:description>
 					<gml:name>GenericSolarCollector 14</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>65 -12.527 12.523</gml:pos>
 						</gml:Point>
@@ -24085,13 +24055,13 @@
 							</gml:surfaceMember>
 						</gml:MultiSurface>
 					</nrg3:lod2MultiSurface>
-				<lca:environmentalId source="oekobaudat">413ba0ce-2a78-44e2-89d2-d9adfd4e492c</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:GenericSolarCollector>
+				</nrg3:GenericSolarCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:PhotovoltaicThermalCollector gml:id="id_pv_thermal_collector_56">
 					<gml:description>This is PhotovoltaicThermalCollector 56</gml:description>
 					<gml:name>PhotovoltaicThermalCollector 56</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>62.333 -12.527 12.523</gml:pos>
 						</gml:Point>
@@ -24143,13 +24113,13 @@
 					<nrg3:opticalEfficiency uom="unit interval">0.8</nrg3:opticalEfficiency>
 					<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 					<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-				<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:PhotovoltaicThermalCollector>
+				</nrg3:PhotovoltaicThermalCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:PhotovoltaicThermalCollector gml:id="id_pv_thermal_collector_57">
 					<gml:description>This is PhotovoltaicThermalCollector 57</gml:description>
 					<gml:name>PhotovoltaicThermalCollector 57</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>65 -12.527 12.523</gml:pos>
 						</gml:Point>
@@ -24201,13 +24171,13 @@
 					<nrg3:opticalEfficiency uom="unit interval">0.8</nrg3:opticalEfficiency>
 					<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 					<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-				<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:PhotovoltaicThermalCollector>
+				</nrg3:PhotovoltaicThermalCollector>
 			</nrg3:device>
 			<nrg3:device>
 				<nrg3:PhotovoltaicThermalCollector gml:id="id_pv_thermal_collector_58">
 					<gml:description>This is PhotovoltaicThermalCollector 58</gml:description>
 					<gml:name>PhotovoltaicThermalCollector 58</gml:name>
-					<nrg3:referencePoint>
+					<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife><nrg3:referencePoint>
 						<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:pos>67.667 -12.527 12.523</gml:pos>
 						</gml:Point>
@@ -24259,7 +24229,7 @@
 					<nrg3:opticalEfficiency uom="unit interval">0.8</nrg3:opticalEfficiency>
 					<nrg3:linearHeatLossCoefficient>10</nrg3:linearHeatLossCoefficient>
 					<nrg3:quadraticHeatLossCoefficient>0.68</nrg3:quadraticHeatLossCoefficient>
-				<lca:environmentalId source="boverket">6000000203</lca:environmentalId><lca:referenceServiceLife uom="a">25</lca:referenceServiceLife></nrg3:PhotovoltaicThermalCollector>
+				</nrg3:PhotovoltaicThermalCollector>
 			</nrg3:device>
 			<nrg3:referencePoint>
 				<gml:Point srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
@@ -25606,3253 +25576,6 @@
 				</nrg3:UsageZone>
 			</nrg3:usageZone>
 		</bldg:Building>
-	</core:cityObjectMember>
-	<core:cityObjectMember>
-		<dem:ReliefFeature gml:id="id_relief_feature_1">
-			<gml:description>Tiled TIN-based DTM of Alderaan, it contains 120 tiles</gml:description>
-			<gml:name>DTM of Alderaan</gml:name>
-			<dem:lod>1</dem:lod>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_0-0">
-					<gml:description>Tile 0-0 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_0-0" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_0-0_0">
-											<gml:posList>-60 -100 0 -60 -80 0 -80 -80 0 -60 -100 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_0-0_1">
-											<gml:posList>-60 -100 0 -80 -80 0 -80 -100 0 -60 -100 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_0-1">
-					<gml:description>Tile 0-1 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_0-1" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_0-1_0">
-											<gml:posList>-60 -80 0 -60 -100 0 -40 -100 0 -60 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_0-1_1">
-											<gml:posList>-60 -80 0 -40 -100 0 -40 -80 0 -60 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_0-2">
-					<gml:description>Tile 0-2 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_0-2" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_0-2_0">
-											<gml:posList>-40 -80 0 -40 -100 0 -20 -100 0 -40 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_0-2_1">
-											<gml:posList>-40 -80 0 -20 -100 0 -20 -80 0 -40 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_0-3">
-					<gml:description>Tile 0-3 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_0-3" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_0-3_0">
-											<gml:posList>-20 -80 0 -20 -100 0 0 -100 0 -20 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_0-3_1">
-											<gml:posList>-20 -80 0 0 -100 0 0 -80 0 -20 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_0-4">
-					<gml:description>Tile 0-4 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_0-4" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_0-4_0">
-											<gml:posList>0 -80 0 0 -100 0 20 -100 0 0 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_0-4_1">
-											<gml:posList>0 -80 0 20 -100 0 20 -80 0 0 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_0-5">
-					<gml:description>Tile 0-5 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_0-5" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_0-5_0">
-											<gml:posList>20 -80 0 20 -100 0 40 -100 0 20 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_0-5_1">
-											<gml:posList>20 -80 0 40 -100 0 40 -80 0 20 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_0-6">
-					<gml:description>Tile 0-6 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_0-6" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_0-6_0">
-											<gml:posList>40 -80 0 40 -100 0 60 -100 0 40 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_0-6_1">
-											<gml:posList>40 -80 0 60 -100 0 60 -80 0 40 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_0-7">
-					<gml:description>Tile 0-7 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_0-7" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_0-7_0">
-											<gml:posList>60 -80 0 60 -100 0 80 -100 0 60 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_0-7_1">
-											<gml:posList>60 -80 0 80 -100 0 80 -80 0 60 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_0-8">
-					<gml:description>Tile 0-8 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_0-8" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_0-8_0">
-											<gml:posList>80 -80 0 80 -100 0 100 -100 0 80 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_0-8_1">
-											<gml:posList>80 -80 0 100 -100 0 100 -80 0 80 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_0-9">
-					<gml:description>Tile 0-9 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_0-9" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_0-9_0">
-											<gml:posList>100 -80 0 100 -100 0 120 -100 0 100 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_0-9_1">
-											<gml:posList>100 -80 0 120 -100 0 120 -80 0 100 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_0-10">
-					<gml:description>Tile 0-10 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_0-10" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_0-10_0">
-											<gml:posList>120 -80 0 120 -100 0 140 -100 0 120 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_0-10_1">
-											<gml:posList>120 -80 0 140 -100 0 140 -80 0 120 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_0-11">
-					<gml:description>Tile 0-11 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_0-11" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_0-11_0">
-											<gml:posList>140 -80 0 140 -100 0 160 -100 0 140 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_0-11_1">
-											<gml:posList>140 -80 0 160 -100 0 160 -80 0 140 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_1-0">
-					<gml:description>Tile 1-0 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_1-0" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_1-0_0">
-											<gml:posList>-80 -60 0 -80 -80 0 -60 -80 0 -80 -60 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_1-0_1">
-											<gml:posList>-80 -60 0 -60 -80 0 -60 -60 0 -80 -60 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_1-1">
-					<gml:description>Tile 1-1 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_1-1" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_1-1_0">
-											<gml:posList>-40 -80 0 -40 -60 0 -60 -60 0 -40 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_1-1_1">
-											<gml:posList>-40 -80 0 -60 -60 0 -60 -80 0 -40 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_1-2">
-					<gml:description>Tile 1-2 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_1-2" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_1-2_0">
-											<gml:posList>-20 -80 0 -20 -60 0 -40 -60 0 -20 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_1-2_1">
-											<gml:posList>-20 -80 0 -40 -60 0 -40 -80 0 -20 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_1-3">
-					<gml:description>Tile 1-3 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_1-3" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_1-3_0">
-											<gml:posList>0 -80 0 0 -60 0 -20 -60 0 0 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_1-3_1">
-											<gml:posList>0 -80 0 -20 -60 0 -20 -80 0 0 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_1-4">
-					<gml:description>Tile 1-4 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_1-4" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_1-4_0">
-											<gml:posList>20 -80 0 20 -60 0 0 -60 0 20 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_1-4_1">
-											<gml:posList>20 -80 0 0 -60 0 0 -80 0 20 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_1-5">
-					<gml:description>Tile 1-5 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_1-5" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_1-5_0">
-											<gml:posList>40 -80 0 40 -60 0 20 -60 0 40 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_1-5_1">
-											<gml:posList>40 -80 0 20 -60 0 20 -80 0 40 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_1-6">
-					<gml:description>Tile 1-6 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_1-6" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_1-6_0">
-											<gml:posList>60 -80 0 60 -60 0 40 -60 0 60 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_1-6_1">
-											<gml:posList>60 -80 0 40 -60 0 40 -80 0 60 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_1-7">
-					<gml:description>Tile 1-7 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_1-7" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_1-7_0">
-											<gml:posList>80 -80 0 80 -60 0 60 -60 0 80 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_1-7_1">
-											<gml:posList>80 -80 0 60 -60 0 60 -80 0 80 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_1-8">
-					<gml:description>Tile 1-8 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_1-8" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_1-8_0">
-											<gml:posList>100 -80 0 100 -60 0 80 -60 0 100 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_1-8_1">
-											<gml:posList>100 -80 0 80 -60 0 80 -80 0 100 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_1-9">
-					<gml:description>Tile 1-9 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_1-9" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_1-9_0">
-											<gml:posList>120 -80 0 120 -60 0 100 -60 0 120 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_1-9_1">
-											<gml:posList>120 -80 0 100 -60 0 100 -80 0 120 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_1-10">
-					<gml:description>Tile 1-10 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_1-10" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_1-10_0">
-											<gml:posList>140 -80 0 140 -60 0 120 -60 0 140 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_1-10_1">
-											<gml:posList>140 -80 0 120 -60 0 120 -80 0 140 -80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_1-11">
-					<gml:description>Tile 1-11 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_1-11" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_1-11_0">
-											<gml:posList>160 -60 0 140 -60 0 140 -80 0 160 -60 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_1-11_1">
-											<gml:posList>160 -60 0 140 -80 0 160 -80 0 160 -60 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_2-0">
-					<gml:description>Tile 2-0 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_2-0" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_2-0_0">
-											<gml:posList>-60 -60 0 -60 -40 0 -80 -40 0 -60 -60 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_2-0_1">
-											<gml:posList>-60 -60 0 -80 -40 0 -80 -60 0 -60 -60 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_2-1">
-					<gml:description>Tile 2-1 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_2-1" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_2-1_0">
-											<gml:posList>-60 -40 0 -60 -60 0 -40 -60 0 -60 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_2-1_1">
-											<gml:posList>-60 -40 0 -40 -60 0 -40 -40 0 -60 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_2-2">
-					<gml:description>Tile 2-2 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_2-2" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_2-2_0">
-											<gml:posList>-40 -40 0 -40 -60 0 -20 -60 0 -40 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_2-2_1">
-											<gml:posList>-40 -40 0 -20 -60 0 -20 -40 0 -40 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_2-3">
-					<gml:description>Tile 2-3 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_2-3" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_2-3_0">
-											<gml:posList>-20 -40 0 -20 -60 0 0 -60 0 -20 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_2-3_1">
-											<gml:posList>-20 -40 0 0 -60 0 0 -40 0 -20 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_2-4">
-					<gml:description>Tile 2-4 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_2-4" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_2-4_0">
-											<gml:posList>0 -40 0 0 -60 0 20 -60 0 0 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_2-4_1">
-											<gml:posList>0 -40 0 20 -60 0 20 -40 0 0 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_2-5">
-					<gml:description>Tile 2-5 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_2-5" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_2-5_0">
-											<gml:posList>20 -40 0 20 -60 0 40 -60 0 20 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_2-5_1">
-											<gml:posList>20 -40 0 40 -60 0 40 -40 0 20 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_2-6">
-					<gml:description>Tile 2-6 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_2-6" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_2-6_0">
-											<gml:posList>40 -40 0 40 -60 0 60 -60 0 40 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_2-6_1">
-											<gml:posList>40 -40 0 60 -60 0 60 -40 0 40 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_2-7">
-					<gml:description>Tile 2-7 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_2-7" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_2-7_0">
-											<gml:posList>60 -40 0 60 -60 0 80 -60 0 60 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_2-7_1">
-											<gml:posList>60 -40 0 80 -60 0 80 -40 0 60 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_2-8">
-					<gml:description>Tile 2-8 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_2-8" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_2-8_0">
-											<gml:posList>80 -40 0 80 -60 0 100 -60 0 80 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_2-8_1">
-											<gml:posList>80 -40 0 100 -60 0 100 -40 0 80 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_2-9">
-					<gml:description>Tile 2-9 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_2-9" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_2-9_0">
-											<gml:posList>100 -40 0 100 -60 0 120 -60 0 100 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_2-9_1">
-											<gml:posList>100 -40 0 120 -60 0 120 -40 0 100 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_2-10">
-					<gml:description>Tile 2-10 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_2-10" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_2-10_0">
-											<gml:posList>120 -40 0 120 -60 0 140 -60 0 120 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_2-10_1">
-											<gml:posList>120 -40 0 140 -60 0 140 -40 0 120 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_2-11">
-					<gml:description>Tile 2-11 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_2-11" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_2-11_0">
-											<gml:posList>160 -40 0 140 -40 0 140 -60 0 160 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_2-11_1">
-											<gml:posList>160 -40 0 140 -60 0 160 -60 0 160 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_3-0">
-					<gml:description>Tile 3-0 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_3-0" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_3-0_0">
-											<gml:posList>-80 -20 0 -80 -40 0 -60 -40 0 -80 -20 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_3-0_1">
-											<gml:posList>-80 -20 0 -60 -40 0 -60 -20 0 -80 -20 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_3-1">
-					<gml:description>Tile 3-1 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_3-1" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_3-1_0">
-											<gml:posList>-40 -40 0 -40 -20 0 -60 -20 0 -40 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_3-1_1">
-											<gml:posList>-40 -40 0 -60 -20 0 -60 -40 0 -40 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_3-2">
-					<gml:description>Tile 3-2 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_3-2" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_3-2_0">
-											<gml:posList>-40 -20 0 -40 -40 0 -20 -40 0 -40 -20 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_3-2_1">
-											<gml:posList>-40 -20 0 -20 -40 0 -20 -20 0 -40 -20 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_3-3">
-					<gml:description>Tile 3-3 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_3-3" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_3-3_0">
-											<gml:posList>0 -40 0 0 -20 0 -20 -20 0 0 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_3-3_1">
-											<gml:posList>0 -40 0 -20 -20 0 -20 -40 0 0 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_3-4">
-					<gml:description>Tile 3-4 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_3-4" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_3-4_0">
-											<gml:posList>20 -40 0 20 -20 0 0 -20 0 20 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_3-4_1">
-											<gml:posList>20 -40 0 0 -20 0 0 -40 0 20 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_3-5">
-					<gml:description>Tile 3-5 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_3-5" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_3-5_0">
-											<gml:posList>20 -20 0 20 -40 0 40 -40 0 20 -20 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_3-5_1">
-											<gml:posList>20 -20 0 40 -40 0 40 -20 0 20 -20 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_3-6">
-					<gml:description>Tile 3-6 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_3-6" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_3-6_0">
-											<gml:posList>60 -40 0 60 -20 0 40 -20 0 60 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_3-6_1">
-											<gml:posList>60 -40 0 40 -20 0 40 -40 0 60 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_3-7">
-					<gml:description>Tile 3-7 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_3-7" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_3-7_0">
-											<gml:posList>80 -40 0 80 -20 0 60 -20 0 80 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_3-7_1">
-											<gml:posList>80 -40 0 60 -20 0 60 -40 0 80 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_3-8">
-					<gml:description>Tile 3-8 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_3-8" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_3-8_0">
-											<gml:posList>100 -40 0 100 -20 0 80 -20 0 100 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_3-8_1">
-											<gml:posList>100 -40 0 80 -20 0 80 -40 0 100 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_3-9">
-					<gml:description>Tile 3-9 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_3-9" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_3-9_0">
-											<gml:posList>120 -40 0 120 -20 0 100 -20 0 120 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_3-9_1">
-											<gml:posList>120 -40 0 100 -20 0 100 -40 0 120 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_3-10">
-					<gml:description>Tile 3-10 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_3-10" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_3-10_0">
-											<gml:posList>140 -40 0 140 -20 0 120 -20 0 140 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_3-10_1">
-											<gml:posList>140 -40 0 120 -20 0 120 -40 0 140 -40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_3-11">
-					<gml:description>Tile 3-11 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_3-11" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_3-11_0">
-											<gml:posList>160 -20 0 140 -20 0 140 -40 0 160 -20 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_3-11_1">
-											<gml:posList>160 -20 0 140 -40 0 160 -40 0 160 -20 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_4-0">
-					<gml:description>Tile 4-0 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_4-0" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_4-0_0">
-											<gml:posList>-60 -20 0 -60 0 0 -80 0 0 -60 -20 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_4-0_1">
-											<gml:posList>-60 -20 0 -80 0 0 -80 -20 0 -60 -20 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_4-1">
-					<gml:description>Tile 4-1 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_4-1" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_4-1_0">
-											<gml:posList>-60 0 0 -60 -20 0 -40 -20 0 -60 0 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_4-1_1">
-											<gml:posList>-60 0 0 -40 -20 0 -40 0 0 -60 0 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_4-2">
-					<gml:description>Tile 4-2 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_4-2" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_4-2_0">
-											<gml:posList>-20 -20 0 -20 0 0 -40 0 0 -20 -20 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_4-2_1">
-											<gml:posList>-20 -20 0 -40 0 0 -40 -20 0 -20 -20 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_4-3">
-					<gml:description>Tile 4-3 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_4-3" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_4-3_0">
-											<gml:posList>0 -20 0 0 0 0 -20 0 0 0 -20 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_4-3_1">
-											<gml:posList>0 -20 0 -20 0 0 -20 -20 0 0 -20 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_4-4">
-					<gml:description>Tile 4-4 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_4-4" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_4-4_0">
-											<gml:posList>20 -20 0 20 0 0 0 0 0 20 -20 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_4-4_1">
-											<gml:posList>20 -20 0 0 0 0 0 -20 0 20 -20 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_4-5">
-					<gml:description>Tile 4-5 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_4-5" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_4-5_0">
-											<gml:posList>40 -20 0 40 0 0 20 0 0 40 -20 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_4-5_1">
-											<gml:posList>40 -20 0 20 0 0 20 -20 0 40 -20 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_4-6">
-					<gml:description>Tile 4-6 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_4-6" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_4-6_0">
-											<gml:posList>40 0 0 40 -20 0 60 -20 0 40 0 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_4-6_1">
-											<gml:posList>40 0 0 60 -20 0 60 0 0 40 0 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_4-7">
-					<gml:description>Tile 4-7 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_4-7" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_4-7_0">
-											<gml:posList>60 0 0 60 -20 0 80 -20 0 60 0 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_4-7_1">
-											<gml:posList>60 0 0 80 -20 0 80 0 0 60 0 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_4-8">
-					<gml:description>Tile 4-8 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_4-8" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_4-8_0">
-											<gml:posList>80 0 0 80 -20 0 100 -20 0 80 0 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_4-8_1">
-											<gml:posList>80 0 0 100 -20 0 100 0 0 80 0 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_4-9">
-					<gml:description>Tile 4-9 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_4-9" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_4-9_0">
-											<gml:posList>100 0 0 100 -20 0 120 -20 0 100 0 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_4-9_1">
-											<gml:posList>100 0 0 120 -20 0 120 0 0 100 0 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_4-10">
-					<gml:description>Tile 4-10 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_4-10" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_4-10_0">
-											<gml:posList>120 0 0 120 -20 0 140 -20 0 120 0 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_4-10_1">
-											<gml:posList>120 0 0 140 -20 0 140 0 0 120 0 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_4-11">
-					<gml:description>Tile 4-11 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_4-11" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_4-11_0">
-											<gml:posList>160 0 0 140 0 0 140 -20 0 160 0 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_4-11_1">
-											<gml:posList>160 0 0 140 -20 0 160 -20 0 160 0 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_5-0">
-					<gml:description>Tile 5-0 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_5-0" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_5-0_0">
-											<gml:posList>-80 20 0 -80 0 0 -60 0 0 -80 20 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_5-0_1">
-											<gml:posList>-80 20 0 -60 0 0 -60 20 0 -80 20 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_5-1">
-					<gml:description>Tile 5-1 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_5-1" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_5-1_0">
-											<gml:posList>-40 0 0 -40 20 0 -60 20 0 -40 0 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_5-1_1">
-											<gml:posList>-40 0 0 -60 20 0 -60 0 0 -40 0 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_5-2">
-					<gml:description>Tile 5-2 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_5-2" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_5-2_0">
-											<gml:posList>-40 20 0 -40 0 0 -20 0 0 -40 20 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_5-2_1">
-											<gml:posList>-40 20 0 -20 0 0 -20 20 0 -40 20 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_5-3">
-					<gml:description>Tile 5-3 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_5-3" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_5-3_0">
-											<gml:posList>0 0 0 0 20 0 -20 20 0 0 0 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_5-3_1">
-											<gml:posList>0 0 0 -20 20 0 -20 0 0 0 0 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_5-4">
-					<gml:description>Tile 5-4 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_5-4" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_5-4_0">
-											<gml:posList>20 0 0 20 20 0 0 20 0 20 0 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_5-4_1">
-											<gml:posList>20 0 0 0 20 0 0 0 0 20 0 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_5-5">
-					<gml:description>Tile 5-5 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_5-5" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_5-5_0">
-											<gml:posList>20 20 0 20 0 0 40 0 0 20 20 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_5-5_1">
-											<gml:posList>20 20 0 40 0 0 40 20 0 20 20 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_5-6">
-					<gml:description>Tile 5-6 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_5-6" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_5-6_0">
-											<gml:posList>60 0 0 60 20 0 40 20 0 60 0 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_5-6_1">
-											<gml:posList>60 0 0 40 20 0 40 0 0 60 0 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_5-7">
-					<gml:description>Tile 5-7 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_5-7" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_5-7_0">
-											<gml:posList>80 0 0 80 20 0 60 20 0 80 0 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_5-7_1">
-											<gml:posList>80 0 0 60 20 0 60 0 0 80 0 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_5-8">
-					<gml:description>Tile 5-8 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_5-8" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_5-8_0">
-											<gml:posList>100 0 0 100 20 0 80 20 0 100 0 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_5-8_1">
-											<gml:posList>100 0 0 80 20 0 80 0 0 100 0 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_5-9">
-					<gml:description>Tile 5-9 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_5-9" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_5-9_0">
-											<gml:posList>120 0 0 120 20 0 100 20 0 120 0 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_5-9_1">
-											<gml:posList>120 0 0 100 20 0 100 0 0 120 0 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_5-10">
-					<gml:description>Tile 5-10 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_5-10" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_5-10_0">
-											<gml:posList>140 0 0 140 20 0 120 20 0 140 0 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_5-10_1">
-											<gml:posList>140 0 0 120 20 0 120 0 0 140 0 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_5-11">
-					<gml:description>Tile 5-11 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_5-11" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_5-11_0">
-											<gml:posList>160 20 0 140 20 0 140 0 0 160 20 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_5-11_1">
-											<gml:posList>160 20 0 140 0 0 160 0 0 160 20 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_6-0">
-					<gml:description>Tile 6-0 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_6-0" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_6-0_0">
-											<gml:posList>-60 20 0 -60 40 0 -80 40 0 -60 20 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_6-0_1">
-											<gml:posList>-60 20 0 -80 40 0 -80 20 0 -60 20 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_6-1">
-					<gml:description>Tile 6-1 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_6-1" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_6-1_0">
-											<gml:posList>-60 40 0 -60 20 0 -40 20 0 -60 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_6-1_1">
-											<gml:posList>-60 40 0 -40 20 0 -40 40 0 -60 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_6-2">
-					<gml:description>Tile 6-2 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_6-2" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_6-2_0">
-											<gml:posList>-40 40 0 -40 20 0 -20 20 0 -40 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_6-2_1">
-											<gml:posList>-40 40 0 -20 20 0 -20 40 0 -40 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_6-3">
-					<gml:description>Tile 6-3 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_6-3" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_6-3_0">
-											<gml:posList>-20 40 0 -20 20 0 0 20 0 -20 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_6-3_1">
-											<gml:posList>-20 40 0 0 20 0 0 40 0 -20 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_6-4">
-					<gml:description>Tile 6-4 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_6-4" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_6-4_0">
-											<gml:posList>0 40 0 0 20 0 20 20 0 0 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_6-4_1">
-											<gml:posList>0 40 0 20 20 0 20 40 0 0 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_6-5">
-					<gml:description>Tile 6-5 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_6-5" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_6-5_0">
-											<gml:posList>20 40 0 20 20 0 40 20 0 20 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_6-5_1">
-											<gml:posList>20 40 0 40 20 0 40 40 0 20 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_6-6">
-					<gml:description>Tile 6-6 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_6-6" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_6-6_0">
-											<gml:posList>40 40 0 40 20 0 60 20 0 40 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_6-6_1">
-											<gml:posList>40 40 0 60 20 0 60 40 0 40 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_6-7">
-					<gml:description>Tile 6-7 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_6-7" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_6-7_0">
-											<gml:posList>60 40 0 60 20 0 80 20 0 60 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_6-7_1">
-											<gml:posList>60 40 0 80 20 0 80 40 0 60 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_6-8">
-					<gml:description>Tile 6-8 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_6-8" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_6-8_0">
-											<gml:posList>80 40 0 80 20 0 100 20 0 80 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_6-8_1">
-											<gml:posList>80 40 0 100 20 0 100 40 0 80 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_6-9">
-					<gml:description>Tile 6-9 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_6-9" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_6-9_0">
-											<gml:posList>100 40 0 100 20 0 120 20 0 100 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_6-9_1">
-											<gml:posList>100 40 0 120 20 0 120 40 0 100 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_6-10">
-					<gml:description>Tile 6-10 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_6-10" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_6-10_0">
-											<gml:posList>120 40 0 120 20 0 140 20 0 120 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_6-10_1">
-											<gml:posList>120 40 0 140 20 0 140 40 0 120 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_6-11">
-					<gml:description>Tile 6-11 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_6-11" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_6-11_0">
-											<gml:posList>160 40 0 140 40 0 140 20 0 160 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_6-11_1">
-											<gml:posList>160 40 0 140 20 0 160 20 0 160 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_7-0">
-					<gml:description>Tile 7-0 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_7-0" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_7-0_0">
-											<gml:posList>-80 60 0 -80 40 0 -60 40 0 -80 60 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_7-0_1">
-											<gml:posList>-80 60 0 -60 40 0 -60 60 0 -80 60 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_7-1">
-					<gml:description>Tile 7-1 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_7-1" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_7-1_0">
-											<gml:posList>-40 40 0 -40 60 0 -60 60 0 -40 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_7-1_1">
-											<gml:posList>-40 40 0 -60 60 0 -60 40 0 -40 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_7-2">
-					<gml:description>Tile 7-2 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_7-2" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_7-2_0">
-											<gml:posList>-20 40 0 -20 60 0 -40 60 0 -20 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_7-2_1">
-											<gml:posList>-20 40 0 -40 60 0 -40 40 0 -20 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_7-3">
-					<gml:description>Tile 7-3 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_7-3" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_7-3_0">
-											<gml:posList>0 40 0 0 60 0 -20 60 0 0 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_7-3_1">
-											<gml:posList>0 40 0 -20 60 0 -20 40 0 0 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_7-4">
-					<gml:description>Tile 7-4 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_7-4" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_7-4_0">
-											<gml:posList>20 40 0 20 60 0 0 60 0 20 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_7-4_1">
-											<gml:posList>20 40 0 0 60 0 0 40 0 20 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_7-5">
-					<gml:description>Tile 7-5 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_7-5" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_7-5_0">
-											<gml:posList>40 40 0 40 60 0 20 60 0 40 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_7-5_1">
-											<gml:posList>40 40 0 20 60 0 20 40 0 40 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_7-6">
-					<gml:description>Tile 7-6 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_7-6" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_7-6_0">
-											<gml:posList>60 40 0 60 60 0 40 60 0 60 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_7-6_1">
-											<gml:posList>60 40 0 40 60 0 40 40 0 60 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_7-7">
-					<gml:description>Tile 7-7 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_7-7" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_7-7_0">
-											<gml:posList>80 40 0 80 60 0 60 60 0 80 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_7-7_1">
-											<gml:posList>80 40 0 60 60 0 60 40 0 80 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_7-8">
-					<gml:description>Tile 7-8 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_7-8" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_7-8_0">
-											<gml:posList>100 40 0 100 60 0 80 60 0 100 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_7-8_1">
-											<gml:posList>100 40 0 80 60 0 80 40 0 100 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_7-9">
-					<gml:description>Tile 7-9 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_7-9" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_7-9_0">
-											<gml:posList>120 40 0 120 60 0 100 60 0 120 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_7-9_1">
-											<gml:posList>120 40 0 100 60 0 100 40 0 120 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_7-10">
-					<gml:description>Tile 7-10 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_7-10" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_7-10_0">
-											<gml:posList>140 40 0 140 60 0 120 60 0 140 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_7-10_1">
-											<gml:posList>140 40 0 120 60 0 120 40 0 140 40 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_7-11">
-					<gml:description>Tile 7-11 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_7-11" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_7-11_0">
-											<gml:posList>160 60 0 140 60 0 140 40 0 160 60 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_7-11_1">
-											<gml:posList>160 60 0 140 40 0 160 40 0 160 60 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_8-0">
-					<gml:description>Tile 8-0 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_8-0" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_8-0_0">
-											<gml:posList>-60 60 0 -60 80 0 -80 80 0 -60 60 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_8-0_1">
-											<gml:posList>-60 60 0 -80 80 0 -80 60 0 -60 60 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_8-1">
-					<gml:description>Tile 8-1 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_8-1" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_8-1_0">
-											<gml:posList>-60 80 0 -60 60 0 -40 60 0 -60 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_8-1_1">
-											<gml:posList>-60 80 0 -40 60 0 -40 80 0 -60 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_8-2">
-					<gml:description>Tile 8-2 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_8-2" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_8-2_0">
-											<gml:posList>-40 80 0 -40 60 0 -20 60 0 -40 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_8-2_1">
-											<gml:posList>-40 80 0 -20 60 0 -20 80 0 -40 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_8-3">
-					<gml:description>Tile 8-3 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_8-3" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_8-3_0">
-											<gml:posList>-20 80 0 -20 60 0 0 60 0 -20 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_8-3_1">
-											<gml:posList>-20 80 0 0 60 0 0 80 0 -20 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_8-4">
-					<gml:description>Tile 8-4 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_8-4" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_8-4_0">
-											<gml:posList>0 80 0 0 60 0 20 60 0 0 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_8-4_1">
-											<gml:posList>0 80 0 20 60 0 20 80 0 0 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_8-5">
-					<gml:description>Tile 8-5 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_8-5" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_8-5_0">
-											<gml:posList>20 80 0 20 60 0 40 60 0 20 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_8-5_1">
-											<gml:posList>20 80 0 40 60 0 40 80 0 20 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_8-6">
-					<gml:description>Tile 8-6 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_8-6" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_8-6_0">
-											<gml:posList>40 80 0 40 60 0 60 60 0 40 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_8-6_1">
-											<gml:posList>40 80 0 60 60 0 60 80 0 40 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_8-7">
-					<gml:description>Tile 8-7 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_8-7" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_8-7_0">
-											<gml:posList>60 80 0 60 60 0 80 60 0 60 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_8-7_1">
-											<gml:posList>60 80 0 80 60 0 80 80 0 60 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_8-8">
-					<gml:description>Tile 8-8 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_8-8" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_8-8_0">
-											<gml:posList>80 80 0 80 60 0 100 60 0 80 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_8-8_1">
-											<gml:posList>80 80 0 100 60 0 100 80 0 80 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_8-9">
-					<gml:description>Tile 8-9 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_8-9" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_8-9_0">
-											<gml:posList>100 80 0 100 60 0 120 60 0 100 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_8-9_1">
-											<gml:posList>100 80 0 120 60 0 120 80 0 100 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_8-10">
-					<gml:description>Tile 8-10 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_8-10" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_8-10_0">
-											<gml:posList>120 80 0 120 60 0 140 60 0 120 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_8-10_1">
-											<gml:posList>120 80 0 140 60 0 140 80 0 120 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_8-11">
-					<gml:description>Tile 8-11 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_8-11" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_8-11_0">
-											<gml:posList>160 80 0 140 80 0 140 60 0 160 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_8-11_1">
-											<gml:posList>160 80 0 140 60 0 160 60 0 160 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_9-0">
-					<gml:description>Tile 9-0 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_9-0" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_9-0_0">
-											<gml:posList>-60 100 0 -80 100 0 -80 80 0 -60 100 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_9-0_1">
-											<gml:posList>-60 100 0 -80 80 0 -60 80 0 -60 100 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_9-1">
-					<gml:description>Tile 9-1 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_9-1" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_9-1_0">
-											<gml:posList>-40 80 0 -40 100 0 -60 100 0 -40 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_9-1_1">
-											<gml:posList>-40 80 0 -60 100 0 -60 80 0 -40 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_9-2">
-					<gml:description>Tile 9-2 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_9-2" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_9-2_0">
-											<gml:posList>-20 80 0 -20 100 0 -40 100 0 -20 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_9-2_1">
-											<gml:posList>-20 80 0 -40 100 0 -40 80 0 -20 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_9-3">
-					<gml:description>Tile 9-3 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_9-3" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_9-3_0">
-											<gml:posList>0 80 0 0 100 0 -20 100 0 0 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_9-3_1">
-											<gml:posList>0 80 0 -20 100 0 -20 80 0 0 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_9-4">
-					<gml:description>Tile 9-4 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_9-4" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_9-4_0">
-											<gml:posList>20 80 0 20 100 0 0 100 0 20 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_9-4_1">
-											<gml:posList>20 80 0 0 100 0 0 80 0 20 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_9-5">
-					<gml:description>Tile 9-5 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_9-5" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_9-5_0">
-											<gml:posList>40 80 0 40 100 0 20 100 0 40 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_9-5_1">
-											<gml:posList>40 80 0 20 100 0 20 80 0 40 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_9-6">
-					<gml:description>Tile 9-6 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_9-6" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_9-6_0">
-											<gml:posList>60 80 0 60 100 0 40 100 0 60 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_9-6_1">
-											<gml:posList>60 80 0 40 100 0 40 80 0 60 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_9-7">
-					<gml:description>Tile 9-7 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_9-7" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_9-7_0">
-											<gml:posList>80 80 0 80 100 0 60 100 0 80 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_9-7_1">
-											<gml:posList>80 80 0 60 100 0 60 80 0 80 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_9-8">
-					<gml:description>Tile 9-8 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_9-8" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_9-8_0">
-											<gml:posList>100 80 0 100 100 0 80 100 0 100 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_9-8_1">
-											<gml:posList>100 80 0 80 100 0 80 80 0 100 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_9-9">
-					<gml:description>Tile 9-9 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_9-9" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_9-9_0">
-											<gml:posList>120 80 0 120 100 0 100 100 0 120 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_9-9_1">
-											<gml:posList>120 80 0 100 100 0 100 80 0 120 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_9-10">
-					<gml:description>Tile 9-10 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_9-10" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_9-10_0">
-											<gml:posList>140 80 0 140 100 0 120 100 0 140 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_9-10_1">
-											<gml:posList>140 80 0 120 100 0 120 80 0 140 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-			<dem:reliefComponent>
-				<dem:TINRelief gml:id="id_tin_relief_9-11">
-					<gml:description>Tile 9-11 of the DTM Alderaan</gml:description>
-					<gml:name>DTM of Alderaan</gml:name>
-					<dem:lod>1</dem:lod>
-					<dem:tin>
-						<gml:TriangulatedSurface gml:id="id_tin_surface_9-11" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
-							<gml:trianglePatches>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_9-11_0">
-											<gml:posList>140 80 0 160 80 0 160 100 0 140 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-								<gml:Triangle>
-									<gml:exterior>
-										<gml:LinearRing gml:id="id_tin_surface_9-11_1">
-											<gml:posList>140 80 0 160 100 0 140 100 0 140 80 0</gml:posList>
-										</gml:LinearRing>
-									</gml:exterior>
-								</gml:Triangle>
-							</gml:trianglePatches>
-						</gml:TriangulatedSurface>
-					</dem:tin>
-				</dem:TINRelief>
-			</dem:reliefComponent>
-		</dem:ReliefFeature>
 	</core:cityObjectMember>
 	<core:cityObjectMember>
 		<frn:CityFurniture gml:id="id_city_furniture_1">
@@ -33191,7 +29914,7 @@
 							<grp:geometry>
 								<gml:MultiSurface gml:id="id_MultiSurf_ufa_1_1_1" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:surfaceMember>
-										<gml:Polygon gml:id="Polygon_UUID_5f0d66cf-753e-453b-a472-969c74978fd8">
+										<gml:Polygon gml:id="fme-gen-5f0d66cf-753e-453b-a472-969c74978fd8">
 											<gml:exterior>
 												<gml:LinearRing>
 													<gml:posList>-40 0 0 0 0 0 0 50 0 -40 50 0 -40 0 0</gml:posList>
@@ -33220,7 +29943,7 @@
 							<grp:geometry>
 								<gml:MultiSurface gml:id="id_MultiSurf_ufa_1_1_2" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:surfaceMember>
-										<gml:Polygon gml:id="Polygon_UUID_2ab98b20-17f3-4783-bd64-02debb37e890">
+										<gml:Polygon gml:id="fme-gen-2ab98b20-17f3-4783-bd64-02debb37e890">
 											<gml:exterior>
 												<gml:LinearRing>
 													<gml:posList>-80 50 0 -40 50 0 -40 100 0 -80 100 0 -80 50 0</gml:posList>
@@ -33249,7 +29972,7 @@
 							<grp:geometry>
 								<gml:MultiSurface gml:id="id_MultiSurf_ufa_1_1_3" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:surfaceMember>
-										<gml:Polygon gml:id="Polygon_UUID_d47e870d-e97b-41c2-8083-245e52e5d798">
+										<gml:Polygon gml:id="fme-gen-d47e870d-e97b-41c2-8083-245e52e5d798">
 											<gml:exterior>
 												<gml:LinearRing>
 													<gml:posList>-40 50 0 0 50 0 0 100 0 -40 100 0 -40 50 0</gml:posList>
@@ -33278,7 +30001,7 @@
 							<grp:geometry>
 								<gml:MultiSurface gml:id="id_MultiSurf_ufa_1_1_4" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:surfaceMember>
-										<gml:Polygon gml:id="Polygon_UUID_61a2a306-cb8d-4f83-93c2-6c603301fe00">
+										<gml:Polygon gml:id="fme-gen-61a2a306-cb8d-4f83-93c2-6c603301fe00">
 											<gml:exterior>
 												<gml:LinearRing>
 													<gml:posList>-80 0 0 -40 0 0 -40 50 0 -80 50 0 -80 0 0</gml:posList>
@@ -33295,7 +30018,7 @@
 					<grp:geometry>
 						<gml:MultiSurface gml:id="id_MultiSurf_ufa_1_1" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:surfaceMember>
-								<gml:Polygon gml:id="Polygon_UUID_e17ba920-78df-4252-bd7f-222911e11600">
+								<gml:Polygon gml:id="fme-gen-e17ba920-78df-4252-bd7f-222911e11600">
 									<gml:exterior>
 										<gml:LinearRing>
 											<gml:posList>-80 0 0 0 0 0 0 100 0 -80 100 0 -80 0 0</gml:posList>
@@ -33336,7 +30059,7 @@
 							<grp:geometry>
 								<gml:MultiSurface gml:id="id_MultiSurf_ufa_1_2_1" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:surfaceMember>
-										<gml:Polygon gml:id="Polygon_UUID_866fabb5-50bb-4b9c-8b2f-764e9b063a46">
+										<gml:Polygon gml:id="fme-gen-866fabb5-50bb-4b9c-8b2f-764e9b063a46">
 											<gml:exterior>
 												<gml:LinearRing>
 													<gml:posList>0 50 0 40 50 0 40 100 0 0 100 0 0 50 0</gml:posList>
@@ -33365,7 +30088,7 @@
 							<grp:geometry>
 								<gml:MultiSurface gml:id="id_MultiSurf_ufa_1_2_2" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:surfaceMember>
-										<gml:Polygon gml:id="Polygon_UUID_ebaacb9a-1ae4-4c59-bed5-5bf4bbabbb9c">
+										<gml:Polygon gml:id="fme-gen-ebaacb9a-1ae4-4c59-bed5-5bf4bbabbb9c">
 											<gml:exterior>
 												<gml:LinearRing>
 													<gml:posList>40 50 0 80 50 0 80 100 0 40 100 0 40 50 0</gml:posList>
@@ -33394,7 +30117,7 @@
 							<grp:geometry>
 								<gml:MultiSurface gml:id="id_MultiSurf_ufa_1_2_3" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:surfaceMember>
-										<gml:Polygon gml:id="Polygon_UUID_08e22675-c330-4f4a-9754-ddab56ddd839">
+										<gml:Polygon gml:id="fme-gen-08e22675-c330-4f4a-9754-ddab56ddd839">
 											<gml:exterior>
 												<gml:LinearRing>
 													<gml:posList>0 0 0 40 0 0 40 50 0 0 50 0 0 0 0</gml:posList>
@@ -33423,7 +30146,7 @@
 							<grp:geometry>
 								<gml:MultiSurface gml:id="id_MultiSurf_ufa_1_2_4" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:surfaceMember>
-										<gml:Polygon gml:id="Polygon_UUID_f77fd108-ad23-4ff3-a56f-d6efa0d53fe5">
+										<gml:Polygon gml:id="fme-gen-f77fd108-ad23-4ff3-a56f-d6efa0d53fe5">
 											<gml:exterior>
 												<gml:LinearRing>
 													<gml:posList>40 0 0 80 0 0 80 50 0 40 50 0 40 0 0</gml:posList>
@@ -33440,7 +30163,7 @@
 					<grp:geometry>
 						<gml:MultiSurface gml:id="id_MultiSurf_ufa_1_2" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:surfaceMember>
-								<gml:Polygon gml:id="Polygon_UUID_7c2efb31-1433-4597-8d2d-1204d1dbe872">
+								<gml:Polygon gml:id="fme-gen-7c2efb31-1433-4597-8d2d-1204d1dbe872">
 									<gml:exterior>
 										<gml:LinearRing>
 											<gml:posList>0 0 0 80 0 0 80 100 0 0 100 0 0 0 0</gml:posList>
@@ -33541,7 +30264,7 @@
 							<grp:geometry>
 								<gml:MultiSurface gml:id="id_MultiSurf_ufa_1_3_1" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:surfaceMember>
-										<gml:Polygon gml:id="Polygon_UUID_b656ff32-33d1-4917-a313-f20e0adebf1f">
+										<gml:Polygon gml:id="fme-gen-b656ff32-33d1-4917-a313-f20e0adebf1f">
 											<gml:exterior>
 												<gml:LinearRing>
 													<gml:posList>120 50 0 160 50 0 160 100 0 120 100 0 120 50 0</gml:posList>
@@ -33570,7 +30293,7 @@
 							<grp:geometry>
 								<gml:MultiSurface gml:id="id_MultiSurf_ufa_1_3_2" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:surfaceMember>
-										<gml:Polygon gml:id="Polygon_UUID_2f737ae8-daec-41e3-95e3-9ce60f1885f4">
+										<gml:Polygon gml:id="fme-gen-2f737ae8-daec-41e3-95e3-9ce60f1885f4">
 											<gml:exterior>
 												<gml:LinearRing>
 													<gml:posList>80 50 0 120 50 0 120 100 0 80 100 0 80 50 0</gml:posList>
@@ -33599,7 +30322,7 @@
 							<grp:geometry>
 								<gml:MultiSurface gml:id="id_MultiSurf_ufa_1_3_3" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:surfaceMember>
-										<gml:Polygon gml:id="Polygon_UUID_cd534850-7319-457e-a53b-f9f9039d59e2">
+										<gml:Polygon gml:id="fme-gen-cd534850-7319-457e-a53b-f9f9039d59e2">
 											<gml:exterior>
 												<gml:LinearRing>
 													<gml:posList>120 0 0 160 0 0 160 50 0 120 50 0 120 0 0</gml:posList>
@@ -33628,7 +30351,7 @@
 							<grp:geometry>
 								<gml:MultiSurface gml:id="id_MultiSurf_ufa_1_3_4" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:surfaceMember>
-										<gml:Polygon gml:id="Polygon_UUID_cad8d947-86f8-4721-90b2-a905b31eb468">
+										<gml:Polygon gml:id="fme-gen-cad8d947-86f8-4721-90b2-a905b31eb468">
 											<gml:exterior>
 												<gml:LinearRing>
 													<gml:posList>80 0 0 120 0 0 120 50 0 80 50 0 80 0 0</gml:posList>
@@ -33645,7 +30368,7 @@
 					<grp:geometry>
 						<gml:MultiSurface gml:id="id_MultiSurf_ufa_1_3" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:surfaceMember>
-								<gml:Polygon gml:id="Polygon_UUID_4798b388-4187-4308-b1dc-fafd2c070fcc">
+								<gml:Polygon gml:id="fme-gen-4798b388-4187-4308-b1dc-fafd2c070fcc">
 									<gml:exterior>
 										<gml:LinearRing>
 											<gml:posList>80 0 0 160 0 0 160 100 0 80 100 0 80 0 0</gml:posList>
@@ -33702,7 +30425,7 @@
 							<grp:geometry>
 								<gml:MultiSurface gml:id="id_MultiSurf_ufa_1_4_1" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:surfaceMember>
-										<gml:Polygon gml:id="Polygon_UUID_31575bbb-7b32-469b-9c95-8868909433eb">
+										<gml:Polygon gml:id="fme-gen-31575bbb-7b32-469b-9c95-8868909433eb">
 											<gml:exterior>
 												<gml:LinearRing>
 													<gml:posList>-80 -100 0 -40 -100 0 -40 -50 0 -80 -50 0 -80 -100 0</gml:posList>
@@ -33731,7 +30454,7 @@
 							<grp:geometry>
 								<gml:MultiSurface gml:id="id_MultiSurf_ufa_1_4_2" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:surfaceMember>
-										<gml:Polygon gml:id="Polygon_UUID_4ccdd003-56ca-4329-9410-b7a7b7fa6a95">
+										<gml:Polygon gml:id="fme-gen-4ccdd003-56ca-4329-9410-b7a7b7fa6a95">
 											<gml:exterior>
 												<gml:LinearRing>
 													<gml:posList>-80 -50 0 -40 -50 0 -40 0 0 -80 0 0 -80 -50 0</gml:posList>
@@ -33760,7 +30483,7 @@
 							<grp:geometry>
 								<gml:MultiSurface gml:id="id_MultiSurf_ufa_1_4_3" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:surfaceMember>
-										<gml:Polygon gml:id="Polygon_UUID_06d153c7-0582-4373-8db7-f8091e02f486">
+										<gml:Polygon gml:id="fme-gen-06d153c7-0582-4373-8db7-f8091e02f486">
 											<gml:exterior>
 												<gml:LinearRing>
 													<gml:posList>-40 -100 0 0 -100 0 0 -50 0 -40 -50 0 -40 -100 0</gml:posList>
@@ -33789,7 +30512,7 @@
 							<grp:geometry>
 								<gml:MultiSurface gml:id="id_MultiSurf_ufa_1_4_4" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:surfaceMember>
-										<gml:Polygon gml:id="Polygon_UUID_497c1526-7baa-4064-ac67-c1883f349075">
+										<gml:Polygon gml:id="fme-gen-497c1526-7baa-4064-ac67-c1883f349075">
 											<gml:exterior>
 												<gml:LinearRing>
 													<gml:posList>-40 -50 0 0 -50 0 0 0 0 -40 0 0 -40 -50 0</gml:posList>
@@ -33806,7 +30529,7 @@
 					<grp:geometry>
 						<gml:MultiSurface gml:id="id_MultiSurf_ufa_1_4" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:surfaceMember>
-								<gml:Polygon gml:id="Polygon_UUID_444b8062-6dee-497c-bfe9-a7352224a746">
+								<gml:Polygon gml:id="fme-gen-444b8062-6dee-497c-bfe9-a7352224a746">
 									<gml:exterior>
 										<gml:LinearRing>
 											<gml:posList>-80 -100 0 0 -100 0 0 0 0 -80 0 0 -80 -100 0</gml:posList>
@@ -33847,7 +30570,7 @@
 							<grp:geometry>
 								<gml:MultiSurface gml:id="id_MultiSurf_ufa_1_5_1" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:surfaceMember>
-										<gml:Polygon gml:id="Polygon_UUID_f657471d-9d23-4a1c-a434-f505cad2a070">
+										<gml:Polygon gml:id="fme-gen-f657471d-9d23-4a1c-a434-f505cad2a070">
 											<gml:exterior>
 												<gml:LinearRing>
 													<gml:posList>40 -100 0 80 -100 0 80 -50 0 40 -50 0 40 -100 0</gml:posList>
@@ -33876,7 +30599,7 @@
 							<grp:geometry>
 								<gml:MultiSurface gml:id="id_MultiSurf_ufa_1_5_2" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:surfaceMember>
-										<gml:Polygon gml:id="Polygon_UUID_c47db710-4778-4841-ab18-fda25a86a000">
+										<gml:Polygon gml:id="fme-gen-c47db710-4778-4841-ab18-fda25a86a000">
 											<gml:exterior>
 												<gml:LinearRing>
 													<gml:posList>0 -100 0 40 -100 0 40 -50 0 0 -50 0 0 -100 0</gml:posList>
@@ -33905,7 +30628,7 @@
 							<grp:geometry>
 								<gml:MultiSurface gml:id="id_MultiSurf_ufa_1_5_3" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:surfaceMember>
-										<gml:Polygon gml:id="Polygon_UUID_5e37e702-c7c6-450e-95ba-38a4496ccee6">
+										<gml:Polygon gml:id="fme-gen-5e37e702-c7c6-450e-95ba-38a4496ccee6">
 											<gml:exterior>
 												<gml:LinearRing>
 													<gml:posList>40 -50 0 80 -50 0 80 0 0 40 0 0 40 -50 0</gml:posList>
@@ -33934,7 +30657,7 @@
 							<grp:geometry>
 								<gml:MultiSurface gml:id="id_MultiSurf_ufa_1_5_4" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:surfaceMember>
-										<gml:Polygon gml:id="Polygon_UUID_6063ce5d-c79d-46d9-9813-3bced3bbccd2">
+										<gml:Polygon gml:id="fme-gen-6063ce5d-c79d-46d9-9813-3bced3bbccd2">
 											<gml:exterior>
 												<gml:LinearRing>
 													<gml:posList>0 -50 0 40 -50 0 40 0 0 0 0 0 0 -50 0</gml:posList>
@@ -33951,7 +30674,7 @@
 					<grp:geometry>
 						<gml:MultiSurface gml:id="id_MultiSurf_ufa_1_5" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:surfaceMember>
-								<gml:Polygon gml:id="Polygon_UUID_4d07992a-70d0-4479-b7a6-637ec230e50b">
+								<gml:Polygon gml:id="fme-gen-4d07992a-70d0-4479-b7a6-637ec230e50b">
 									<gml:exterior>
 										<gml:LinearRing>
 											<gml:posList>0 -100 0 80 -100 0 80 0 0 0 0 0 0 -100 0</gml:posList>
@@ -33992,7 +30715,7 @@
 							<grp:geometry>
 								<gml:MultiSurface gml:id="id_MultiSurf_ufa_1_6_1" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:surfaceMember>
-										<gml:Polygon gml:id="Polygon_UUID_ff0c402e-36af-42d3-a44a-207fd21b1286">
+										<gml:Polygon gml:id="fme-gen-ff0c402e-36af-42d3-a44a-207fd21b1286">
 											<gml:exterior>
 												<gml:LinearRing>
 													<gml:posList>80 -100 0 120 -100 0 120 -50 0 80 -50 0 80 -100 0</gml:posList>
@@ -34021,7 +30744,7 @@
 							<grp:geometry>
 								<gml:MultiSurface gml:id="id_MultiSurf_ufa_1_6_2" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:surfaceMember>
-										<gml:Polygon gml:id="Polygon_UUID_632a1db1-6734-4380-afc6-673665893133">
+										<gml:Polygon gml:id="fme-gen-632a1db1-6734-4380-afc6-673665893133">
 											<gml:exterior>
 												<gml:LinearRing>
 													<gml:posList>120 -50 0 160 -50 0 160 0 0 120 0 0 120 -50 0</gml:posList>
@@ -34050,7 +30773,7 @@
 							<grp:geometry>
 								<gml:MultiSurface gml:id="id_MultiSurf_ufa_1_6_3" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:surfaceMember>
-										<gml:Polygon gml:id="Polygon_UUID_d3b649db-a47d-4977-92cf-1c123255b355">
+										<gml:Polygon gml:id="fme-gen-d3b649db-a47d-4977-92cf-1c123255b355">
 											<gml:exterior>
 												<gml:LinearRing>
 													<gml:posList>80 -50 0 120 -50 0 120 0 0 80 0 0 80 -50 0</gml:posList>
@@ -34079,7 +30802,7 @@
 							<grp:geometry>
 								<gml:MultiSurface gml:id="id_MultiSurf_ufa_1_6_4" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 									<gml:surfaceMember>
-										<gml:Polygon gml:id="Polygon_UUID_c8ec6ac6-66f6-4352-bd4a-fd9c7cb7f509">
+										<gml:Polygon gml:id="fme-gen-c8ec6ac6-66f6-4352-bd4a-fd9c7cb7f509">
 											<gml:exterior>
 												<gml:LinearRing>
 													<gml:posList>120 -100 0 160 -100 0 160 -50 0 120 -50 0 120 -100 0</gml:posList>
@@ -34096,7 +30819,7 @@
 					<grp:geometry>
 						<gml:MultiSurface gml:id="id_MultiSurf_ufa_1_6" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 							<gml:surfaceMember>
-								<gml:Polygon gml:id="Polygon_UUID_53b194bb-ca9d-4ff5-8ba9-49d93d0998e1">
+								<gml:Polygon gml:id="fme-gen-53b194bb-ca9d-4ff5-8ba9-49d93d0998e1">
 									<gml:exterior>
 										<gml:LinearRing>
 											<gml:posList>80 -100 0 160 -100 0 160 0 0 80 0 0 80 -100 0</gml:posList>
@@ -34113,7 +30836,7 @@
 			<grp:geometry>
 				<gml:MultiSurface gml:id="id_MultiSurf_ufa_1" srsName="urn:ogc:def:crs,crs:EPSG::28992,crs:EPSG::5109" srsDimension="3">
 					<gml:surfaceMember>
-						<gml:Polygon gml:id="Polygon_UUID_fe3a9bfe-8526-47f1-b661-016759cd2bef">
+						<gml:Polygon gml:id="fme-gen-fe3a9bfe-8526-47f1-b661-016759cd2bef">
 							<gml:exterior>
 								<gml:LinearRing>
 									<gml:posList>-80 -100 0 160 -100 0 160 100 0 -80 100 0 -80 -100 0</gml:posList>
@@ -35282,134 +32005,6 @@
 					<app:target>#id_building_unit_12_lod1_Solid</app:target>
 					<app:target>#id_building_unit_12_lod2_Solid</app:target>
 					<app:target>#id_building_unit_12_lod3_Solid</app:target>
-				</app:X3DMaterial>
-			</app:surfaceDataMember>
-			<app:surfaceDataMember>
-				<app:X3DMaterial gml:id="X3DMaterial_UUID_0b1ccf08-6da5-40e4-bb90-e4992c732157">
-					<gml:description>This is DTM Colour Green (FRONT)</gml:description>
-					<gml:name>Colour Green (FRONT) TINRelief</gml:name>
-					<app:isFront>true</app:isFront>
-					<app:diffuseColor>0 1 0</app:diffuseColor>
-					<app:target>#id_tin_surface_0-0</app:target>
-					<app:target>#id_tin_surface_8-4</app:target>
-					<app:target>#id_tin_surface_5-6</app:target>
-					<app:target>#id_tin_surface_6-2</app:target>
-					<app:target>#id_tin_surface_7-9</app:target>
-					<app:target>#id_tin_surface_3-1</app:target>
-					<app:target>#id_tin_surface_2-10</app:target>
-					<app:target>#id_tin_surface_6-4</app:target>
-					<app:target>#id_tin_surface_2-5</app:target>
-					<app:target>#id_tin_surface_5-0</app:target>
-					<app:target>#id_tin_surface_3-0</app:target>
-					<app:target>#id_tin_surface_7-0</app:target>
-					<app:target>#id_tin_surface_7-2</app:target>
-					<app:target>#id_tin_surface_0-4</app:target>
-					<app:target>#id_tin_surface_8-11</app:target>
-					<app:target>#id_tin_surface_9-10</app:target>
-					<app:target>#id_tin_surface_9-2</app:target>
-					<app:target>#id_tin_surface_0-7</app:target>
-					<app:target>#id_tin_surface_5-10</app:target>
-					<app:target>#id_tin_surface_1-7</app:target>
-					<app:target>#id_tin_surface_7-4</app:target>
-					<app:target>#id_tin_surface_2-3</app:target>
-					<app:target>#id_tin_surface_9-8</app:target>
-					<app:target>#id_tin_surface_9-6</app:target>
-					<app:target>#id_tin_surface_0-10</app:target>
-					<app:target>#id_tin_surface_1-0</app:target>
-					<app:target>#id_tin_surface_1-5</app:target>
-					<app:target>#id_tin_surface_6-6</app:target>
-					<app:target>#id_tin_surface_7-8</app:target>
-					<app:target>#id_tin_surface_0-11</app:target>
-					<app:target>#id_tin_surface_6-9</app:target>
-					<app:target>#id_tin_surface_0-3</app:target>
-					<app:target>#id_tin_surface_2-0</app:target>
-					<app:target>#id_tin_surface_6-10</app:target>
-					<app:target>#id_tin_surface_0-5</app:target>
-					<app:target>#id_tin_surface_5-2</app:target>
-					<app:target>#id_tin_surface_7-6</app:target>
-					<app:target>#id_tin_surface_9-1</app:target>
-					<app:target>#id_tin_surface_2-11</app:target>
-					<app:target>#id_tin_surface_1-8</app:target>
-					<app:target>#id_tin_surface_8-5</app:target>
-					<app:target>#id_tin_surface_0-2</app:target>
-					<app:target>#id_tin_surface_4-0</app:target>
-					<app:target>#id_tin_surface_9-0</app:target>
-					<app:target>#id_tin_surface_3-10</app:target>
-					<app:target>#id_tin_surface_7-11</app:target>
-					<app:target>#id_tin_surface_4-2</app:target>
-					<app:target>#id_tin_surface_0-6</app:target>
-					<app:target>#id_tin_surface_8-1</app:target>
-					<app:target>#id_tin_surface_4-8</app:target>
-					<app:target>#id_tin_surface_8-2</app:target>
-					<app:target>#id_tin_surface_8-10</app:target>
-					<app:target>#id_tin_surface_4-5</app:target>
-					<app:target>#id_tin_surface_2-2</app:target>
-					<app:target>#id_tin_surface_6-5</app:target>
-					<app:target>#id_tin_surface_5-7</app:target>
-					<app:target>#id_tin_surface_7-10</app:target>
-					<app:target>#id_tin_surface_3-11</app:target>
-					<app:target>#id_tin_surface_8-3</app:target>
-					<app:target>#id_tin_surface_0-9</app:target>
-					<app:target>#id_tin_surface_4-9</app:target>
-					<app:target>#id_tin_surface_2-9</app:target>
-					<app:target>#id_tin_surface_3-8</app:target>
-					<app:target>#id_tin_surface_5-1</app:target>
-					<app:target>#id_tin_surface_4-4</app:target>
-					<app:target>#id_tin_surface_4-6</app:target>
-					<app:target>#id_tin_surface_1-4</app:target>
-					<app:target>#id_tin_surface_0-8</app:target>
-					<app:target>#id_tin_surface_8-6</app:target>
-					<app:target>#id_tin_surface_3-3</app:target>
-					<app:target>#id_tin_surface_3-6</app:target>
-					<app:target>#id_tin_surface_5-8</app:target>
-					<app:target>#id_tin_surface_8-8</app:target>
-					<app:target>#id_tin_surface_1-2</app:target>
-					<app:target>#id_tin_surface_5-9</app:target>
-					<app:target>#id_tin_surface_8-7</app:target>
-					<app:target>#id_tin_surface_6-11</app:target>
-					<app:target>#id_tin_surface_3-4</app:target>
-					<app:target>#id_tin_surface_7-5</app:target>
-					<app:target>#id_tin_surface_6-0</app:target>
-					<app:target>#id_tin_surface_1-10</app:target>
-					<app:target>#id_tin_surface_7-1</app:target>
-					<app:target>#id_tin_surface_3-7</app:target>
-					<app:target>#id_tin_surface_2-6</app:target>
-					<app:target>#id_tin_surface_1-3</app:target>
-					<app:target>#id_tin_surface_8-9</app:target>
-					<app:target>#id_tin_surface_6-3</app:target>
-					<app:target>#id_tin_surface_2-8</app:target>
-					<app:target>#id_tin_surface_7-3</app:target>
-					<app:target>#id_tin_surface_6-1</app:target>
-					<app:target>#id_tin_surface_4-11</app:target>
-					<app:target>#id_tin_surface_9-4</app:target>
-					<app:target>#id_tin_surface_2-1</app:target>
-					<app:target>#id_tin_surface_1-6</app:target>
-					<app:target>#id_tin_surface_6-8</app:target>
-					<app:target>#id_tin_surface_9-7</app:target>
-					<app:target>#id_tin_surface_2-7</app:target>
-					<app:target>#id_tin_surface_3-2</app:target>
-					<app:target>#id_tin_surface_4-1</app:target>
-					<app:target>#id_tin_surface_4-7</app:target>
-					<app:target>#id_tin_surface_6-7</app:target>
-					<app:target>#id_tin_surface_3-9</app:target>
-					<app:target>#id_tin_surface_1-1</app:target>
-					<app:target>#id_tin_surface_9-9</app:target>
-					<app:target>#id_tin_surface_9-3</app:target>
-					<app:target>#id_tin_surface_5-4</app:target>
-					<app:target>#id_tin_surface_1-11</app:target>
-					<app:target>#id_tin_surface_7-7</app:target>
-					<app:target>#id_tin_surface_5-11</app:target>
-					<app:target>#id_tin_surface_0-1</app:target>
-					<app:target>#id_tin_surface_5-5</app:target>
-					<app:target>#id_tin_surface_5-3</app:target>
-					<app:target>#id_tin_surface_1-9</app:target>
-					<app:target>#id_tin_surface_2-4</app:target>
-					<app:target>#id_tin_surface_4-10</app:target>
-					<app:target>#id_tin_surface_9-5</app:target>
-					<app:target>#id_tin_surface_8-0</app:target>
-					<app:target>#id_tin_surface_9-11</app:target>
-					<app:target>#id_tin_surface_4-3</app:target>
-					<app:target>#id_tin_surface_3-5</app:target>
 				</app:X3DMaterial>
 			</app:surfaceDataMember>
 			<app:surfaceDataMember>

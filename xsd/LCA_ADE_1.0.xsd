@@ -7,22 +7,40 @@
   Version    : 1.0 beta  |  2026-07
   Authors    : Chalmers University of Technology
 
-  NOTE — ADE hook coverage
-  ─────────────────────────
+  NOTE — ADE hook coverage and element ordering
+  ──────────────────────────────────────────────
   lca:environmentalId and lca:referenceServiceLife are declared as
   substitutes for core:_GenericApplicationPropertyOfCityObject.  This
   hook applies to all core:_CityObject subclasses, which covers:
 
-    [via _CityObject hook, formally validated]
+    [via _CityObject hook, formally schema-validated]
       nrg3:AbstractDevice subclasses (12 concrete types)
       bldg:BuildingInstallation
       bldg:IntBuildingInstallation
+
+  ELEMENT ORDERING REQUIREMENT (xs:sequence):
+  Because core:AbstractCityObjectType uses xs:sequence, the
+  _GenericApplicationPropertyOfCityObject slot falls AFTER core-level
+  properties (creationDate, terminationDate, …) and BEFORE any
+  Energy ADE-specific child elements.  Consuming tools and injection
+  scripts MUST insert lca:environmentalId and lca:referenceServiceLife
+  at that position — appending them after Energy ADE content will cause
+  cvc-complex-type.2.4.a validation failures.
+
+    Correct element order inside an nrg3:AbstractDevice element:
+      1. gml:description, gml:name, …          (gml:AbstractFeatureType)
+      2. core:creationDate, …                   (core:AbstractCityObjectType)
+      3. lca:environmentalId                    ← substitution group slot
+         lca:referenceServiceLife              ← substitution group slot
+      4. nrg3:model, nrg3:deviceOperation, …   (nrg3:AbstractDeviceType)
 
   The following nrg3 classes extend gml:AbstractFeatureType rather than
   core:AbstractCityObjectType and therefore do NOT participate in the
   _GenericApplicationPropertyOfCityObject substitution group.  For those
   classes the LCA properties are injected as sibling XML children by
-  convention (not schema-validated unless the target XSD is patched):
+  convention (not schema-validated unless the target XSD is patched).
+  A formal hook request has been submitted to the Energy ADE maintainers
+  — see reference/LCA_ADE_1.0.md §"Energy ADE improvement proposal":
 
     [convention injection, not schema-validated]
       nrg3:SolidMaterial

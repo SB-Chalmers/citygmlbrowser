@@ -104,6 +104,14 @@ _DEVICE_LOCALS = frozenset({
 def _lca_props(el: ET.Element) -> dict:
     """Return any lca: properties found as direct children of *el*.
 
+    Uses el.find() (path-based lookup) rather than positional indexing, so
+    this function is robust to element ordering.  For AbstractDevice targets
+    the schema-valid position of lca: properties is BEFORE Energy ADE children
+    (see LCA_ADE_1.0.xsd header and reference/LCA_ADE_1.0.md §"Encoding and
+    conformance").  For convention-injected targets (SolidMaterial etc.) the
+    properties appear at the end of the element; el.find() locates them in
+    either position.
+
     Unit-of-measure attributes (uom) are folded into the value string
     (e.g. "50 a") rather than emitted as separate rows.
     """
