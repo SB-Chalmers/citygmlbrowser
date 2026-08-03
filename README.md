@@ -8,7 +8,7 @@ This repository now includes a lightweight browser stack for CityGML files:
 ## Current Support
 
 - CityGML: 2.0, 3.0
-- Energy ADE: 2.0, 3.0
+- Energy ADE: 2.0, 3.0 (beta7 + beta8 namespace variants)
 - LCA ADE: 1.0
 
 The API detects unsupported dialects and returns structured errors for now.

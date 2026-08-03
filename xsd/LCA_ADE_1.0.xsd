@@ -3,18 +3,23 @@
 ===========================================================================
   CityGML LCA ADE 1.0 — XML Schema Definition
   Namespace  : http://sb.chalmers.se/ade/lca/1.0  (prefix: lca)
-  Depends on : CityGML 2.0 Core, Energy ADE 3.0 beta7
-  Version    : 1.0 beta  |  2026-07
+  Depends on : CityGML 2.0 Core, Energy ADE 3.0 beta8
+  Version    : 1.0 beta8 |  2026-08
   Authors    : Chalmers University of Technology
 
   NOTE — ADE hook coverage and element ordering
   ──────────────────────────────────────────────
   lca:environmentalId and lca:referenceServiceLife are declared as
   substitutes for core:_GenericApplicationPropertyOfCityObject.  This
-  hook applies to all core:_CityObject subclasses, which covers:
+  profile is intentionally scoped to the Energy ADE 3.0 beta8 model,
+  where the relevant classes participate in the formal hook.  The
+  supported coverage includes:
 
     [via _CityObject hook, formally schema-validated]
       nrg3:AbstractDevice subclasses (12 concrete types)
+      nrg3:AbstractMaterial subclasses (e.g. SolidMaterial, Gas)
+      nrg3:AbstractLayeredConstruction subclasses
+      nrg3:AbstractResource subclasses
       bldg:BuildingInstallation
       bldg:IntBuildingInstallation
 
@@ -34,19 +39,10 @@
          lca:referenceServiceLife              ← substitution group slot
       4. nrg3:model, nrg3:deviceOperation, …   (nrg3:AbstractDeviceType)
 
-  The following nrg3 classes extend gml:AbstractFeatureType rather than
-  core:AbstractCityObjectType and therefore do NOT participate in the
-  _GenericApplicationPropertyOfCityObject substitution group.  For those
-  classes the LCA properties are injected as sibling XML children by
-  convention (not schema-validated unless the target XSD is patched).
-  A formal hook request has been submitted to the Energy ADE maintainers
-  — see reference/LCA_ADE_1.0.md §"Energy ADE improvement proposal":
-
-    [convention injection, not schema-validated]
-      nrg3:SolidMaterial
-      nrg3:LayeredConstruction, nrg3:ReverseLayeredConstruction
-      nrg3:Energy, nrg3:Water, nrg3:ConstructionMaterial,
-      nrg3:Waste, nrg3:Food, nrg3:OtherResource, nrg3:UrbanSpace
+  NOTE ON SCOPE:
+  This schema is intentionally limited to the Energy ADE 3.0 beta8
+  inheritance model. Beta7-only compatibility rules and alternate
+  placement conventions are out of scope for this profile.
 ===========================================================================
 -->
 <xs:schema

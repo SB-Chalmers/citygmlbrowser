@@ -159,18 +159,24 @@ DEVICE_TYPE_MAP: dict[str, tuple[str, str, str]] = {
 # validation errors ("lca:environmentalId found where nrg3:deviceOperation is
 # expected") because the validator has already passed the legal insertion window.
 #
-# For types that extend gml:AbstractFeatureType directly (SolidMaterial, Gas,
-# LayeredConstruction, ReverseLayeredConstruction, AbstractResource subclasses)
-# no such hook exists in the host schema.  For those elements the properties are
-# appended at the end by convention injection — see LCA_ADE_1.0.md §"Encoding
-# and conformance" for the full discussion.
+# In Energy ADE 3.0 beta8, AbstractMaterial, AbstractLayeredConstruction, and
+# AbstractResource also derive from core:AbstractCityObjectType, so the same
+# ordering rule applies there as well.
+#
+# For legacy beta7 content (namespace http://www.citygml.org/ade/energy/3.0),
+# materials/constructions/resources were often modelled as gml:AbstractFeatureType
+# without the formal CityObject ADE hook. In that case this script keeps the old
+# convention-injection behavior (append at end) for backward compatibility.
 
 # Energy ADE namespace URIs — LCA properties for AbstractDevice targets must
 # be placed BEFORE any child element from these namespaces.
 _ADE_NAMESPACES: frozenset[str] = frozenset({
     "http://www.citygml.org/ade/energy/3.0",
+    "http://3dcities.bk.tudelft.nl/citygml/2.0/energy/3.0",
     "http://www.sig3d.org/citygml/2.0/energy/2.0",
 })
+
+_ENERGY_ADE_30_BETA8_NS = "http://3dcities.bk.tudelft.nl/citygml/2.0/energy/3.0"
 
 
 def _ade_insert_pos(el: ET.Element) -> int:
@@ -207,6 +213,7 @@ _NAMESPACE_PREFIXES = {
     "gml32":  "http://www.opengis.net/gml/3.2",
     "energy": "http://www.sig3d.org/citygml/2.0/energy/2.0",
     "nrg3":   "http://www.citygml.org/ade/energy/3.0",
+    "nrg3b8": "http://3dcities.bk.tudelft.nl/citygml/2.0/energy/3.0",
     "app":    "http://www.opengis.net/citygml/appearance/2.0",
     "xAL":    "urn:oasis:names:tc:ciq:xsdschema:xAL:2.0",
     "xlink":  "http://www.w3.org/1999/xlink",
@@ -222,6 +229,17 @@ _NAMESPACE_PREFIXES = {
     "luse":   "http://www.opengis.net/citygml/landuse/2.0",
     LCA_PRE:  LCA_NS,
 }
+
+
+def _register_output_prefixes(root: ET.Element) -> None:
+    """Register stable, readable prefixes while preserving input nrg3 flavor."""
+    prefixes = dict(_NAMESPACE_PREFIXES)
+    if _has_energy_ade_beta8_namespace(root):
+        prefixes["nrg3"] = _ENERGY_ADE_30_BETA8_NS
+        prefixes["nrg3legacy"] = "http://www.citygml.org/ade/energy/3.0"
+
+    for prefix, uri in prefixes.items():
+        ET.register_namespace(prefix, uri)
 
 
 def _gml_id(el: ET.Element) -> str | None:
@@ -246,10 +264,49 @@ def _energy_layer_tag(el: ET.Element) -> str:
     return f"{{{ns}}}layer" if ns else "layer"
 
 
+def _has_energy_ade_beta8_namespace(root: ET.Element) -> bool:
+    """Return True when any element uses the Energy ADE 3.0 beta8 namespace."""
+    needle = f"{{{_ENERGY_ADE_30_BETA8_NS}}}"
+    for el in root.iter():
+        if isinstance(el.tag, str) and el.tag.startswith(needle):
+            return True
+    return False
+
+
+def _inject_lca_props(
+    el: ET.Element,
+    *,
+    source: str,
+    resource_id: str,
+    rsl: str,
+    use_formal_hook: bool,
+) -> None:
+    """Inject environmentalId + referenceServiceLife on one target element."""
+    if use_formal_hook:
+        env = ET.Element(_lca("environmentalId"))
+        env.set("source", source)
+        env.text = resource_id
+        life = ET.Element(_lca("referenceServiceLife"))
+        life.set("uom", "a")
+        life.text = rsl
+        pos = _ade_insert_pos(el)
+        el.insert(pos, life)
+        el.insert(pos, env)
+        return
+
+    env = ET.SubElement(el, _lca("environmentalId"))
+    env.set("source", source)
+    env.text = resource_id
+    life = ET.SubElement(el, _lca("referenceServiceLife"))
+    life.set("uom", "a")
+    life.text = rsl
+
+
 def inject(root: ET.Element) -> tuple[int, int, int]:
     mats_done = 0
     devs_done = 0
     bldgs_done = 0
+    use_formal_hook_for_materials_and_constructions = _has_energy_ade_beta8_namespace(root)
 
     for el in root.iter():
         local = _local(el.tag)
@@ -259,12 +316,13 @@ def inject(root: ET.Element) -> tuple[int, int, int]:
             if mapping is None:
                 continue
             resource_id, rsl = mapping
-            env = ET.SubElement(el, _lca("environmentalId"))
-            env.set("source", "boverket")
-            env.text = resource_id
-            life = ET.SubElement(el, _lca("referenceServiceLife"))
-            life.set("uom", "a")
-            life.text = rsl
+            _inject_lca_props(
+                el,
+                source="boverket",
+                resource_id=resource_id,
+                rsl=rsl,
+                use_formal_hook=use_formal_hook_for_materials_and_constructions,
+            )
             mats_done += 1
 
         elif local in _CONSTRUCTION_LOCALS:
@@ -276,30 +334,25 @@ def inject(root: ET.Element) -> tuple[int, int, int]:
             if el.find(_energy_layer_tag(el)) is not None:
                 continue
             resource_id, rsl = mapping
-            env = ET.SubElement(el, _lca("environmentalId"))
-            env.set("source", "boverket")
-            env.text = resource_id
-            life = ET.SubElement(el, _lca("referenceServiceLife"))
-            life.set("uom", "a")
-            life.text = rsl
+            _inject_lca_props(
+                el,
+                source="boverket",
+                resource_id=resource_id,
+                rsl=rsl,
+                use_formal_hook=use_formal_hook_for_materials_and_constructions,
+            )
             mats_done += 1
 
         elif local in DEVICE_TYPE_MAP:
             resource_id, rsl, src = DEVICE_TYPE_MAP[local]
-            # Build elements first, then insert at the correct schema position.
-            # AbstractDevice extends core:AbstractCityObjectType, so the
-            # _GenericApplicationPropertyOfCityObject slot (where these elements
-            # legally substitute) falls BEFORE any Energy ADE-specific children.
-            # Using insert() rather than SubElement() satisfies xs:sequence order.
-            env = ET.Element(_lca("environmentalId"))
-            env.set("source", src)
-            env.text = resource_id
-            life = ET.Element(_lca("referenceServiceLife"))
-            life.set("uom", "a")
-            life.text = rsl
-            pos = _ade_insert_pos(el)
-            el.insert(pos, life)   # insert life first so env ends up before it
-            el.insert(pos, env)
+            # Devices always use formal hook ordering.
+            _inject_lca_props(
+                el,
+                source=src,
+                resource_id=resource_id,
+                rsl=rsl,
+                use_formal_hook=True,
+            )
             devs_done += 1
 
         elif local == "CityModel":
@@ -325,12 +378,10 @@ def main(argv: list[str]) -> int:
 
     in_path, out_path = argv[1], argv[2]
 
-    # Preserve readable prefixes on output (avoids ns0:, ns1:, …)
-    for prefix, uri in _NAMESPACE_PREFIXES.items():
-        ET.register_namespace(prefix, uri)
-
     tree = ET.parse(in_path)
     root = tree.getroot()
+    # Preserve readable prefixes on output (avoids ns0:, ns1:, …)
+    _register_output_prefixes(root)
 
     mats, devs, rsps = inject(root)
 

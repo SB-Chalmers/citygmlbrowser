@@ -1,9 +1,9 @@
 @startuml
-' CityGML LCA ADE 1.0 - Additions to the Energy ADE 3.0 (beta7)
+' CityGML LCA ADE 1.0 - Additions to the Energy ADE 3.0 (beta8)
 ' Namespace : http://sb.chalmers.se/ade/lca/1.0
 ' Organised after Hollberg et al. Table 1: GENERAL / EMBODIED / OPERATIONAL.
-' Depends on: CityGML 2.0 + Energy ADE 3.0 beta7.
-' NOTE: Energy ADE 3.0 beta7 targets CityGML 2.0, not 3.0. The ADE hook
+' Depends on: CityGML 2.0 + Energy ADE 3.0 beta8 namespace.
+' NOTE: Energy ADE 3.0 beta8 targets CityGML 2.0, not 3.0. The ADE hook
 '       (_GenericApplicationPropertyOfCityObject) is a CityGML 2.0 concept.
 ' Version : 1.0 beta | 2026-07
 
@@ -26,11 +26,9 @@ skinparam packageFontSize 12
 '   purple = Resources   green = LCA additions   peach = dataType
 '   Rows marked "+ LCA ADE [F]" use the formal CityGML 2.0 ADE hook
 '     (_GenericApplicationPropertyOfCityObject substitution group).
-'     These are SCHEMA-VALIDATED and element-order constrained (see note below).
-'   Rows marked "+ LCA ADE [C]" use convention injection
-'     (direct sibling children of a gml:AbstractFeatureType element).
-'     These are NOT schema-validated by the host XSD.
-'     Formal hook coverage requires Energy ADE XSD extension — see proposal.
+'     These use a formal XSD extension point and are element-order constrained
+'     (see note below). Practical validation still depends on schema/tool compatibility.
+'   Existing Energy ADE attributes are abbreviated with "..." for readability.
 
 ' ════════════════════════════════════════════════════════════════════
 ' SHARED LCA BUILDING BLOCKS
@@ -57,15 +55,16 @@ package "LCA ADE 1.0 - shared types" as LCAShared #EAF7EA {
 ' Required for all life-cycle modules beyond A1-A5 (the assessment horizon).
 ' ════════════════════════════════════════════════════════════════════
 package "GENERAL   [assessment period]" as PkgGeneral #FFFFFF {
-  abstract class "Core::_CityObject" <<featureType>> #7FE0DE {
+  abstract class "core::_CityObject" <<featureType>> #7FE0DE {
     +gml:id : ID
+    +core:_GenericApplicationPropertyOfCityObject [0..*] <<hook>>
   }
   class "lca::LCAScenario" <<featureType>> #A8E4A0 {
     <<topLevel>>
     --
-    +lca:referenceStudyPeriod : Measure
+    +lca:referenceStudyPeriod : Measure [1]
   }
-  "lca::LCAScenario" -up-|> "Core::_CityObject"
+  "lca::LCAScenario" -up-|> "core::_CityObject"
   note bottom of "lca::LCAScenario"
     One or more per CityGML document, written as
     core:cityObjectMember entries (like MaterialLibrary,
@@ -82,22 +81,32 @@ package "GENERAL   [assessment period]" as PkgGeneral #FFFFFF {
 ' ════════════════════════════════════════════════════════════════════
 package "EMBODIED   [A1-A5, C1-C4, D + B4]" as PkgEmbodied #FFFFFF {
 
+  abstract class "nrg3::AbstractMaterial" <<featureType>> #66C5F0 {
+    ...
+  }
+
+  abstract class "nrg3::AbstractLayeredConstruction" <<featureType>> #66C5F0 {
+    ...
+  }
+
   ' --- Equipment / Devices (Devices module) ---
   abstract class "nrg3::AbstractDevice" <<featureType>> #FFB570 {
     +model : CharacterString [0..1]
     +installedPower : Measure [0..1]
     +nominalEfficiency : Measure [0..1]
     -- + LCA ADE [F] formal hook --
-    +lca:environmentalId : LCAEnvironmentalReference
-    +lca:referenceServiceLife : Measure
+    +lca:environmentalId : LCAEnvironmentalReference [0..1]
+    +lca:referenceServiceLife : Measure [0..1]
   }
+  "nrg3::AbstractDevice" -up-|> "core::_CityObject"
   note right of "nrg3::AbstractDevice"
     [F] Formal hook: substitutes
     core:_GenericApplicationPropertyOfCityObject.
     Element ordering constraint (xs:sequence):
     lca: properties MUST appear before any
     nrg3: child elements in the XML document.
-    Validated by citygml-tools v2.5.0.
+    Beta8 schema compilation may still fail in some
+    XSD 1.0 validator stacks (known UPA conflict).
   end note
 
   ' --- Window / door construction unit (Layered construction module) ---
@@ -108,20 +117,23 @@ package "EMBODIED   [A1-A5, C1-C4, D + B4]" as PkgEmbodied #FFFFFF {
     +uValue : Measure [0..1]
     +gValue : Scale [0..1]
     +glazingRatio : Scale [0..1]
-    -- + LCA ADE [C] convention injection --
-    +lca:environmentalId : LCAEnvironmentalReference
-    +lca:referenceServiceLife : Measure
+    -- + LCA ADE [F] formal hook --
+    +lca:environmentalId : LCAEnvironmentalReference [0..1]
+    +lca:referenceServiceLife : Measure [0..1]
   }
+  "nrg3::LayeredConstruction" -up-|> "nrg3::AbstractLayeredConstruction"
 
   class "nrg3::ReverseLayeredConstruction" <<featureType>> #66C5F0 {
     +libraryCode : Code [0..1]
     +uValue : Measure [0..1]
     +gValue : Scale [0..1]
     +glazingRatio : Scale [0..1]
-    -- + LCA ADE [C] convention injection --
-    +lca:environmentalId : LCAEnvironmentalReference
-    +lca:referenceServiceLife : Measure
+    -- + LCA ADE [F] formal hook --
+    +lca:environmentalId : LCAEnvironmentalReference [0..1]
+    +lca:referenceServiceLife : Measure [0..1]
   }
+  "nrg3::ReverseLayeredConstruction" -up-|> "nrg3::AbstractLayeredConstruction"
+  "nrg3::AbstractLayeredConstruction" -up-|> "core::_CityObject"
 
   ' --- Solid material (Layered construction module) ---
   class "nrg3::SolidMaterial" <<featureType>> #66C5F0 {
@@ -129,17 +141,19 @@ package "EMBODIED   [A1-A5, C1-C4, D + B4]" as PkgEmbodied #FFFFFF {
     +density : Measure [0..1]
     +embodiedEnergy : Measure [0..1]
     +embodiedCarbon : Measure [0..1]
-    -- + LCA ADE [C] convention injection --
-    +lca:environmentalId : LCAEnvironmentalReference
-    +lca:referenceServiceLife : Measure
+    -- + LCA ADE [F] formal hook --
+    +lca:environmentalId : LCAEnvironmentalReference [0..1]
+    +lca:referenceServiceLife : Measure [0..1]
   }
+  "nrg3::SolidMaterial" -up-|> "nrg3::AbstractMaterial"
+  "nrg3::AbstractMaterial" -up-|> "core::_CityObject"
   note left of "nrg3::SolidMaterial"
-    [C] Convention injection: these classes
-    extend gml:AbstractFeatureType, not
-    core:AbstractCityObjectType, so no
+    [F] Formal hook path:
+    SolidMaterial -> AbstractMaterial ->
+    core:_CityObject.
+    This inheritance exposes
     _GenericApplicationPropertyOfCityObject
-    hook is available. Formal hook requires
-    Energy ADE XSD extension (see proposal).
+    for LCA ADE properties in beta8.
   end note
 }
 
@@ -161,9 +175,10 @@ package "OPERATIONAL   [B6, B7]" as PkgOperational #FFFFFF {
     +status : ResourceStatusValue
     +amount : Measure [0..1]
     +co2Equivalent : Measure [0..1]
-    -- + LCA ADE [C] convention injection --
-    +lca:environmentalId : LCAEnvironmentalReference
+    -- + LCA ADE [F] formal hook --
+    +lca:environmentalId : LCAEnvironmentalReference [0..1]
   }
+  "nrg3::AbstractResource" -up-|> "core::_CityObject"
   note bottom of "nrg3::AbstractResource"
     Subclasses: Energy, Water, Food, Waste,
     ConstructionMaterial, OtherResource, UrbanSpace.

@@ -6,12 +6,11 @@ Transforms the parsed CityGML model dict into vis-network compatible
 
 from __future__ import annotations
 
-import xml.etree.ElementTree as ET
 from concurrent.futures import ThreadPoolExecutor
 from functools import lru_cache
 from pathlib import Path
 
-from api.parsers.base import NS, _gml_id, text_of
+from api.parsers.base import NS, _gml_id, text_of, parse_xml_root
 from api.parsers import energy_ade_20, energy_ade_30, lca_ade
 from api.dialect import detect_dialect
 
@@ -190,7 +189,7 @@ def collect_global_energy(gml_file: str) -> dict:
     lca:environmentalId, the corresponding GWP figures are looked up from the
     referenced EPD database (Boverket / Ökobaudat) and added to its details.
     """
-    root    = ET.parse(gml_file).getroot()
+    root    = parse_xml_root(gml_file)
     dialect = detect_dialect(gml_file)
     if dialect.energy_ade == "3.0":
         result = energy_ade_30.collect_global_objects(root)

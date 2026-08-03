@@ -7,6 +7,7 @@ CITYGML_2_URI = "http://www.opengis.net/citygml/2.0"
 CITYGML_3_URI = "http://www.opengis.net/citygml/3.0"
 ENERGY_ADE_2_URI = "http://www.sig3d.org/citygml/2.0/energy/2.0"
 ENERGY_ADE_3_URI = "http://www.citygml.org/ade/energy/3.0"
+ENERGY_ADE_3_BETA8_URI = "http://3dcities.bk.tudelft.nl/citygml/2.0/energy/3.0"
 LCA_ADE_URI      = "http://sb.chalmers.se/ade/lca/1.0"
 
 
@@ -21,7 +22,7 @@ class DialectInfo:
 def _detect_energy_ade_version(uri: str) -> str | None:
     if uri == ENERGY_ADE_2_URI:
         return "2.0"
-    if uri == ENERGY_ADE_3_URI:
+    if uri in {ENERGY_ADE_3_URI, ENERGY_ADE_3_BETA8_URI}:
         return "3.0"
 
     lowered = uri.lower()

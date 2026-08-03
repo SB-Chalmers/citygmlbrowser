@@ -2,8 +2,16 @@
 
 **Specification and design rationale**
 Namespace: `http://sb.chalmers.se/ade/lca/1.0` (prefix `lca`)
-Depends on: CityGML 2.0 (Core, Building) and the Energy ADE 3.0 (beta 7)
+Depends on: CityGML 2.0 (Core, Building) and the Energy ADE 3.0 (beta 7/beta 8)
 Version: 1.0 beta — 2026-07
+
+> **Beta 8 update (2026-08):**
+> The Energy ADE 3.0 beta8 schema derives `AbstractMaterial`,
+> `AbstractLayeredConstruction`, and `AbstractResource` from
+> `core:AbstractCityObjectType`. This enables formal
+> `core:_GenericApplicationPropertyOfCityObject` hook usage for LCA fields on
+> those class families. The former convention-injection limitation documented
+> below applies to beta7-era schemas and sample files.
 
 ---
 
@@ -96,15 +104,18 @@ The table below summarises the split for the classes targeted by the LCA ADE:
 
 | Class | Energy ADE base type | ADE hook available? | LCA ADE mechanism |
 |---|---|---|---|
-| `AbstractDevice` subclasses (12 types) | `core:AbstractCityObjectType` | ✓ Formal hook | [F] schema-validated |
-| `BuildingInstallation` / `IntBuildingInstallation` | `core:AbstractCityObjectType` | ✓ Formal hook | [F] schema-validated |
+| `AbstractDevice` subclasses (12 types) | `core:AbstractCityObjectType` | ✓ Formal hook | [F] formal hook insertion |
+| `BuildingInstallation` / `IntBuildingInstallation` | `core:AbstractCityObjectType` | ✓ Formal hook | [F] formal hook insertion |
 | `SolidMaterial` | `gml:AbstractFeatureType` | ✗ No hook | [C] convention injection |
 | `LayeredConstruction` / `ReverseLayeredConstruction` | `gml:AbstractFeatureType` | ✗ No hook | [C] convention injection |
 | `AbstractResource` subclasses | `gml:AbstractFeatureType` | ✗ No hook | [C] convention injection |
 
-The formal hook cases generate zero validation errors. The convention injection
-cases generate one `cvc-2.4.d` error per element regardless of where the
-injected properties are placed. A proposal to add formal hooks to the Energy ADE
+On beta7 sample profiles, the formal hook cases generate zero instance-level
+ordering errors after correct element placement. The convention injection cases
+generate one `cvc-2.4.d` error per element regardless of where the injected
+properties are placed. For beta8 schema sets, strict XSD 1.0 validator stacks may
+fail earlier at schema-compilation stage due to an external UPA ambiguity in the
+Energy ADE/GML metadata pattern. A proposal to add formal hooks to the Energy ADE
 for the convention-injection targets is included at the end of this document.
 
 ---
@@ -275,10 +286,10 @@ attributes.
 
 **Interoperability.** Because `AbstractDevice` extends `core:_CityObject`, the two
 LCA properties attach to it through the **formal** CityGML ADE hook: they
-substitute `core:_GenericApplicationPropertyOfCityObject` and are therefore
-schema-validated on every device. This is the strongest form of interoperability
-the host schema offers — a validating parser will accept the properties without
-any knowledge of the LCA ADE beyond its schema location.
+substitute `core:_GenericApplicationPropertyOfCityObject`. This is the strongest
+form of interoperability the host schema offers; however, practical validation
+outcomes remain dependent on schema/tool compatibility in the selected validator
+stack.
 
 ### Embodied impact of window and door units
 
@@ -411,7 +422,7 @@ attachment mechanism, and the EN 15978 modules each supports.
 | Operational | `AbstractResource` | Resources | `environmentalId` | convention injection [C] | B6, B7 |
 
 **[F] Formal hook** — substitutes `core:_GenericApplicationPropertyOfCityObject`;
-schema-validated. Element ordering constraint applies (see §"Encoding and conformance").  
+formally defined in the host XSD. Element ordering constraint applies (see §"Encoding and conformance"). Validation outcomes still depend on schema/tool compatibility.  
 **[C] Convention injection** — direct sibling children of a `gml:AbstractFeatureType`
 element; accepted by the CityGML parser but not validated by the host XSD. Formal
 coverage requires Energy ADE XSD extension (see §"Energy ADE improvement proposal").
@@ -425,8 +436,8 @@ difference matters for anyone building a validating parser or injection tool.
 
 For city objects — the energy devices, and the CityGML building installations —
 the LCA properties substitute `core:_GenericApplicationPropertyOfCityObject`.
-This is the **formal** CityGML 2.0 ADE hook, and such properties are validated by
-the schema on any `_CityObject` subclass.
+This is the **formal** CityGML 2.0 ADE hook. In compatible validator stacks,
+such properties validate on any `_CityObject` subclass.
 
 **Element ordering requirement.** The CityGML 2.0 base schema defines
 `AbstractCityObjectType` with an `xs:sequence`, in which
@@ -489,9 +500,13 @@ pragmatic reasons. The proposal in the next section addresses this gap.
 | `FZKHouseLoD3-LCA.gml` | 2.0 | CityGML 2.0 + Energy ADE 2.0 + LCA ADE 1.0 | **15** | Convention injection only |
 | `Alderaan-LCA.gml` | 3.0 beta7 | CityGML 2.0 + Energy ADE 3.0 + LCA ADE 1.0 | **17** | Convention injection only |
 
-Zero ordering errors remain. All residual errors are `cvc-2.4.d` and arise
+Zero ordering errors remain (beta7 sample set). All residual errors are `cvc-2.4.d` and arise
 exclusively from convention-injected elements on `gml:AbstractFeatureType`-derived
 Energy ADE types.
+
+For beta8 schema sets, a separate known limitation may occur earlier: schema
+compilation can fail in strict XSD 1.0 validators because of a UPA ambiguity in
+the Energy ADE/GML metadata type hierarchy.
 
 ---
 
@@ -602,7 +617,7 @@ This proposal will be submitted as a GitHub issue to
 cross-referenced in the accompanying paper. Once accepted and incorporated into
 Energy ADE 3.0, the LCA ADE XSD can be updated to use formal substitution groups
 for all targeted types, eliminating the convention injection pattern entirely and
-achieving full schema compliance.
+substantially improving schema-level conformance across validator stacks.
 
 ---
 

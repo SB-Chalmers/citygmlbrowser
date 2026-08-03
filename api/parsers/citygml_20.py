@@ -26,7 +26,7 @@ from typing import Callable
 
 from .base import (
     NS, _gml_id, elem_text, text_of,
-    parse_envelope, collect_polygons, short_tag,
+    parse_envelope, collect_polygons, short_tag, parse_xml_root,
     _name_el, _desc_el,
 )
 
@@ -201,7 +201,7 @@ def parse_file(
     path: str,
     enrich_energy: Callable[[ET.Element, dict], None] | None = None,
 ) -> dict:
-    root = ET.parse(path).getroot()
+    root = parse_xml_root(path)
     model: dict = {
         "file":      str(path),
         "id":        _gml_id(root),

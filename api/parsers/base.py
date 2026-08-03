@@ -9,6 +9,13 @@ from __future__ import annotations
 import xml.etree.ElementTree as ET
 
 # ── Namespace registry ────────────────────────────────────────────────────────
+# Energy ADE 3.0 exists with two namespace URIs in the wild (beta7 vs beta8).
+# We normalize both to the canonical beta7 URI so existing xpath paths keep
+# working without branching in every parser.
+ENERGY_ADE_3_CANONICAL_URI = "http://www.citygml.org/ade/energy/3.0"
+ENERGY_ADE_3_ALT_URI = "http://3dcities.bk.tudelft.nl/citygml/2.0/energy/3.0"
+ENERGY_ADE_3_URIS = frozenset({ENERGY_ADE_3_CANONICAL_URI, ENERGY_ADE_3_ALT_URI})
+
 NS: dict[str, str] = {
     # GML
     "gml":    "http://www.opengis.net/gml",        # GML 3.1 (CityGML 2.0)
@@ -27,7 +34,8 @@ NS: dict[str, str] = {
     # Energy ADE 2.0
     "energy": "http://www.sig3d.org/citygml/2.0/energy/2.0",
     # Energy ADE 3.0
-    "nrg3":   "http://www.citygml.org/ade/energy/3.0",
+    "nrg3":   ENERGY_ADE_3_CANONICAL_URI,
+    "nrg3b8": ENERGY_ADE_3_ALT_URI,
     # LCA ADE 1.0
     "lca":    "http://sb.chalmers.se/ade/lca/1.0",
 }
@@ -42,6 +50,45 @@ _GML_ID_ATTRS = (
     "{http://www.opengis.net/gml}id",
     "{http://www.opengis.net/gml/3.2}id",
 )
+
+
+def _replace_namespace_in_tag(tag: str) -> str:
+    """Map Energy ADE beta8 URI tags to the canonical Energy ADE 3.0 URI."""
+    if not tag.startswith("{"):
+        return tag
+    uri, local = tag[1:].split("}", 1)
+    if uri in ENERGY_ADE_3_URIS and uri != ENERGY_ADE_3_CANONICAL_URI:
+        return f"{{{ENERGY_ADE_3_CANONICAL_URI}}}{local}"
+    return tag
+
+
+def normalize_energy_ade_3_namespace(root: ET.Element) -> ET.Element:
+    """Normalize all Energy ADE 3.0 element/attribute namespaces in-place.
+
+    Beta 8 switched the namespace URI while keeping class/property local names.
+    Normalizing here allows existing parser xpath paths (nrg3:...) to work for
+    both namespace variants.
+    """
+    for el in root.iter():
+        el.tag = _replace_namespace_in_tag(el.tag)
+        if el.attrib:
+            new_attrib: dict[str, str] = {}
+            changed = False
+            for key, value in el.attrib.items():
+                new_key = _replace_namespace_in_tag(key)
+                new_attrib[new_key] = value
+                if new_key != key:
+                    changed = True
+            if changed:
+                el.attrib.clear()
+                el.attrib.update(new_attrib)
+    return root
+
+
+def parse_xml_root(path: str) -> ET.Element:
+    """Parse XML and normalize known ADE namespace variants."""
+    root = ET.parse(path).getroot()
+    return normalize_energy_ade_3_namespace(root)
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────

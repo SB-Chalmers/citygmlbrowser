@@ -10,7 +10,7 @@ from pathlib import Path
 
 from api.dialect import detect_dialect, DialectInfo
 
-from .base import NS  # re-export for graph.py / legacy callers
+from .base import NS, parse_xml_root  # re-export for graph.py / legacy callers
 from . import citygml_20, citygml_30
 from . import energy_ade_20, energy_ade_30
 from . import lca_ade
@@ -69,7 +69,6 @@ def parse_file(path: str, *, force_citygml: str | None = None) -> dict:
 
     # Overlay CityModel-level LCA data (referenceStudyPeriod)
     if dialect.lca_ade:
-        import xml.etree.ElementTree as ET
-        lca_ade.enrich_model(ET.parse(path).getroot(), model)
+        lca_ade.enrich_model(parse_xml_root(path), model)
 
     return model
